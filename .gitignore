@@ -1,0 +1,15 @@
+# Folder
+__pycache__/
+flask_session
+bin/
+obj/
+.vscode/
+.vs/
+
+# File Type
+*.csv
+*.db
+*.sqlite3
+*.code-workspace
+
+# Specific file
