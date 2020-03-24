@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.forms import EmailField, CharField
+from django.forms.widgets import TextInput, PasswordInput
 
 
 class UserCreationForm(UserCreationForm):
@@ -26,6 +27,13 @@ class UserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class AuthenticationForm(AuthenticationForm):
+    '''
+    https://stackoverflow.com/questions/54152670/django-auth-add-placeholder-in-the-login-form/54152827
+    '''
+    username = CharField(widget=TextInput(attrs={'class':'validate','placeholder': 'Your Username'}))
+    password = CharField(widget=PasswordInput(attrs={'placeholder':'Password'}))
 
 
 # ToDo: for upgrading login form: https://stackoverflow.com/questions/48814504/how-can-i-add-a-class-atribute-to-django-auth-login-form
