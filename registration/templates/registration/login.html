@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'registration/registration.css' %}">
-<script src="{% static 'registration/registration.js' %}"></script>
-{% endblock %}
 
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'registration/registration.css' %}">
+  <!-- Fonte: https://codepen.io/colorlib/pen/rxddKy -->
+{% endblock %}
 
 
 {% block content %}
@@ -39,33 +39,5 @@
       </form>
     </div>
   </div>
-
-
-
-<!-- 
-  <div class="container mt-4">
-    <form class="form-signin row justify-content-center" method="POST" action="{% url 'login' %}">
-      {% csrf_token %}
-
-      <div class="form-label-group col-2">
-        {{ form.username.label_tag }}
-        {{ form.username }}
-      </div>
-      <div class="form-label-group col-2">
-        {{ form.password.label_tag }}
-        {{ form.password }}
-      </div>
-      <div class="form-group">
-        <button type="submit"  class="btn btn-lg btn-primary text-uppercase">Enter</button>
-        <input type="hidden" name="next" value="{{ next }}" />
-      </div>
-    </form>
-
-    <div class="row justify-content-center">
-      <p class="col-2"><a href="{% url 'password_reset' %}">Lost password?</a></p>
-      <p class="col-2"><a href="{% url 'signup' %}">Register!</a></p>
-    </div>
-
-  </div> -->
 
 {% endblock %}

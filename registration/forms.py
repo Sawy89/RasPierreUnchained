@@ -7,10 +7,14 @@ from django.forms.widgets import TextInput, PasswordInput
 class UserCreationForm(UserCreationForm):
     '''
     Upgrade for adding email, first_name and last_name
+    We can add 'help_text="Required.", '
     '''
-    email = EmailField(label="Email address", required=True, help_text="Required.")
-    first_name = CharField(max_length=30)
-    last_name = CharField(max_length=30)
+    username = CharField(widget=TextInput(attrs={'class':'validate','placeholder': 'Your Username'}))
+    email = EmailField(label="Email address", required=True, widget=TextInput(attrs={'placeholder': 'Email'}))
+    first_name = CharField(max_length=30, widget=TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = CharField(max_length=30, widget=TextInput(attrs={'placeholder': 'Last Name'}))
+    password1 = CharField(widget=PasswordInput(attrs={'placeholder':'Password'}))
+    password2 = CharField(widget=PasswordInput(attrs={'placeholder':'Repeat password'}))
     
     class Meta:
         model = User
@@ -34,6 +38,3 @@ class AuthenticationForm(AuthenticationForm):
     '''
     username = CharField(widget=TextInput(attrs={'class':'validate','placeholder': 'Your Username'}))
     password = CharField(widget=PasswordInput(attrs={'placeholder':'Password'}))
-
-
-# ToDo: for upgrading login form: https://stackoverflow.com/questions/48814504/how-can-i-add-a-class-atribute-to-django-auth-login-form

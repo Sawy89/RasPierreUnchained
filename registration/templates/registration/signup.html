@@ -1,26 +1,36 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'registration/registration.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
-<h2 class="text-center">Sign up</h2>
+<div class="login-page">
+  <div class="form">
+    <form class="register-form" method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
 
-<div class="container mt-4">
-  <form class="form-signin justify-content-center" method="POST">
-    {% csrf_token %}
+      {% for field in form %}
+        {{ field }}
 
-    {% for field in form %}
-      <p class="row">
-        <span class="col-2">{{ field.label_tag }}</span>
-        <span class="col-2">{{ field }}</span>
         {% if field.help_text %}
           <small style="color: grey">{{ field.help_text }}</small>
         {% endif %}
+
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit" class="btn btn-lg btn-primary text-uppercase">Sign up</button>
+
+      {% endfor %}
+      <button type="submit" >Register</button>
+      <p class="message">Already registered? <a href="{% url 'login' %}">Sign In</a></p>
+    </form>
+  </div>
 </div>
+
 
 {% endblock %}
