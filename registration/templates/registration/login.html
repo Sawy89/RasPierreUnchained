@@ -9,17 +9,18 @@
 
 {% block content %}
 
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
-  {% if next %}
-    {% if user.is_authenticated == False %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-
   <div class="login-page">
+    
+    {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated == False %}
+        <p>Please login to see this page.</p>
+      {% endif %}
+    {% endif %}
+    
     <div class="form">
       <form class="login-form" method="POST" action="{% url 'login' %}">
         {% csrf_token %}
