@@ -17,6 +17,13 @@ Web Programming with Python and JavaScript - Final Project
 
 
 ## Configuration & Launch program
+Set those ENV variable in the system before launching docker:
+```
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=yourmail
+EMAIL_HOST_PASSWORD=yourpass!
+```
 
 
 ## Program description
@@ -27,3 +34,7 @@ The project is a platform where user can subscribe, selecting to participate in 
 
 ### File description
 
+### Biblio
+- Login template: https://codepen.io/colorlib/pen/rxddKy
+- Login overwrite: https://learndjango.com/tutorials/django-password-reset-tutorial, 
+https://stackoverflow.com/questions/53563534/template-password-reset-form-html-does-not-overwrite-the-django-admin-template
