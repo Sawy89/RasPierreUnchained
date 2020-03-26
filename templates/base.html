@@ -18,7 +18,29 @@
 </head>
 
 <body>
-  {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+  <div class="d-flex flex-row-reverse"></div>
+    <!-- Top bar -->
+    {% if user.is_authenticated %}
+      <div class="float-right dropdown">
+        <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
+          <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+      </div>
+    {% endif %}
+
+
+    {% block sidebar %}
+    <div class="dropdown float-right">
+      <button class="btn btn-lg dropbtn">Dropdown</button>
+      <div class="dropdown-content">
+        <a href="{% url 'xmasg_index' %}">XmasG</a>
+        <a href="#">Coming soon</a>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+  
+  
   {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>
 

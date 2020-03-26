@@ -125,7 +125,7 @@ STATICFILES_DIRS = [
 ]
 
 # Page after login
-LOGIN_REDIRECT_URL = '/xmasg'
+LOGIN_REDIRECT_URL = '/'
 
 # Email
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

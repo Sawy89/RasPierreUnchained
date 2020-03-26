@@ -1,16 +1,11 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
 
 
 {% block content %}
-<div class="container">
-  <h1>Hello {{ user.username }}!</h1>
-  <p>Welcome to Pinochio's pizza! Are you hungry?</p>
-  <a href="{% url 'menu' %}">Let's go to our menu!</a>
-  <br>
-  <a href="{% url 'orders' %}">Let's see your orders!</a>
-</div>
-
-
+  <h1>Hello! Welcome to RaspierreUnchained!</h1>
 {% endblock %}
-
-<!-- ToDo: Mail per registrazione e ordine! -->
