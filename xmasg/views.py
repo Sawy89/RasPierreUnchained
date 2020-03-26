@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def index(request):
-    return HttpResponse("Hello! Welcome to XmasG!")
+    # return HttpResponse("Hello! Welcome to XmasG!")
+    return render(request, 'xmasg/index.html') 
