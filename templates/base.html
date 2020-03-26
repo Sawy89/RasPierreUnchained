@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <div class="d-flex flex-row-reverse"></div>
+  <div class="d-flex flex-row-reverse">
     <!-- Top bar -->
     {% if user.is_authenticated %}
       <div class="float-right dropdown">
@@ -26,22 +26,21 @@
           <span class="glyphicon glyphicon-log-out"></span>
         </a>
       </div>
-    {% endif %}
 
-
-    {% block sidebar %}
-    <div class="dropdown float-right">
-      <button class="btn btn-lg dropbtn">Dropdown</button>
-      <div class="dropdown-content">
-        <a href="{% url 'xmasg_index' %}">XmasG</a>
-        <a href="#">Coming soon</a>
+      <div class="dropdown float-right">
+        <button class="btn btn-lg dropbtn">App</button>
+        <div class="dropdown-content">
+          <a href="{% url 'xmasg_index' %}">XmasG</a>
+          <a href="#">Coming soon</a>
+        </div>
       </div>
-    </div>
-    {% endblock %}
+    {% endif %}
   </div>
   
-  
-  {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+  <div class="wrapper">
+    {% block sidebar %}{% endblock %}
+    {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+  </div>
 </body>
 
 </html>
