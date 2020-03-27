@@ -80,6 +80,10 @@ body {
     margin-left: -250px;
 }
 
+#sidebarCollapse.active {
+    width: 250px;
+}
+
 a[data-toggle="collapse"] {
     position: relative;
 }
