@@ -2,44 +2,74 @@
 <html lang="en">
 {% load static %} 
 
+
 <head>
-  {% block title %}<title>RasPierre Unchained</title>{% endblock %}
+
+  {% block title %}
+  <title>RasPierre Unchained</title>
+  {% endblock %}
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+  <script src="{% static 'base.js' %}"></script>
 
   {% if alert_message %}
     <script>alert("{{ alert_message }}")</script>  
   {% endif %}
 
   {% block head %} {% endblock %}
+
 </head>
 
-<body>
-  <div class="d-flex flex-row-reverse">
-    <!-- Top bar -->
-    {% if user.is_authenticated %}
-      <div class="float-right dropdown">
-        <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
-          <span class="glyphicon glyphicon-log-out"></span>
-        </a>
-      </div>
 
-      <div class="dropdown float-right">
-        <button class="btn btn-lg dropbtn">App</button>
-        <div class="dropdown-content">
-          <a href="{% url 'xmasg_index' %}">XmasG</a>
-          <a href="#">Coming soon</a>
-        </div>
-      </div>
+<body>
+  <!-- Top right bar -->
+  <div class="row">
+    {% if user.is_authenticated %}
+    <!-- Navbar button -->
+    <div class="col-auto">
+      <nav class="dropdown">
+        <button type="button" id="sidebarCollapse" class="btn btn-lg dropbtn button-logout">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+      </nav>
+    </div>
     {% endif %}
+
+    <div class="col text-center">
+      {% block h1title %}{% endblock %}
+    </div>
+
+    <div class="col-auto">
+      <!-- App menu -->
+      {% if user.is_authenticated %}
+        <div class="float-right dropdown">
+          <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
+            <span class="glyphicon glyphicon-log-out"></span>
+          </a>
+        </div>
+      <!-- Logout button -->
+        <div class="dropdown float-right">
+          <button class="btn btn-lg dropbtn">App</button>
+          <div class="dropdown-content">
+            <a href="{% url 'xmasg_index' %}">XmasG</a>
+            <a href="#">Coming soon</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    
   </div>
   
+  
   <div class="wrapper">
+
     {% block sidebar %}{% endblock %}
+    
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+
   </div>
 </body>
 
