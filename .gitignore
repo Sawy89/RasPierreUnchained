@@ -13,3 +13,5 @@ obj/
 *.code-workspace
 
 # Specific file
+config.bat
+note.txt
