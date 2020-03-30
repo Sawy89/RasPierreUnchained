@@ -27,17 +27,9 @@
 <body>
   <!-- Top right bar -->
   <div class="row">
-    {% if user.is_authenticated %}
-    <!-- Navbar button -->
-    <div class="col-auto">
-      <nav class="dropdown">
-        <button type="button" id="sidebarCollapse" class="btn btn-lg dropbtn button-logout active">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
-      </nav>
-    </div>
-    {% endif %}
-
+    
+    {% block sidebarbutton %}{% endblock %}
+    
     <div class="col text-center">
       {% block h1title %}{% endblock %}
     </div>
