@@ -42,7 +42,9 @@ a, a:hover, a:focus {
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 20px;
+    font-weight: bold;
 }
 
 #sidebar ul li a {
@@ -63,4 +65,14 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #3e8e41;
+}
+
+
+.new-channel-div {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#new-channel {
+    min-width: 20px;
 }

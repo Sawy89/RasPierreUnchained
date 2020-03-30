@@ -31,10 +31,17 @@
   </div>
 
   <ul class="list-unstyled components">
-    <p>Dummy Heading</p>
-    <li class="active">
-      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-      <ul class="collapse list-unstyled" id="homeSubmenu">
+    <p>Stanze</p>
+    <!-- Aggiungere class='active' per la pagina selezionata -->
+    <div class="input-group new-channel-div">
+      <input class="form-control" type="text" name="new-channel" placeholder="nuova stanza">
+      <a href="#" id="new-channel" class="btn btn-plus">
+        <span class="glyphicon glyphicon-plus"></span>
+      </a>
+    </div>
+    <li>
+      <a href="#channelList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Stanze disponibili</a>
+      <ul class="collapse list-unstyled" id="channelList">
         <li>
           <a href="#">Home 1</a>
         </li>
@@ -46,9 +53,8 @@
         </li>
       </ul>
     </li>
-    <li>
-      <a href="#">About</a>
-    </li>
+
+    <p>Messaggi diretti</p>
     <li>
       <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
       <ul class="collapse list-unstyled" id="pageSubmenu">
