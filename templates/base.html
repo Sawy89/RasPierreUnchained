@@ -27,7 +27,7 @@
 <body>
   <!-- Top right bar -->
   <div class="row">
-    
+
     {% block sidebarbutton %}{% endblock %}
     
     <div class="col text-center">
@@ -35,13 +35,19 @@
     </div>
 
     <div class="col-auto">
-      <!-- App menu -->
       {% if user.is_authenticated %}
+      <!-- App menu -->
         <div class="float-right dropdown">
           <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
             <span class="glyphicon glyphicon-log-out"></span>
           </a>
         </div>
+      <!-- Home -->
+      <div class="float-right dropdown">
+        <a href="{% url 'index' %}" class="btn btn-lg dropbtn button-logout">
+          <span class="glyphicon glyphicon-home"></span>
+        </a>
+      </div>
       <!-- Logout button -->
         <div class="dropdown float-right">
           <button class="btn btn-lg dropbtn">App</button>
