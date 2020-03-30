@@ -73,7 +73,7 @@ body {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh;
+    min-height: calc(99.5vh - 55px);;
 }
 
 #sidebar.active {
