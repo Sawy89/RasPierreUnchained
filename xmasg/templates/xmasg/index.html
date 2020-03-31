@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
-<script src="{% static 'xmasg/index.js' %}"></script>
+<script src="{% static 'xmasg/room.js' %}"></script>
 {% endblock %}
 
 
@@ -14,25 +14,18 @@
 
 
 {% block sidebarbutton %}
-<div class="col-auto">
-  <nav class="dropdown">
-    <button type="button" id="sidebarCollapse" class="btn btn-lg dropbtn button-logout active">
-      <span class="glyphicon glyphicon-menu-hamburger"></span>
-    </button>
-  </nav>
-</div>
+{% include "xmasg/element_sidebar_button.html" %}
 {% endblock %}
 
 
 {% block sidebar %}
-{% include "xmasg/sidebar.html" %}
+{% include "xmasg/element_sidebar.html" %}
 {% endblock %}
 
 
 {% block content %}
 <div id="content">
-  <p>Ciao ciao!</p>
-
-  
+  <p>Ciao, sono Denny!</p>
+  <p>Sono contento che stai utilizzando l'app XmasG; la domanda è: cosa puoi fare? Adesso provo a spiegartelo:</p>
 </div>
 {% endblock %}
