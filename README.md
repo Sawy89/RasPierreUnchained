@@ -38,3 +38,4 @@ The project is a platform where user can subscribe, selecting to participate in 
 - Login template: https://codepen.io/colorlib/pen/rxddKy
 - Login overwrite: https://learndjango.com/tutorials/django-password-reset-tutorial, 
 https://stackoverflow.com/questions/53563534/template-password-reset-form-html-does-not-overwrite-the-django-admin-template
+- SocketIO: https://channels.readthedocs.io/en/latest/tutorial/part_1.html

@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
-<!-- <script src="{% static 'xmasg/xmasg.js' %}"></script> -->
+<script src="{% static 'xmasg/index.js' %}"></script>
 {% endblock %}
 
 
@@ -25,59 +25,7 @@
 
 
 {% block sidebar %}
-<nav id="sidebar">
-  <div class="sidebar-header">
-    <h3>XmasG</h3>
-  </div>
-
-  <ul class="list-unstyled components">
-    <p>Stanze</p>
-    <!-- Aggiungere class='active' per la pagina selezionata -->
-    <div class="input-group new-channel-div">
-      <input class="form-control" type="text" name="new-channel" placeholder="nuova stanza">
-      <a href="#" id="new-channel" class="btn btn-plus">
-        <span class="glyphicon glyphicon-plus"></span>
-      </a>
-    </div>
-    <li>
-      <a href="#channelList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Stanze disponibili</a>
-      <ul class="collapse list-unstyled" id="channelList">
-        <li>
-          <a href="#">Home 1</a>
-        </li>
-        <li>
-          <a href="#">Home 2</a>
-        </li>
-        <li>
-          <a href="#">Home 3</a>
-        </li>
-      </ul>
-    </li>
-
-    <p>Messaggi diretti</p>
-    <li>
-      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-      <ul class="collapse list-unstyled" id="pageSubmenu">
-        <li>
-          <a href="#">Page 1</a>
-        </li>
-        <li>
-          <a href="#">Page 2</a>
-        </li>
-        <li>
-          <a href="#">Page 3</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">Portfolio</a>
-    </li>
-    <li>
-      <a href="#">Contact</a>
-    </li>
-  </ul>
-
-</nav>
+{% include "xmasg/sidebar.html" %}
 {% endblock %}
 
 
