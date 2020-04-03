@@ -27,5 +27,26 @@
 <div id="content">
   <p>Nessuno dei tuoi amici ha già creato la vostra stanza?</p>
   <p>Allora fallo tu, e poi aspetta che si iscrivano!</p>
+
+  <div class="container">
+    <div class="form">
+      <form class="" method="POST" action="{% url 'xmasg_room_new' %}">
+        {% csrf_token %}
+  
+        {% for field in form %}
+        <p>
+          <span>{{ field.label }}</span>
+          {{ field }}
+  
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+        {% endfor %}
+        <button type="submit">Crea nuova stanza</button>
+      </form>
+    </div>
+  </div>
+  
 </div>
 {% endblock %}
