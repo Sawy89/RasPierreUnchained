@@ -1,6 +1,6 @@
 <nav id="sidebar">
     <div class="sidebar-header">
-        <h3 id="room-name">{{ info.room_name }}</h3>
+        <h3 id="room-name">{{ room.name }}</h3>
     </div>
 
     <ul class="list-unstyled components">
@@ -22,7 +22,7 @@
             <ul class="collapse list-unstyled" id="roomList">
                 {% for room in rooms %}
                     <li>
-                        <a href="#">{{ room.name }}</a>
+                        <a href="{% url 'xmasg_room' room.id %}">{{ room.name }}</a>
                     </li>
                 {% endfor %}
             </ul>

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import forms, models
 
@@ -10,8 +10,12 @@ def index(request):
 
 
 @login_required
-def room(request):
-    return render(request, 'xmasg/room.html', {"rooms": models.Room.objects.all(), "friends": None}) 
+def room(request, pk):
+    try:
+        room = models.Room.objects.get(id=pk)
+    except models.Room.DoesNotExist:
+        raise Http404('Room does not exist')
+    return render(request, 'xmasg/room.html', {"rooms": models.Room.objects.all(), "friends": None, "room": room}) 
 
 
 @login_required
