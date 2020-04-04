@@ -6,21 +6,25 @@
     <ul class="list-unstyled components">
         <!-- Aggiungere class='active' per la pagina selezionata -->
         
-        <!-- Other rooms -->
+        <!-- rooms -->
         <p class="sidebar-rooms">Stanze</p>
         <li class="sidebar-rooms">
             <a href="{% url 'xmasg_room_new' %}">Crea una nuova stanza</a>
         </li>
-        <!-- <div class="input-group new-room-div">
-        <input class="form-control" type="text" name="new-room" placeholder="nuova stanza">
-        <a href="#" id="new-room" class="btn btn-plus">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-        </div> -->
+        <li class="sidebar-rooms">
+            <a href="#myroomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Le tue stanze</a>
+            <ul class="collapse list-unstyled" id="myroomList">
+                {% for room in sidebar_data.myrooms %}
+                    <li>
+                        <a href="{% url 'xmasg_room' room.id %}">{{ room.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
         <li class="sidebar-rooms">
             <a href="#roomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Stanze disponibili</a>
             <ul class="collapse list-unstyled" id="roomList">
-                {% for room in rooms %}
+                {% for room in sidebar_data.rooms %}
                     <li>
                         <a href="{% url 'xmasg_room' room.id %}">{{ room.name }}</a>
                     </li>

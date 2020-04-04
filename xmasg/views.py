@@ -4,9 +4,24 @@ from django.contrib.auth.decorators import login_required
 from . import forms, models
 
 
+def prepare_sidebar(current_user):
+    '''
+    Function for getting info for sidebar
+    '''
+    sidebar_data = {}
+    
+    sidebar_data['rooms'] = models.Room.objects.all()   # Get available rooms
+    sidebar_data['myrooms'] = models.Room.objects.all()   # ToDO: add filter on user subscribed
+
+    return sidebar_data
+
+
 @login_required
 def index(request):
-    return render(request, 'xmasg/index.html', {"rooms": models.Room.objects.all(), "friends": None}) 
+    # Get data for sidebar
+    sidebar_data = prepare_sidebar(request.user)
+
+    return render(request, 'xmasg/index.html', {"sidebar_data": sidebar_data}) 
 
 
 @login_required
@@ -15,7 +30,9 @@ def room(request, pk):
         room = models.Room.objects.get(id=pk)
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
-    return render(request, 'xmasg/room.html', {"rooms": models.Room.objects.all(), "friends": None, "room": room}) 
+    # Get data for sidebar
+    sidebar_data = prepare_sidebar(request.user)
+    return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, "room": room}) 
 
 
 @login_required
@@ -23,9 +40,13 @@ def room_new(request):
     if request.method == 'POST':
         form = forms.RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save()
+            obj.admin.add(request.user)     # add admin
+            obj.save()
             return redirect('xmasg_index')
     else:
         form = forms.RoomForm()
-    return render(request, 'xmasg/room_new.html', {"rooms": None, "friends": None,
+    # Get data for sidebar
+    sidebar_data = prepare_sidebar(request.user)
+    return render(request, 'xmasg/room_new.html', {"sidebar_data": sidebar_data,
                                                     "form": form}) 
