@@ -10,7 +10,6 @@ class Room(models.Model):
     description = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()       # final date (for countdown)
-    admin = models.ManyToManyField(User, related_name="room_admin")
     member = models.ManyToManyField(User, through='RoomMember', related_name="rooms")
 
     def __str__(self):
@@ -33,6 +32,7 @@ class RoomMember(models.Model):
     '''
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="members")
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_members")
+    is_admin = models.BooleanField(default=False)
     exclusion = models.ManyToManyField(User, blank=True, related_name="room_exclusions")
 
 

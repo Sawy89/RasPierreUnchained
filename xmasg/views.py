@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
+import datetime
 from . import forms, models
 
 
@@ -10,8 +11,8 @@ def prepare_sidebar(current_user):
     '''
     sidebar_data = {}
     
-    sidebar_data['rooms'] = models.Room.objects.all()   # Get available rooms
-    sidebar_data['myrooms'] = models.Room.objects.all()   # ToDO: add filter on user subscribed
+    sidebar_data['rooms'] = models.Room.objects.filter(end_date__gte=datetime.datetime.now()).all()   # Get available rooms
+    sidebar_data['myrooms'] = models.Room.objects.filter(member=current_user).all()   # ToDO: add filter on user subscribed
 
     return sidebar_data
 
@@ -41,8 +42,8 @@ def room_new(request):
         form = forms.RoomForm(request.POST)
         if form.is_valid():
             obj = form.save()
-            obj.admin.add(request.user)     # add admin
-            obj.save()
+            room_member = models.RoomMember.objects.create(room=obj, member=request.user, is_admin=True)
+            room_member.save()
             return redirect('xmasg_index')
     else:
         form = forms.RoomForm()
