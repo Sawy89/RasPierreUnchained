@@ -26,5 +26,16 @@
 {% block content %}
 <div id="content">
   <p>Eilà!</p>
+  {% if request.user in room_members %}
+    <p>Sei già iscritto!</p>
+  {% else %}
+    <form name="addRoomMember" action="" method="post" onsubmit="ajaxAddRoomMember(); return false;">
+      {% csrf_token %}
+      {% for field in form_add_member %}
+        {{ field }}
+      {% endfor %}
+      <input type="submit" class="btn btn-primary" value="Unisciti">
+    </form>
+  {% endif %}
 </div>
 {% endblock %}

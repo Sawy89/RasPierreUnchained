@@ -1,5 +1,5 @@
-from django.forms import ModelForm, DateTimeField
-from django.forms.widgets import TextInput, DateTimeInput
+from django.forms import Form, ModelForm, DateTimeField, IntegerField
+from django.forms.widgets import TextInput, DateTimeInput, HiddenInput
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin import widgets
 from . import models
@@ -21,3 +21,11 @@ class RoomForm(ModelForm):
             'description': _('Descrizione'),
             'end_date': _('Data estrazione'),
         }
+
+
+class RoomMemberForm(Form):
+    room_id = IntegerField(widget=HiddenInput())
+    user_id = IntegerField(widget=HiddenInput())
+
+    class Meta:
+        fields = ('room_id', 'user_id')

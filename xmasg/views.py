@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 import datetime
 from . import forms, models
 
 
+# %% Support Functions
 def prepare_sidebar(current_user):
     '''
     Function for getting info for sidebar
@@ -17,6 +18,7 @@ def prepare_sidebar(current_user):
     return sidebar_data
 
 
+# %% Pages
 @login_required
 def index(request):
     # Get data for sidebar
@@ -29,11 +31,20 @@ def index(request):
 def room(request, pk):
     try:
         room = models.Room.objects.get(id=pk)
+        room_members = room.member.all()
+        if request.user not in room_members:
+            form = forms.RoomMemberForm()
+            form.fields['user_id'].initial = request.user.id
+            form.fields['room_id'].initial = room.id
+        else:
+            form = None
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
     # Get data for sidebar
     sidebar_data = prepare_sidebar(request.user)
-    return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, "room": room}) 
+    return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, 
+                                                "room": room, "room_members": room_members,
+                                                "form_add_member": form}) 
 
 
 @login_required
@@ -51,3 +62,23 @@ def room_new(request):
     sidebar_data = prepare_sidebar(request.user)
     return render(request, 'xmasg/room_new.html', {"sidebar_data": sidebar_data,
                                                     "form": form}) 
+
+
+# %% API (Ajax)
+# @login_required
+def room_add_member(request):
+    '''
+    Add a member to a room
+    '''
+    if request.is_ajax and request.method == "POST":
+        form = forms.RoomMemberForm(request.POST)
+        if form.is_valid():
+            user1 = models.User.filter(id=form.user_id).first()
+            room1 = models.Room.filter(id=form.room_id).first()
+            room_member = models.RoomMember.objects.create(room=room1, 
+                                                            member=user1, is_admin=False)
+            room_member.save()
+            return JsonResponse({"alert_message": f"{user1.username} added to room {room1.name}"}, status=200)
+        else:
+            return JsonResponse({"alert_message": form.errors}, status=400)
+    return JsonResponse({"alert_message": "Wrong request"}, status=400)
