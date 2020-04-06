@@ -29,7 +29,7 @@
   {% if request.user in room_members %}
     <p>Sei già iscritto!</p>
   {% else %}
-    <form name="addRoomMember" action="" method="post" onsubmit="ajaxAddRoomMember(); return false;">
+    <form name="addRoomMember" action="{% url 'xmasg_room_add_member' room_id=room.id user_id=user.id %}" method="GET">
       {% csrf_token %}
       {% for field in form_add_member %}
         {{ field }}
