@@ -137,6 +137,10 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 
+# Timezone
+TIME_ZONE = "Europe/Rome"
+USE_TZ = True
+
 
 # Channels
 ASGI_APPLICATION = 'RasPierreUnchained.routing.application'

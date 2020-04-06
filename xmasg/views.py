@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 import datetime
+import math
 from . import forms, models
 from django.contrib.auth.models import User
+from string import Template
 
 
 # %% Support Functions
@@ -17,6 +19,17 @@ def prepare_sidebar(current_user):
     sidebar_data['myrooms'] = models.Room.objects.filter(member=current_user).all()   # ToDO: add filter on user subscribed
 
     return sidebar_data
+
+
+class DeltaTemplate(Template):
+    delimiter = "%"
+
+def strfdelta(tdelta, fmt):
+    d = {"D": tdelta.days}
+    d["H"], rem = divmod(tdelta.seconds, 3600)
+    d["M"], d["S"] = divmod(rem, 60)
+    t = DeltaTemplate(fmt)
+    return t.substitute(**d)
 
 
 # %% Pages
@@ -34,6 +47,9 @@ def room(request, pk):
     try:
         room = models.Room.objects.get(id=pk)
         room_members = room.member.all()
+        room.end_date_str = room.end_date.strftime('%d-%m-%Y %H:%M')
+        delta = room.end_date.replace(tzinfo=None) - datetime.datetime.now()
+        room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
     # Get form

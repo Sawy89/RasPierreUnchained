@@ -25,10 +25,21 @@
 
 {% block content %}
 <div id="content">
-  <p>Eilà!</p>
-  {% if request.user in room_members %}
-    <p>Sei già iscritto!</p>
-  {% else %}
+  <!-- Dati della stanza -->
+  <div class="room-info">
+    <h2>Benvenuto!</h2>
+    <h3>{{ room.name }} - {{ room.description }}</h3>
+    <p>L'estrazione avverrà il {{ room.end_date_str }}: mancano {{ room.end_date_delta_str }}</p>
+    <h4>Ecco i partecipanti</h4>
+    <ul class="room-member">
+      {% for member in room_members %}
+      <li>{{ member.username }} - {{ member.first_name }} {{ member.last_name }}</li>
+      {% endfor%}
+    </ul>
+  </div>
+
+  <!-- Iscritto o no -->
+  {% if request.user not in room_members %}
     <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
       {% csrf_token %}
       {% for field in form_add_member %}
@@ -36,6 +47,8 @@
       {% endfor %}
       <input type="submit" class="btn btn-primary" value="Unisciti">
     </form>
+  {% else %}
+    <p>Sei già iscritto! Ollè!</p>
   {% endif %}
 </div>
 {% endblock %}
