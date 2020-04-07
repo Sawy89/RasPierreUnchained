@@ -31,15 +31,26 @@
     <h3>{{ room.name }} - {{ room.description }}</h3>
     <p>L'estrazione avverrà il {{ room.end_date_str }}: mancano {{ room.end_date_delta_str }}</p>
     <h4>Ecco i partecipanti</h4>
-    <ul class="room-member">
+    <table class="room-member">
+      <tr>
+        <th>User</th>
+        <th>Nome</th>
+        <th>Admin</th>
+        <th>Esclusione</th>
+      </tr>
       {% for member in room_members %}
-      <li>{{ member.username }} - {{ member.first_name }} {{ member.last_name }}</li>
+        <tr>
+          <td>{{ member.member.username }}</td>
+          <td>{{ member.member.first_name }} {{ member.member.last_name }}</td>
+          <td>{{ member.is_admin }}</td>
+          <td>{{ member.is_your_exclusion }}</td> 
+        </tr>
       {% endfor%}
-    </ul>
+    </table>
   </div>
 
   <!-- Iscritto o no -->
-  {% if request.user not in room_members %}
+  {% if form != None %}
     <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
       {% csrf_token %}
       {% for field in form_add_member %}

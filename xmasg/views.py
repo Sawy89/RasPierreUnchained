@@ -46,14 +46,18 @@ def room(request, pk):
     # Get room
     try:
         room = models.Room.objects.get(id=pk)
-        room_members = room.member.all()
+        room_members = models.RoomMember.objects.filter(room=room).all()
+        # aggiungere info admin e esclusioni!!
         room.end_date_str = room.end_date.strftime('%d-%m-%Y %H:%M')
         delta = room.end_date.replace(tzinfo=None) - datetime.datetime.now()
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
+        for u in room_members:
+            u.is_exclusion_of(request.user)
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
     # Get form
-    if request.user not in room_members:
+    room_members_list = [u.member for u in room_members]
+    if (request.user in room_members_list):
         form = forms.RoomMemberForm()
         form.fields['user_id'].initial = request.user.id
         form.fields['room_id'].initial = room.id
@@ -81,7 +85,8 @@ def room_add_member(request):
                 room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False)
                 room_member.save()
             return redirect('xmasg_room', pk=room.id)
-    return HttpResponseBadRequest('Wrong add member request')
+        return HttpResponseBadRequest('Wrong add member request')
+    return HttpResponseBadRequest('Wrong type request')
 
 
 @login_required

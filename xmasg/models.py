@@ -35,6 +35,12 @@ class RoomMember(models.Model):
     is_admin = models.BooleanField(default=False)
     exclusion = models.ManyToManyField(User, blank=True, related_name="room_exclusions")
 
+    def is_exclusion_of(self, user_to_check):
+        if user_to_check in self.exclusion.all():
+            self.is_your_exclusion = True
+        else:
+            self.is_your_exclusion = False
+
 
 class XmasGift(models.Model):
     '''
