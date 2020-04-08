@@ -53,6 +53,8 @@ def room(request, pk):
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
             u.is_exclusion_of(request.user)
+            if u.member == request.user  and  u.is_admin:
+                room.is_user_admin = True
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
     # Get form
@@ -82,7 +84,7 @@ def room_add_member(request):
             user = User.objects.get(id=form.cleaned_data['user_id'])
             room_members = room.member.all()
             if user not in room_members:
-                room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False)
+                room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False, exclusion=user)
                 room_member.save()
             return redirect('xmasg_room', pk=room.id)
         return HttpResponseBadRequest('Wrong add member request')
@@ -96,6 +98,7 @@ def room_new(request):
         if form.is_valid():
             obj = form.save()
             room_member = models.RoomMember.objects.create(room=obj, member=request.user, is_admin=True)
+            room_member.exclusion.add(request.user)
             room_member.save()
             return redirect('xmasg_index')
     else:
