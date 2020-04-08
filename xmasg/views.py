@@ -59,7 +59,7 @@ def room(request, pk):
         raise Http404('Room does not exist')
     # Get form
     room_members_list = [u.member for u in room_members]
-    if (request.user in room_members_list):
+    if not(request.user in room_members_list):
         form = forms.RoomMemberForm()
         form.fields['user_id'].initial = request.user.id
         form.fields['room_id'].initial = room.id
@@ -82,9 +82,10 @@ def room_add_member(request):
         if form.is_valid():
             room = models.Room.objects.get(id=form.cleaned_data['room_id'])
             user = User.objects.get(id=form.cleaned_data['user_id'])
-            room_members = room.member.all()
-            if user not in room_members:
-                room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False, exclusion=user)
+            room_members = models.RoomMember.objects.filter(room=room).all()
+            if user not in [u.member for u in room_members]:
+                room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False)
+                room_member.exclusion.add(request.user)
                 room_member.save()
             return redirect('xmasg_room', pk=room.id)
         return HttpResponseBadRequest('Wrong add member request')

@@ -5,8 +5,14 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
 <script src="{% static 'xmasg/room.js' %}"></script>
+<!-- Variable to javascript -->
 <script>
   var roomAdmin = {{ room.is_user_admin|yesno:"true,false" }};
+  {% if form_add_member is None %}
+    var userIsMember = true;
+  {% else %}
+    var userIsMember = false;
+  {% endif %}
 </script>
 {% endblock %}
 
@@ -61,7 +67,7 @@
   </div>
 
   <!-- Iscritto o no -->
-  {% if form != None %}
+  {% if form_add_member is not None %}
     <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
       {% csrf_token %}
       {% for field in form_add_member %}
