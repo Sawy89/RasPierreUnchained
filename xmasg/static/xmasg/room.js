@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         element.addEventListener("change", checkInputChange, false);
     });
 
+    // Submit change
+    document.querySelector('#bnt-change-member').onclick = function () {
+        roommemberModExclusion();
+    };
+
 });
 
 
@@ -53,3 +58,25 @@ function isEqualToDefault(element) {
     if (element.dataset.defaultvalue == currentStatus) {return true;}
     else {return false;}
 };
+
+
+// AJAX modification sent
+function roommemberModExclusion() {
+    // url_xmasgajax_roommember_exclusion
+    var csrftoken = getCookie('csrftoken');
+    const request = new XMLHttpRequest();
+    request.open('POST', url_xmasgajax_roommember_exclusion);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("X-CSRFToken", csrftoken)
+    // Result of request
+    // request.onload = () => {
+    //     const data = JSON.parse(request.responseText);
+    //     if (request.status == 200) 
+    //         alert('Message deleted!')
+    //     else
+    //         alert(data['error']);
+    // };
+    var messageJson = {'message': 'ciao cazzo!'};
+    request.send(JSON.stringify(messageJson));
+}
+

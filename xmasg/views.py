@@ -1,11 +1,13 @@
 from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.contrib.auth.models import User
+from string import Template
 import datetime
 import math
 from . import forms, models
-from django.contrib.auth.models import User
-from string import Template
+import json
 
 
 # %% Support Functions
@@ -108,3 +110,16 @@ def room_new(request):
     sidebar_data = prepare_sidebar(request.user)
     return render(request, 'xmasg/room_new.html', {"sidebar_data": sidebar_data,
                                                     "form": form}) 
+
+
+# %% API for AJAX
+class RoomMemberExclusion(View):
+    def get(self, request):
+        # <view logic>
+        return JsonResponse({'message': 'OK'})
+    
+    def post(self, request):
+        print('oh yeah0')
+        data = json.loads(request.body)
+        print(data['message'])
+        return JsonResponse({'message': 'OK'}, status=200)
