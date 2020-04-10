@@ -49,13 +49,14 @@ def room(request, pk):
     try:
         room = models.Room.objects.get(id=pk)
         room_members = models.RoomMember.objects.filter(room=room).all()
+        user_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()
         # aggiungere info admin e esclusioni!!
         room.end_date_str = room.end_date.strftime('%d-%m-%Y %H:%M')
         delta = room.end_date.replace(tzinfo=None) - datetime.datetime.now()
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
-            u.is_exclusion_of(request.user)
-            if u.member == request.user  and  u.is_admin:
+            u.is_your_exclusion = user_member.has_as_exclusion(u.member)
+            if u.member == request.user and u.is_admin:
                 room.is_user_admin = True
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
@@ -121,8 +122,8 @@ class RoomMemberModification(View):
         '''
         data = json.loads(request.body) #{'roomId': room_id, 'elName': elName, 'elMemberId': elMemberId, 'elChecked': elChecked}
         print(data)
-        room = models.Room.objects.get(id=data['roomId']).first()
-        member = User.objects.get(id=data['elMemberId']).first()
+        room = models.Room.objects.get(id=data['roomId'])
+        member = User.objects.get(id=data['elMemberId'])
 
         
         if data['elName'] == 'is-your-exclusion':

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Submit change on RoomMember
     document.querySelector('#bnt-change-member').onclick = function () {
         // Admin change
-        if (roomAdmin == false) {
+        if (roomAdmin == true) {
             document.querySelectorAll('input[name="is-admin"]').forEach(element => {
                 if (isEqualToDefault(element) == false) {
                     roommemberModification(element);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
         // Exclusion change
-        if (roomAdmin == false) {
+        if (userIsMember == true) {
             document.querySelectorAll('input[name="is-your-exclusion"]').forEach(element => {
                 if (isEqualToDefault(element) == false) {
                     roommemberModification(element);
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Reload page
+        setTimeout('', 5000); // ToDo: improve by waiting for answer!
         location.reload();
     };
 
