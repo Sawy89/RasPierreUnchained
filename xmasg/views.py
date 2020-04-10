@@ -113,13 +113,48 @@ def room_new(request):
 
 
 # %% API for AJAX
-class RoomMemberExclusion(View):
-    def get(self, request):
-        # <view logic>
-        return JsonResponse({'message': 'OK'})
+class RoomMemberModification(View):
     
     def post(self, request):
-        print('oh yeah0')
-        data = json.loads(request.body)
-        print(data['message'])
+        '''
+        Modify the exclusion or admin
+        '''
+        data = json.loads(request.body) #{'roomId': room_id, 'elName': elName, 'elMemberId': elMemberId, 'elChecked': elChecked}
+        print(data)
+        room = models.Room.objects.get(id=data['roomId']).first()
+        member = User.objects.get(id=data['elMemberId']).first()
+
+        
+        if data['elName'] == 'is-your-exclusion':
+            # is-your-exclusion
+            room_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()
+            if data['elChecked'] == True:
+                room_member.exclusion.add(member)
+                room_member.save()
+            else:
+                if member == request.user:
+                    return JsonResponse({'message': 'Can not remove exclusion from yourself!'}, status=400)
+                else:
+                    room_member.exclusion.remove(member)
+                    room_member.save()
+        elif data['elName'] == 'is-admin':
+            # is-admin
+            # ToDO aggiungere controllo: solo request.user == is_admin può modificare queste cose
+            room_member = models.RoomMember.objects.filter(room=room).filter(user=member).first()
+            if data['elChecked'] == True:
+                room_member.is_admin = True
+                room_member.save()
+            else:
+                n_admin = 0
+                for u in models.RoomMember.objects.filter(room=room).all():
+                    if u.is_admin == True:
+                        n_admin += 1    # count number of admin
+                if n_admin > 1:
+                    room_member.is_admin = False
+                    room_member.save()
+                else:
+                    return HttpResponseBadRequest('Can not remove last admin')
+        else:
+            return HttpResponseBadRequest('Wrong elName')
+
         return JsonResponse({'message': 'OK'}, status=200)

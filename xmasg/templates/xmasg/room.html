@@ -13,7 +13,8 @@
   {% else %}
     var userIsMember = false;
   {% endif %}
-  var url_xmasgajax_roommember_exclusion = '{% url 'xmasgajax_roommember_exclusion' %}';
+  var url_xmasgajax_roommember_modification = '{% url 'xmasgajax_roommember_modification' %}';
+  var room_id = {{ room.id }};
 </script>
 {% endblock %}
 
@@ -41,33 +42,31 @@
     <h3>{{ room.name }} - {{ room.description }}</h3>
     <p>L'estrazione avverrà il {{ room.end_date_str }}: mancano {{ room.end_date_delta_str }}</p>
     <h4>Ecco i partecipanti</h4>
-    <form>
-      <table class="room-member table">
+    <table class="room-member table">
+      <tr>
+        <th scope='col'>User</th>
+        <th scope='col'>Nome</th>
+        <th scope='col'>Admin</th>
+        <th scope='col'>Esclusione</th>
+      </tr>
+      {% for member in room_members %}
         <tr>
-          <th scope='col'>User</th>
-          <th scope='col'>Nome</th>
-          <th scope='col'>Admin</th>
-          <th scope='col'>Esclusione</th>
+          <td scope='row'>{{ member.member.username }}</td>
+          <td>{{ member.member.first_name }} {{ member.member.last_name }}</td>
+          {% if member.is_admin %}
+            <td><input type="checkbox" id="admin-{{ member.member.id }}" name="is-admin" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
+          {% else %}
+            <td><input type="checkbox" id="admin-{{ member.member.id }}" name="is-admin" data-defaultvalue="" value="{{ member.member.username }}"></td>
+          {% endif %}
+          {% if member.is_your_exclusion %}
+            <td><input type="checkbox" id="exclusion-{{ member.member.id }}" name="is-your-exclusion" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
+          {% else %}
+            <td><input type="checkbox" id="exclusion-{{ member.member.id }}" name="is-your-exclusion" data-defaultvalue="" value="{{ member.member.username }}"></td>
+          {% endif %}
         </tr>
-        {% for member in room_members %}
-          <tr>
-            <td scope='row'>{{ member.member.username }}</td>
-            <td>{{ member.member.first_name }} {{ member.member.last_name }}</td>
-            {% if member.is_admin %}
-              <td><input type="checkbox" id="admin-{{ member.member.username }}" name="is-admin" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
-            {% else %}
-              <td><input type="checkbox" id="admin-{{ member.member.username }}" name="is-admin" data-defaultvalue="" value="{{ member.member.username }}"></td>
-            {% endif %}
-            {% if member.is_your_exclusion %}
-              <td><input type="checkbox" id="exclusion-{{ member.member.username }}" name="is-your-exclusion" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
-            {% else %}
-              <td><input type="checkbox" id="exclusion-{{ member.member.username }}" name="is-your-exclusion" data-defaultvalue="" value="{{ member.member.username }}"></td>
-            {% endif %}
-          </tr>
-        {% endfor%}
-      </table>
-      <input id="bnt-change-member" type="submit" class="btn btn-primary" value="Modifica">
-    </form>
+      {% endfor%}
+    </table>
+    <input id="bnt-change-member" type="submit" class="btn btn-primary" value="Modifica">
   </div>
 
   <!-- Iscritto o no -->
