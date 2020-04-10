@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequ
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
 from string import Template
 import datetime
 import math
@@ -114,8 +115,10 @@ def room_new(request):
 
 
 # %% API for AJAX
+# @login_required
 class RoomMemberModification(View):
     
+    @method_decorator(login_required)
     def post(self, request):
         '''
         Modify the exclusion or admin
@@ -141,7 +144,7 @@ class RoomMemberModification(View):
         elif data['elName'] == 'is-admin':
             # is-admin
             # ToDO aggiungere controllo: solo request.user == is_admin può modificare queste cose
-            room_member = models.RoomMember.objects.filter(room=room).filter(user=member).first()
+            room_member = models.RoomMember.objects.filter(room=room).filter(member=member).first()
             if data['elChecked'] == True:
                 room_member.is_admin = True
                 room_member.save()
