@@ -1,0 +1,172 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "Sawy89",
+            "first_name": "Denny",
+            "last_name": "LoAdmino",
+            "email": "terreno@eviso.it",
+            "password": "pa12ssàè!e"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "ElenaBella",
+            "first_name": "Elena",
+            "last_name": "Scotti",
+            "email": "elenabella@gmail.com",
+            "password": "pa12ssàè!e"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "Daniele32",
+            "first_name": "Daniele",
+            "last_name": "Giargiatto",
+            "email": "daniele32@gmail.com",
+            "password": "pa12ssàè!e"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "username": "ErmiLaP",
+            "first_name": "Ermenegilda",
+            "last_name": "Dominga",
+            "email": "ermicuore@gmail.com",
+            "password": "pa12ssàè!e"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "username": "BigBang1",
+            "first_name": "Luca",
+            "last_name": "Pototo",
+            "email": "luca.big.pototo@gmail.com",
+            "password": "pa12ssàè!e"
+        }
+    },
+
+
+
+    {
+        "model": "xmasg.Room",
+        "pk": 1,
+        "fields": {
+            "name": "La magione",
+            "description": "gli amici di ogni momento",
+            "creation_date": "2020-04-14 07:00:00+01:00",
+            "end_date": "2020-06-01 15:00:00+01:00"
+        }
+    },
+    {
+        "model": "xmasg.Room",
+        "pk": 2,
+        "fields": {
+            "name": "La società",
+            "description": "non sono admin, la vedo?",
+            "creation_date": "2020-04-14 07:00:00+01:00",
+            "end_date": "2020-06-01 15:00:00+01:00"
+        }
+    },
+    {
+        "model": "xmasg.Room",
+        "pk": 3,
+        "fields": {
+            "name": "Vecchia stanza",
+            "description": "Stanza scaduta!",
+            "creation_date": "2020-01-14 07:00:00+01:00",
+            "end_date": "2020-03-01 15:00:00+01:00"
+        }
+    },
+
+
+
+
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 1,
+        "fields": {
+            "room": 1,
+            "member": 1,
+            "is_admin": true,
+            "exclusion": [1,2,3]
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 2,
+        "fields": {
+            "room": 1,
+            "member": 2,
+            "is_admin": true,
+            "exclusion": [2,3]
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 3,
+        "fields": {
+            "room": 1,
+            "member": 3,
+            "is_admin": false,
+            "exclusion": [2,3]
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 4,
+        "fields": {
+            "room": 1,
+            "member": 4,
+            "is_admin": false
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 5,
+        "fields": {
+            "room": 1,
+            "member": 5,
+            "is_admin": false
+        }
+    },
+
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 6,
+        "fields": {
+            "room": 2,
+            "member": 2,
+            "is_admin": true,
+            "exclusion": [2,3]
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 7,
+        "fields": {
+            "room": 2,
+            "member": 3,
+            "is_admin": false,
+            "exclusion": [2,3]
+        }
+    },
+    {
+        "model": "xmasg.RoomMember",
+        "pk": 8,
+        "fields": {
+            "room": 3,
+            "member": 2,
+            "is_admin": true
+        }
+    }
+]
