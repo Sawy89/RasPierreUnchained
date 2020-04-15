@@ -56,7 +56,7 @@ def room(request, pk):
         delta = room.end_date.replace(tzinfo=None) - datetime.datetime.now()
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
-            u.is_your_exclusion = user_member.has_as_exclusion(u.member)
+            u.is_your_exclusion = user_member.has_as_exclusion(u.member) if user_member != None else False
             if u.member == request.user and u.is_admin:
                 room.is_user_admin = True
     except models.Room.DoesNotExist:
