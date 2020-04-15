@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from apscheduler.schedulers.background import BackgroundScheduler
-from django.core.mail import send_mail
+from . import xmasg
 
 
 class Room(models.Model):
@@ -15,28 +15,28 @@ class Room(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()       # final date (for countdown)
     member = models.ManyToManyField(User, through='RoomMember', related_name="rooms")
+    job_id = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
         return f"{self.name}"
 
-def stampa(testo):
-    from_mail = 'dennytool@gmail.com'
-    oggetto = "Prova n2"
-    testo = "Prova numero 2"
-    # Send mail
-    print('Invio la mail')
-    send_mail(oggetto, testo, from_mail, ['terreno@eviso.it'])
 
-@receiver(post_save, sender=Room)
+@receiver(pre_save, sender=Room)
 def setRoomEndDate(sender, instance, **kwargs):
     '''
-    Set the timeout of the room
+    Set the timeout of the room for the extraction!
     '''
     # ToDO: save job ID on DB
+    # ToDo: reload all event on startup!
+    # Add the job to the scheduler
     scheduler = BackgroundScheduler()
-    print(f"imposto l'evento alle {instance.end_date}")
-    scheduler.add_job(stampa, 'date', run_date=instance.end_date, args=['text'])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
+    print(f"Event will start at {instance.end_date}")
+    job = scheduler.add_job(xmasg.stampa, 'date', run_date=instance.end_date, args=[instance.name])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
     scheduler.start()
+
+    # Save job id on DB
+    instance.job_id = job.id
+
 
 class RoomMessage(models.Model):
     '''
