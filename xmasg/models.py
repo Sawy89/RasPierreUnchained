@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from apscheduler.schedulers.background import BackgroundScheduler
+from django.core.mail import send_mail
 
 
 class Room(models.Model):
@@ -15,6 +19,24 @@ class Room(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+def stampa(testo):
+    from_mail = 'dennytool@gmail.com'
+    oggetto = "Prova n2"
+    testo = "Prova numero 2"
+    # Send mail
+    print('Invio la mail')
+    send_mail(oggetto, testo, from_mail, ['terreno@eviso.it'])
+
+@receiver(post_save, sender=Room)
+def setRoomEndDate(sender, instance, **kwargs):
+    '''
+    Set the timeout of the room
+    '''
+    # ToDO: save job ID on DB
+    scheduler = BackgroundScheduler()
+    print(f"imposto l'evento alle {instance.end_date}")
+    scheduler.add_job(stampa, 'date', run_date=instance.end_date, args=['text'])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
+    scheduler.start()
 
 class RoomMessage(models.Model):
     '''
