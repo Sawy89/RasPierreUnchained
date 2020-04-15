@@ -7,7 +7,7 @@
             "first_name": "Denny",
             "last_name": "LoAdmino",
             "email": "terreno@eviso.it",
-            "password": "pa12ssàè!e"
+            "password": "pbkdf2_sha256$180000$LvrPloUNzNsv$Mh6CvhxMYrWlGwYW0RS6AD9uqnqtXkStNXTZa2KTAkk="
         }
     },
     {
