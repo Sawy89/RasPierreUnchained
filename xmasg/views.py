@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from string import Template
-import datetime
+from django.utils import timezone
 import math
 from . import forms, models
 import json
@@ -18,7 +18,7 @@ def prepare_sidebar(current_user):
     '''
     sidebar_data = {}
     
-    sidebar_data['rooms'] = models.Room.objects.filter(end_date__gte=datetime.datetime.now()).exclude(member=current_user).all()   # Get available rooms
+    sidebar_data['rooms'] = models.Room.objects.filter(end_date__gte=timezone.now()).exclude(member=current_user).all()   # Get available rooms
     sidebar_data['myrooms'] = models.Room.objects.filter(member=current_user).all()   # ToDO: add filter on user subscribed
 
     return sidebar_data
@@ -52,8 +52,8 @@ def room(request, pk):
         room_members = models.RoomMember.objects.filter(room=room).all()
         user_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()
         # aggiungere info admin e esclusioni!!
-        room.end_date_str = room.end_date.strftime('%d-%m-%Y %H:%M')
-        delta = room.end_date.replace(tzinfo=None) - datetime.datetime.now()
+        room.end_date_str = timezone.localtime(room.end_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
+        delta = room.end_date - timezone.now()
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
             u.is_your_exclusion = user_member.has_as_exclusion(u.member) if user_member != None else False
