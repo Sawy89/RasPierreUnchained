@@ -14,7 +14,7 @@ class Room(models.Model):
     description = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()       # final date (for countdown)
-    member = models.ManyToManyField(User, through='RoomMember', related_name="rooms")
+    member = models.ManyToManyField(User, through='RoomMember', through_fields=('room', 'member'), related_name="rooms")
     job_id = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
@@ -27,6 +27,7 @@ def setRoomEndDate(sender, instance, **kwargs):
     Set the timeout of the room for the extraction!
     '''
     # ToDo: reload all event on startup!
+    # ToDO: check that the date of the job scheduler is the same
     # Add the job to the scheduler (only if not present)
     scheduler = BackgroundScheduler()
     if instance.job_id not in [i.id for i in scheduler.get_jobs()]:
@@ -57,6 +58,7 @@ class RoomMember(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_members")
     is_admin = models.BooleanField(default=False)
     exclusion = models.ManyToManyField(User, blank=True, related_name="room_exclusions")
+    receiver = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE, related_name="receiver")
 
     def has_as_exclusion(self, user_to_check):
         if user_to_check in self.exclusion.all():
@@ -64,11 +66,3 @@ class RoomMember(models.Model):
         else:
            return False
 
-
-class XmasGift(models.Model):
-    '''
-    Class for extraction of the sender and receiver
-    '''
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="extraction")
-    giver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="extractions_giver")
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="extractions_receiver")
