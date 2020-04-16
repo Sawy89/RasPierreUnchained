@@ -63,8 +63,8 @@
         "fields": {
             "name": "La magione",
             "description": "gli amici di ogni momento",
-            "creation_date": "2020-04-14 07:00:00+01:00",
-            "end_date": "2020-06-01 15:00:00+01:00"
+            "creation_date": "2020-04-14 07:00:00+02:00",
+            "end_date": "2020-04-16 17:11:00+02:00"
         }
     },
     {
@@ -73,8 +73,8 @@
         "fields": {
             "name": "La società",
             "description": "non sono admin, la vedo?",
-            "creation_date": "2020-04-14 07:00:00+01:00",
-            "end_date": "2020-06-01 15:00:00+01:00"
+            "creation_date": "2020-04-14 07:00:00+02:00",
+            "end_date": "2020-06-01 15:00:00+02:00"
         }
     },
     {
@@ -83,8 +83,8 @@
         "fields": {
             "name": "Vecchia stanza",
             "description": "Stanza scaduta!",
-            "creation_date": "2020-01-14 07:00:00+01:00",
-            "end_date": "2020-03-01 15:00:00+01:00"
+            "creation_date": "2020-01-14 07:00:00+02:00",
+            "end_date": "2020-03-01 15:00:00+02:00"
         }
     },
 

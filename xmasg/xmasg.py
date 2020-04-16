@@ -9,12 +9,12 @@ def xmasg_extraction(room_id):
     Run a random extraction for the Xmas gift of the selected room
     '''
     room = models.Room.objects.get(id=room_id)
-    room_members = models.RoomMember.objects.filter(room=room).all()
+    room_members = models.RoomMember.objects.filter(room=room)
     # ToDo: check and add the same member to exclusions
     
     # Cycle on room members to get J as expected
     members = {}
-    for u in room_members:
+    for u in room_members.all():
         exc = [i[0] for i in u.exclusion.all().values_list('id')]
         members[u.member.id] = exc
     
@@ -24,7 +24,8 @@ def xmasg_extraction(room_id):
     # Save receiver
     for u in room_members:
         user_receiver = User.objects.get(id=members_receiver[u.id])
-        u.update(receiver=user_receiver)
+        u.receiver=user_receiver
+        u.save()
 
 
 
