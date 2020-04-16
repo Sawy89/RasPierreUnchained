@@ -16,6 +16,7 @@ class Room(models.Model):
     end_date = models.DateTimeField()       # final date (for countdown)
     member = models.ManyToManyField(User, through='RoomMember', through_fields=('room', 'member'), related_name="rooms")
     job_id = models.CharField(max_length=128, blank=True)
+    extraction_done = models.CharField(max_length=1024, blank=True)
 
     def __str__(self):
         return f"{self.name}"

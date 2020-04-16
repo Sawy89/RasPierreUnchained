@@ -1,6 +1,7 @@
 import random
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.utils import timezone
 from . import models
 
 
@@ -9,23 +10,31 @@ def xmasg_extraction(room_id):
     Run a random extraction for the Xmas gift of the selected room
     '''
     room = models.Room.objects.get(id=room_id)
-    room_members = models.RoomMember.objects.filter(room=room)
-    # ToDo: check and add the same member to exclusions
-    
-    # Cycle on room members to get J as expected
-    members = {}
-    for u in room_members.all():
-        exc = [i[0] for i in u.exclusion.all().values_list('id')]
-        members[u.member.id] = exc
-    
-    # Permutation = extraction
-    members_receiver = xmasg_perm(members)
+    try:
+        room_members = models.RoomMember.objects.filter(room=room)
+        
+        # Cycle on room members to get J as expected
+        members = {}
+        for u in room_members.all():
+            exc = [i[0] for i in u.exclusion.all().values_list('id')]
+            if u.member.id not in exc:
+                exc.append(u.member.id)
+            members[u.member.id] = exc
+        
+        # Permutation = extraction
+        members_receiver = xmasg_perm(members)
 
-    # Save receiver
-    for u in room_members:
-        user_receiver = User.objects.get(id=members_receiver[u.id])
-        u.receiver=user_receiver
-        u.save()
+        # Save receiver
+        for u in room_members:
+            user_receiver = User.objects.get(id=members_receiver[u.id])
+            u.receiver=user_receiver
+            u.save()
+        # Save extraction done
+        room.extraction_done = f"Success on {timezone.now()}"
+        room.save()
+    except:
+        room.extraction_done = f"Failure for a problem on {timezone.now()}"
+        room.save()
 
 
 
@@ -53,9 +62,10 @@ def xmasg_perm(J):
     done = False                  # permutation done and correct!
     D = random.sample(M, len(M))  # 1st permutation (list of who_receive index)
     n_cycle = 0
+    max_n_cycle = 10000
     
     # permutation and check till result is OK
-    while done == False:
+    while done == False and n_cycle < max_n_cycle:
         n_cycle += 1
         # print('--> permut N '+str(n_cycle))
         
@@ -69,9 +79,12 @@ def xmasg_perm(J):
                 done = False    # permutation NO OK: redo!
     
     # prepare output
-    receiver = {}
-    for i in range(len(M)):
-        receiver[M[i]] = D[i]
+    if done == True:
+        receiver = {}
+        for i in range(len(M)):
+            receiver[M[i]] = D[i]
+    else:
+        receiver = None
     
     # print('--> PERMUTATION OK!!!')
     return receiver
