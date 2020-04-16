@@ -3,10 +3,10 @@ from django.core.mail import send_mail
 from . import models
 
 
-def stampa(testo):
+def xmasg_extraction(room_id):
     from_mail = 'dennytool@gmail.com'
     oggetto = "Prova n2"
-    testo = f"Prova numero 2 per la stanza {testo}"
+    testo = f"Prova numero 2 per la stanza {room_id}"
     # Send mail
     print('Invio la mail')
     send_mail(oggetto, testo, from_mail, ['terreno@eviso.it'])
