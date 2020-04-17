@@ -25,15 +25,20 @@ def xmasg_extraction(room_id):
         members_receiver = xmasg_perm(members)
 
         # Save receiver
-        for u in room_members:
-            user_receiver = User.objects.get(id=members_receiver[u.id])
-            u.receiver=user_receiver
-            u.save()
-        # Save extraction done
-        room.extraction_done = f"Success on {timezone.now()}"
-        room.save()
+        if members_receiver == None:
+            # Save error
+            room.extraction_done = f"Failure: extraction not done at {timezone.now()}"
+            room.save()
+        else:
+            for u in room_members:
+                user_receiver = User.objects.get(id=members_receiver[u.id])
+                u.receiver=user_receiver
+                u.save()
+            # Save extraction done
+            room.extraction_done = f"Success at {timezone.now()}"
+            room.save()
     except:
-        room.extraction_done = f"Failure for a problem on {timezone.now()}"
+        room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"
         room.save()
 
 
@@ -56,7 +61,7 @@ def xmasg_perm(J):
     INPUT: J is a dict containing all members as keys (django user_id) and the values are 
             user_id of exclusions!
     '''
-    # ToDO: add max number of cycle, and check permutation possible
+    # ToDO: check permutation possible
     # init
     M = list(J.keys())      # list of who_give index
     done = False                  # permutation done and correct!
