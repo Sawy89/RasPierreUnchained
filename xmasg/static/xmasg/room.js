@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Check extraction date
+    var countDownInit = new Date(room_end_date).getTime();
+    var nowInit = new Date().getTime();
+
     // Set Sidebar Name
     roomName = document.querySelector('#room-name');
     if (roomName.innerHTML == '')
@@ -13,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Disable exclusion checkbox if not member
-    if (userIsMember == false) {
+    if (userIsMember == false || nowInit>countDownInit) {
         document.querySelectorAll('input[name="is-your-exclusion"]').forEach(element => {
             element.disabled = true;
         });
@@ -113,28 +117,28 @@ function roommemberModification(element) {
 // Countdown https://codepen.io/AllThingsSmitty/pen/JJavZN
 function setCountdown() {
 
-const second = 1000,
-      minute = second * 60,
-      hour = minute * 60,
-      day = hour * 24;
+    const second = 1000,
+        minute = second * 60,
+        hour = minute * 60,
+        day = hour * 24;
 
-let countDown = new Date(room_end_date).getTime(),
-    x = setInterval(function() {    
+    let countDown = new Date(room_end_date).getTime(),
+        x = setInterval(function() {    
 
-      let now = new Date().getTime(),
-          distance = countDown - now;
+        let now = new Date().getTime(),
+            distance = countDown - now;
 
-      document.getElementById('days').innerText = Math.floor(distance / (day)),
-        document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
-        document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
-        document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+        document.getElementById('days').innerText = Math.floor(distance / (day)),
+            document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
 
-      //do something later when date is reached
-      if (distance < 0) {
-       // Reload page
-       setTimeout('', 5000);
-       location.reload();
-      };
+        //do something later when date is reached
+        if (distance < 0) {
+        // Reload page
+        setTimeout('', 5000);
+        location.reload();
+        };
 
-    }, second)
+        }, second)
 };
