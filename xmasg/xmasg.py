@@ -37,6 +37,7 @@ def xmasg_extraction(room_id):
             # Save extraction done
             room.extraction_done = f"Success at {timezone.now()}"
             room.save()
+            # ToDO: send mail to members
     except:
         room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"
         room.save()
