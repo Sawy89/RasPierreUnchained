@@ -55,8 +55,8 @@ def room(request, pk):
         # aggiungere info admin e esclusioni!!
         room.user_member = user_member
         room.end_date_str = timezone.localtime(room.end_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
-        delta = room.end_date - timezone.now()
-        room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
+        # delta = room.end_date - timezone.now()
+        # room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
             u.is_your_exclusion = user_member.has_as_exclusion(u.member) if user_member != None else False
             if u.member == request.user and u.is_admin:
@@ -92,6 +92,8 @@ def room_add_member(request):
             room = models.Room.objects.get(id=form.cleaned_data['room_id'])
             user = User.objects.get(id=form.cleaned_data['user_id'])
             room_members = models.RoomMember.objects.filter(room=room).all()
+            if room.extraction_done != '':
+                return HttpResponseBadRequest('Extraction already done')
             if user not in [u.member for u in room_members]:
                 room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False)
                 room_member.exclusion.add(request.user)
@@ -133,7 +135,10 @@ class RoomMemberModification(View):
         room = models.Room.objects.get(id=data['roomId'])
         member = User.objects.get(id=data['elMemberId'])
 
-        
+        # Extraction already done
+        if room.extraction_done != '':
+            return HttpResponseBadRequest('Extraction already done')
+
         if data['elName'] == 'is-your-exclusion':
             # is-your-exclusion
             room_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()

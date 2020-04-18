@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelectorAll('.li-countdown').length > 0)
         setCountdown();
 
+    // If click, set visible
+    document.querySelector('#user-extracted').onclick = function () {
+        this.classList.toggle('user-extracted-not-visible');
+        this.classList.toggle('user-extracted-visible');
+    };
+
 });
 
 
