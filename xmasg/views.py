@@ -51,7 +51,9 @@ def room(request, pk):
         room = models.Room.objects.get(id=pk)
         room_members = models.RoomMember.objects.filter(room=room).all()
         user_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()
+        
         # aggiungere info admin e esclusioni!!
+        room.user_member = user_member
         room.end_date_str = timezone.localtime(room.end_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
         delta = room.end_date - timezone.now()
         room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
@@ -61,6 +63,7 @@ def room(request, pk):
                 room.is_user_admin = True
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
+    
     # Get form
     room_members_list = [u.member for u in room_members]
     if not(request.user in room_members_list):
@@ -69,8 +72,10 @@ def room(request, pk):
         form.fields['room_id'].initial = room.id
     else:
         form = None
+    
     # Get data for sidebar
     sidebar_data = prepare_sidebar(request.user)
+    
     return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, 
                                                 "room": room, "room_members": room_members,
                                                 "form_add_member": form}) 

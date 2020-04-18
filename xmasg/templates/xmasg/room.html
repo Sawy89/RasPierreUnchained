@@ -15,6 +15,8 @@
   {% endif %}
   var url_xmasgajax_roommember_modification = '{% url 'xmasgajax_roommember_modification' %}';
   var room_id = {{ room.id }};
+  // var room_end_date = '{{ room.end_date }}';
+  var room_end_date = new  Date("{{ room.end_date.isoformat }}");
 </script>
 {% endblock %}
 
@@ -40,7 +42,21 @@
   <div class="room-info">
     <h2>Benvenuto!</h2>
     <h3>{{ room.name }} - {{ room.description }}</h3>
-    <p>L'estrazione avverrà il {{ room.end_date_str }}: mancano {{ room.end_date_delta_str }}</p>
+    <div class="extraction">
+      {% if room.extraction_done == '' %}
+        <p>L'estrazione avverrà il {{ room.end_date_str }}</p>
+        <ul>
+          <li class="li-countdown"><span id="days"></span>days</li>
+          <li class="li-countdown"><span id="hours"></span>Hours</li>
+          <li class="li-countdown"><span id="minutes"></span>Minutes</li>
+          <li class="li-countdown"><span id="seconds"></span>Seconds</li>
+        </ul>
+      {% elif 'Success' in room.extraction_done %}
+        <p>L'estrazione è avvenuta il {{ room.end_date_str }} con successo! Prepara il tuo regalo per <strong>{{ room.user_member.receiver.username }} - {{ room.user_member.receiver.first_name }} {{ room.user_member.receiver.last_name }}</strong></p>
+      {% else %}
+        <p>L'estrazione è fallita il {{ room.end_date_str }}: contatta l'admin del sito per avere indicazioni</p>
+      {% endif %}
+    </div>
     <h4>Ecco i partecipanti</h4>
     <table class="room-member table">
       <tr>
