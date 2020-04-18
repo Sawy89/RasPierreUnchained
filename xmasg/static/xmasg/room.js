@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Set countDown
-    setCountdown();
+    if (document.querySelectorAll('.li-countdown').length > 0)
+        setCountdown();
 
 });
 
@@ -129,10 +130,11 @@ let countDown = new Date(room_end_date).getTime(),
         document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
 
       //do something later when date is reached
-      //if (distance < 0) {
-      //  clearInterval(x);
-      //  'IT'S MY BIRTHDAY!;
-      //}
+      if (distance < 0) {
+       // Reload page
+       setTimeout('', 5000);
+       location.reload();
+      };
 
     }, second)
 };
