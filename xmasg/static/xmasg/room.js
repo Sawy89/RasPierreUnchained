@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Reload page
-        setTimeout('', 5000); // ToDo: improve by waiting for answer!
+        // setTimeout('', 5000);
         location.reload();
     };
 
@@ -58,10 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setCountdown();
 
     // If click, set visible
-    document.querySelector('#user-extracted').onclick = function () {
-        this.classList.toggle('user-extracted-not-visible');
-        this.classList.toggle('user-extracted-visible');
-    };
+    userExtracted = document.querySelector('#user-extracted');
+    if (userExtracted) {
+        userExtracted.onclick = function () {
+            this.classList.toggle('user-extracted-not-visible');
+            this.classList.toggle('user-extracted-visible');
+        };
+    ;}
 
 });
 
@@ -98,12 +101,14 @@ function roommemberModification(element) {
     // Create POST request
     var csrftoken = getCookie('csrftoken');
     const request = new XMLHttpRequest();
-    request.open('POST', url_xmasgajax_roommember_modification);
+
+    // Open request
+    request.open('POST', url_xmasgajax_roommember_modification, false);     // the false means it's async
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("X-CSRFToken", csrftoken)  // add csrf token for Django!
     
     // Result of request
-    request.onload = () => {
+    request.onreadystatechange = () => {
         // const data = JSON.parse(request.responseText);
         if (request.status == 200) 
             return true;
