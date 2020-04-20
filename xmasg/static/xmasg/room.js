@@ -103,7 +103,7 @@ function roommemberModification(element) {
     const request = new XMLHttpRequest();
 
     // Open request
-    request.open('POST', url_xmasgajax_roommember_modification, false);     // the false means it's async
+    request.open('POST', url_xmasgajax_roommember_modification, false);     // the false means it's async: https://stackoverflow.com/questions/3760319/how-to-force-a-program-to-wait-until-an-http-request-is-finished-in-javascript
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("X-CSRFToken", csrftoken)  // add csrf token for Django!
     

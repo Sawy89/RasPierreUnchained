@@ -37,22 +37,28 @@ def xmasg_extraction(room_id):
             # Save extraction done
             room.extraction_done = f"Success at {timezone.now()}"
             room.save()
+
             # ToDO: send mail to members
+            for u in room_members:
+                xmasg_extraction_mail(room, u)
+
     except:
         room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"
         room.save()
 
 
 
-def xmasg_extraction_test(room_id):
-    ''' For testing the scheduler '''
+def xmasg_extraction_mail(room, member):
+    '''
+    Send mail with the extracted
+    '''
     from_mail = 'dennytool@gmail.com'
-    oggetto = "Prova n2"
-    room = models.Room.objects.get(id=room_id)
-    testo = f"Prova numero 2 per la stanza di numero {room_id} che si chiama {room.name}"
+    oggetto = f"XmasG: estrazione per {room.name}"
+    testo = f"Buongiorno {member.member.first_name},\nÉ stata effettuata l'estrazione per la stanza {room.name}.\n\n"+\
+        "Sei stato molto fortunato, e dovrai fare il regalo a {member.receiver.username} - {member.receiver.first_name} {member.receiver.last_name}"
     # Send mail
-    print('Invio la mail')
-    send_mail(oggetto, testo, from_mail, ['terreno@eviso.it'])
+    print(f'Invio la mail a {member.member.mail}')
+    send_mail(oggetto, testo, from_mail, [member.member.mail])
 
 
 # %% Extraction
