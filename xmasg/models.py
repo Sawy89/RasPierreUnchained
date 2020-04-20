@@ -15,6 +15,7 @@ class Room(models.Model):
     description = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()       # final date (for countdown)
+    gift_date = models.DateTimeField()      # Date of the physical gift exchange
     member = models.ManyToManyField(User, through='RoomMember', through_fields=('room', 'member'), related_name="rooms")
     job_id = models.CharField(max_length=128, blank=True)
     extraction_done = models.CharField(max_length=1024, blank=True)

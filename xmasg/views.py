@@ -55,6 +55,7 @@ def room(request, pk):
         # aggiungere info admin e esclusioni!!
         room.user_member = user_member
         room.end_date_str = timezone.localtime(room.end_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
+        room.gift_date_str = timezone.localtime(room.gift_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
         # delta = room.end_date - timezone.now()
         # room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:

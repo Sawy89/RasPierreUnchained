@@ -64,7 +64,8 @@
             "name": "La magione",
             "description": "gli amici di ogni momento",
             "creation_date": "2020-04-14 07:00:00+02:00",
-            "end_date": "2020-05-17 16:32:00+02:00"
+            "end_date": "2020-05-17 16:32:00+02:00",
+            "gift_date": "2020-12-25 00:00:00+01:00"
         }
     },
     {
@@ -74,7 +75,8 @@
             "name": "La società",
             "description": "non sono admin, la vedo?",
             "creation_date": "2020-04-14 07:00:00+02:00",
-            "end_date": "2020-06-01 15:00:00+02:00"
+            "end_date": "2020-06-01 15:00:00+02:00",
+            "gift_date": "2020-12-25 00:00:00+01:00"
         }
     },
     {
@@ -84,7 +86,8 @@
             "name": "Vecchia stanza",
             "description": "Stanza scaduta!",
             "creation_date": "2020-01-14 07:00:00+02:00",
-            "end_date": "2020-03-01 15:00:00+02:00"
+            "end_date": "2020-03-01 15:00:00+02:00",
+            "gift_date": "2020-12-25 00:00:00+01:00"
         }
     },
 

@@ -41,6 +41,7 @@
   <div class="room-info">
     <h2>Benvenuto!</h2>
     <h3>{{ room.name }} - {{ room.description }}</h3>
+    <h3>Lo scambio dei regali è previsto per il {{ room.gift_date_str }}</h3>
     <div class="extraction">
       {% if room.extraction_done == '' %}
         <p>L'estrazione avverrà il {{ room.end_date_str }}</p>
