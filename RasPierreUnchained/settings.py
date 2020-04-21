@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
-    'channels',
     'xmasg.apps.XmasgConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,7 +139,3 @@ EMAIL_USE_TLS = True
 # Timezone
 TIME_ZONE = "Europe/Rome"
 USE_TZ = True
-
-
-# Channels
-ASGI_APPLICATION = 'RasPierreUnchained.routing.application'
