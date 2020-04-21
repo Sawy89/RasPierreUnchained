@@ -66,6 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     ;}
 
+    // Change dates
+    if (roomAdmin == true) {
+        // Button for display date change
+        document.querySelector('#bnt-change-giftdate').onclick = function () {showDateForm('giftdate');};
+        document.querySelector('#bnt-change-enddate').onclick = function () {showDateForm('enddate');};
+        // Dates
+        document.querySelector('#input-change-giftdate').addEventListener("change", processInputDates);
+        document.querySelector('#input-change-enddate').addEventListener("change", processInputDates);
+        
+        // Button for change the date
+        document.querySelector('#bnt-change2-giftdate').onclick = function () {dateModification('giftdate');};
+        document.querySelector('#bnt-change2-enddate').onclick = function () {dateModification('enddate');};
+    }
+
 });
 
 
@@ -153,3 +167,49 @@ function setCountdown() {
 
         }, second)
 };
+
+
+// Show the form for changing dates
+function showDateForm (elName) {
+    document.querySelectorAll('.change-'+elName).forEach(element => {
+        element.classList.toggle('change-date-not-visible');
+    });
+};
+
+
+// Input dates
+function processInputDates() {
+    var input = this.value;
+    var dateEntered = new Date(input);
+    // console.log(input); //e.g. 2015-11-13
+    // console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
+};
+
+
+
+// AJAX request for changing date
+function dateModification(elName) {
+    // Create POST request
+    var csrftoken = getCookie('csrftoken');
+    const request = new XMLHttpRequest();
+
+    // Open request
+    request.open('POST', url_xmasgajax_date_modification, false);     // the false means it's async: https://stackoverflow.com/questions/3760319/how-to-force-a-program-to-wait-until-an-http-request-is-finished-in-javascript
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("X-CSRFToken", csrftoken)  // add csrf token for Django!
+    
+    // Result of request
+    request.onreadystatechange = () => {
+        // const data = JSON.parse(request.responseText);
+        if (request.status == 200) 
+            location.reload();
+        else
+            alert(request.responseText)
+            // alert('Something went wrong! Try again!')
+    };
+
+    // Send
+    var elDate = document.querySelector('#input-change-'+elName).value;
+    var messageJson = {'roomId': room_id, 'elName': elName, 'elDate': elDate};
+    request.send(JSON.stringify(messageJson));
+}

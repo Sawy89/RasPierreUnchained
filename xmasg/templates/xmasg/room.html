@@ -14,6 +14,7 @@
     var userIsMember = false;
   {% endif %}
   var url_xmasgajax_roommember_modification = '{% url 'xmasgajax_roommember_modification' %}';
+  var url_xmasgajax_date_modification = '{% url 'xmasgajax_date_modification' %}';
   var room_id = {{ room.id }};
   var room_end_date = new  Date("{{ room.end_date.isoformat }}");
 </script>
@@ -41,10 +42,20 @@
   <div class="room-info">
     <h2>Benvenuto!</h2>
     <h3>{{ room.name }} - {{ room.description }}</h3>
-    <h3>Lo scambio dei regali è previsto per il {{ room.gift_date_str }}</h3>
+    <h3 class="next-button">Lo scambio dei regali è previsto per il {{ room.gift_date_str }}</h3>
+    {% if room.is_user_admin %}
+      <button id="bnt-change-giftdate" class="btn btn-primary change-giftdate">Cambia data</button>
+      <input id="input-change-giftdate" type="datetime-local" class="change-giftdate change-date-not-visible" required>
+      <button id="bnt-change2-giftdate" class="btn btn-primary change-giftdate change-date-not-visible">Cambia data</button>
+    {% endif %}
     <div class="extraction">
       {% if room.extraction_done == '' %}
-        <p>L'estrazione avverrà il {{ room.end_date_str }}</p>
+        <h3 class="next-button">L'estrazione avverrà il {{ room.end_date_str }}</h3>
+        {% if room.is_user_admin %}
+          <button id="bnt-change-enddate" class="btn btn-primary change-enddate">Cambia data</button>
+          <input id="input-change-enddate" type="datetime-local" class="change-enddate change-date-not-visible" required>
+          <button id="bnt-change2-enddate" class="btn btn-primary change-enddate change-date-not-visible">Cambia data</button>
+        {% endif %}
         <ul>
           <li class="li-countdown"><span id="days"></span>days</li>
           <li class="li-countdown"><span id="hours"></span>Hours</li>

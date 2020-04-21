@@ -79,7 +79,7 @@ ul ul a {
 
 .extraction {
     /* color: #ff0000; */
-    font-size: 1.5em;
+    /* font-size: 1.5em; */
     padding: 1em;
 }
 
@@ -103,4 +103,13 @@ li span {
 
 .user-extracted-visible {
     font-weight: bold;
+}
+
+.next-button {
+    display: inline;
+}
+
+.change-date-not-visible {
+    visibility: hidden;
+    width: 0px;
 }
