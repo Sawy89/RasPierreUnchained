@@ -6,6 +6,10 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    /* background: linear-gradient(
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.8)
+      ), url("/static/background.png") no-repeat center center fixed; */
 }
 
 p {
@@ -23,8 +27,27 @@ a, a:hover, a:focus {
 }
 
 #content {
-    background-color: #c5c7c9;
+    /* background-color: #c5c7c9; */
     width: 100%;
+    padding: 15px;
+    color: white;
+    background: inherit;
+    background-attachment: fixed;
+    overflow: auto;
+    /* -webkit-filter: blur(5px);
+    filter: blur(5px);
+    z-index: -1; */
+}
+
+.content-text {
+    background-color: #c5c7c9;
+}
+
+
+
+#content p, #content li {
+    font-size: 14px;
+    color: black;
 }
 
 .new-room-div {

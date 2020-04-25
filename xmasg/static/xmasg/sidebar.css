@@ -1,5 +1,4 @@
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
     background: #2e2d2d;  /* #009900 2e2d2d */
     color: #fff;
     transition: all 0.3s;
@@ -41,4 +40,46 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #4e4c4c;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100%;
+}
+
+#sidebar.active {
+    /* manda il testo all'inizio */
+    margin-left: -250px;
+}
+
+#sidebarCollapse.active {
+    /* controlla la grandezza del bottone */
+    width: 250px;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+
+@media (max-width: 480px) {
+    #sidebar {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #sidebar.active {
+        margin-left: -100%;
+    }
+    #sidebarCollapse.active {
+    width: auto;
+    }
 }

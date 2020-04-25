@@ -1,5 +1,12 @@
+html {
+  height: 100%;
+}
+
 body {
-    background: url("/static/background.png") no-repeat center center fixed;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ), url("/static/background.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -7,7 +14,10 @@ body {
     color: white;
     /* font-family: "Roboto", sans-serif; */
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;      
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
   }
 
 .button-logout {
@@ -107,40 +117,7 @@ body {
   .wrapper {
     display: flex;
     width: 100%;
+    height: 100%;
     align-items: stretch;
 }
 
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    min-height: calc(99.5vh - 55px);;
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
-#sidebarCollapse.active {
-    width: 250px;
-}
-
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-/* @media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-} */
