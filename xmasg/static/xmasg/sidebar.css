@@ -1,0 +1,44 @@
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: #2e2d2d;  /* #009900 2e2d2d */
+    color: #fff;
+    transition: all 0.3s;
+    border: 1px solid;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #2e2d2d;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #000000;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding-left: 10px;
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #2e2d2d;
+    background: #c5c7c9;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #c5c7c9;
+    background: #2e2d2d;
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #4e4c4c;
+}

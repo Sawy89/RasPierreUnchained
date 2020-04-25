@@ -22,51 +22,10 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #009900;
-    color: #fff;
-    transition: all 0.3s;
-    border: 1px solid;
+#content {
+    background-color: #c5c7c9;
+    width: 100%;
 }
-
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #006600;
-}
-
-#sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #006600;
-}
-
-#sidebar ul p {
-    color: #fff;
-    padding-left: 10px;
-    padding-top: 20px;
-    font-weight: bold;
-}
-
-#sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-#sidebar ul li a:hover {
-    color: #006600;
-    background: #fff;
-}
-
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #006600;
-}
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #3e8e41;
-}
-
 
 .new-room-div {
     padding-left: 10px;

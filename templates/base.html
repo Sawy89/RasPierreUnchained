@@ -29,15 +29,16 @@
 
 <body>
   <!-- Top right bar -->
-  <div class="row">
+  <div class="container-fluid top-menu">
+  <div class="row top-menu">
 
     {% block sidebarbutton %}{% endblock %}
     
-    <div class="col text-center">
+    <div class="col text-center top-menu top-menu-title">
       {% block h1title %}{% endblock %}
     </div>
 
-    <div class="col-auto">
+    <div class="col-auto top-menu">
       {% if user.is_authenticated %}
       <!-- App menu -->
         <div class="float-right dropdown">
@@ -52,7 +53,7 @@
         </a>
       </div>
       <!-- Logout button -->
-        <div class="dropdown float-right">
+        <div class="float-right dropdown">
           <button class="btn btn-lg dropbtn">App</button>
           <div class="dropdown-content">
             <a href="{% url 'xmasg_index' %}">XmasG</a>
@@ -62,6 +63,7 @@
       {% endif %}
     </div>
     
+  </div>
   </div>
   
   

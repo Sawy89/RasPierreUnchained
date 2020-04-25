@@ -7,12 +7,18 @@
 
 
 {% block h1title %}
-  <h1>Hello! Welcome to RaspierreUnchained!</h1>
+  <h1>Ciao! Benvenuti su RaspierreUnchained!</h1>
 {% endblock %}
 
 
 {% block content %}
-  <p>Ciao a tutti!</p>
+<div class="block-ext-main">
+  <div class="block-int-main">
+    <p>Ciao a tutti!<br>Benvenuti su RaspierreUnchained!</p>
+    <p>Le applicazioni disponibili al momento sono:</p>
+    <p><a href="{% url 'xmasg_index' %}">Xmasg</a></p>
+  </dib>
+</div>
 {% endblock %}
 
 
