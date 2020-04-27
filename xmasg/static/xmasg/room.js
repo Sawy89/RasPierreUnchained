@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Check extraction date
-    var countDownInit = new Date(room_end_date).getTime();
+    if (room_end_date)
+        var countDownInit = new Date(room_end_date).getTime();
     var nowInit = new Date().getTime();
 
     // Set Sidebar Name

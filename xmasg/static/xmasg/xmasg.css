@@ -27,20 +27,27 @@ a, a:hover, a:focus {
 }
 
 #content {
-    /* background-color: #c5c7c9; */
     width: 100%;
     padding: 15px;
-    color: white;
-    background: inherit;
-    background-attachment: fixed;
-    overflow: auto;
-    /* -webkit-filter: blur(5px);
-    filter: blur(5px);
-    z-index: -1; */
+    position: relative;
 }
 
+.content-blur {
+    background-attachment: fixed;
+    overflow: visible;
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.content-blur,
 .content-text {
-    background-color: #c5c7c9;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  left: 0;
 }
 
 
