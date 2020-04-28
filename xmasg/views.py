@@ -71,22 +71,34 @@ def room(request, pk):
                 room.is_user_admin = True
     except models.Room.DoesNotExist:
         raise Http404('Room does not exist')
+
+    # Check public-private
+    if not(room.is_public) and request.user not in [u.member for u in room_members]:
+        raise Http404('Room does not exist for you')
     
-    # Get form
+    # Get form add/remove member
     room_members_list = [u.member for u in room_members]
+    form = forms.RoomMemberForm()
+    form.fields['user_id'].initial = request.user.id
+    form.fields['room_id'].initial = room.id
     if not(request.user in room_members_list):
-        form = forms.RoomMemberForm()
-        form.fields['user_id'].initial = request.user.id
-        form.fields['room_id'].initial = room.id
+        # User not member
+        form_add = form
+        form_remove = None
     else:
-        form = None
+        # User is member
+        form_add = None
+        if not(room.extraction_done):
+            form_remove = form  # extraction to be done
+        else:
+            form_remove = None  # extraction already done
     
     # Get data for sidebar
     sidebar_data = prepare_sidebar(request.user)
     
     return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, 
                                                 "room": room, "room_members": room_members,
-                                                "form_add_member": form}) 
+                                                "form_add_member": form_add, "form_remove_member": form_remove}) 
 
 @login_required
 def room_add_member(request):
@@ -108,6 +120,31 @@ def room_add_member(request):
                 room_member.save()
             return redirect('xmasg_room', pk=room.id)
         return HttpResponseBadRequest('Wrong add member request')
+    return HttpResponseBadRequest('Wrong type request')
+
+
+@login_required
+def room_remove_member(request):
+    '''
+    Remove a member from a room
+    '''
+    # Read form
+    if request.method == 'POST':
+        form = forms.RoomMemberForm(request.POST)
+        if form.is_valid():
+            room = models.Room.objects.get(id=form.cleaned_data['room_id'])
+            user = User.objects.get(id=form.cleaned_data['user_id'])
+            room_members = models.RoomMember.objects.filter(room=room).all()
+            if room.extraction_done != '':
+                return HttpResponseBadRequest('Extraction already done')
+            if user in [u.member for u in room_members]:
+                member = models.RoomMember.objects.filter(room=room).filter(member=user).first()
+                if  room.getNumberAdmin() > 1 or member.is_admin == False:
+                    member.delete()
+                else:
+                    return HttpResponseBadRequest('Cannot remove last admin')
+            return redirect('xmasg_room', pk=room.id)
+        return HttpResponseBadRequest('Wrong remove member request')
     return HttpResponseBadRequest('Wrong type request')
 
 
@@ -168,10 +205,7 @@ class RoomMemberModification(View):
                     room_member.is_admin = True
                     room_member.save()
                 else:
-                    n_admin = 0
-                    for u in models.RoomMember.objects.filter(room=room).all():
-                        if u.is_admin == True:
-                            n_admin += 1    # count number of admin
+                    n_admin = room.getNumberAdmin()    # count number of admin
                     if n_admin > 1:
                         room_member.is_admin = False
                         room_member.save()

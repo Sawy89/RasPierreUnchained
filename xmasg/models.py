@@ -23,7 +23,14 @@ class Room(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-
+    
+    def getNumberAdmin(self):
+        '''Get the number of admin'''
+        n_admin = 0
+        for u in RoomMember.objects.filter(room=self).all():
+            if u.is_admin == True:
+                n_admin += 1    # count number of admin
+        return n_admin
 
 @receiver(post_save, sender=Room)
 def setRoomEndDate(sender, instance, **kwargs):

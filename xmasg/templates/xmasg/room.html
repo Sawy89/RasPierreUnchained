@@ -80,6 +80,9 @@
           <th scope='col'>Nome</th>
           <th scope='col'>Admin</th>
           <th scope='col'>Esclusione</th>
+          {% if room.is_user_admin %}
+            <th scope='col'></th>
+          {% endif %}
         </tr>
         {% for member in room_members %}
           <tr>
@@ -95,6 +98,14 @@
             {% else %}
               <td><input type="checkbox" id="exclusion-{{ member.member.id }}" name="is-your-exclusion" data-defaultvalue="" value="{{ member.member.username }}"></td>
             {% endif %}
+            {% if room.is_user_admin %}
+              <td><form name="removeRoomMember" action="{% url 'xmasg_room_remove_member' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="room_id" value="{{ room.id }}">
+                <input type="hidden" name="user_id" value="{{ member.member.id }}">
+                <input type="submit" class="b tn btn-primary" value="Rimuovi">
+              </form></td>
+            {% endif %}
           </tr>
         {% endfor%}
       </table>
@@ -102,17 +113,28 @@
     </div>
 
     <!-- Iscritto o no -->
-    {% if form_add_member is not None %}
-      <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
-        {% csrf_token %}
-        {% for field in form_add_member %}
-          {{ field }}
-        {% endfor %}
-        <input type="submit" class="btn btn-primary" value="Unisciti">
-      </form>
-    {% else %}
-      <!-- Già iscritto -->
-    {% endif %}
+    <div class="mt-5">
+      {% if form_add_member is not None %}
+        <h2>Vuoi entrare a far parte di questa stanza?</h2>
+        <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
+          {% csrf_token %}
+          {% for field in form_add_member %}
+            {{ field }}
+          {% endfor %}
+          <input type="submit" class="b tn btn-primary" value="Unisciti">
+        </form>
+      {% elif form_remove_member is not None %}
+        <!-- Già iscritto -->
+        <h2>Vuoi abbondare questa stanza prima dell'estrazione?</h2>
+        <form name="removeRoomMember" action="{% url 'xmasg_room_remove_member' %}" method="POST">
+          {% csrf_token %}
+          {% for field in form_remove_member %}
+            {{ field }}
+          {% endfor %}
+          <input type="submit" class="btn btn-primary" value="Abbandona">
+        </form>
+      {% endif %}
+    </div>  
   </div>
 </div>
 {% endblock %}
