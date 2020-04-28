@@ -20,7 +20,7 @@ def prepare_sidebar(current_user):
     '''
     sidebar_data = {}
     
-    sidebar_data['rooms'] = models.Room.objects.filter(end_date__gte=timezone.now()).exclude(member=current_user).all()   # Get available rooms
+    sidebar_data['rooms'] = models.Room.objects.filter(end_date__gte=timezone.now()).filter(is_public=True).exclude(member=current_user).all()   # Get available rooms
     sidebar_data['myrooms'] = models.Room.objects.filter(member=current_user).all()   # ToDO: add filter on user subscribed
 
     return sidebar_data

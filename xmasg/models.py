@@ -19,6 +19,7 @@ class Room(models.Model):
     member = models.ManyToManyField(User, through='RoomMember', through_fields=('room', 'member'), related_name="rooms")
     job_id = models.CharField(max_length=128, blank=True)
     extraction_done = models.CharField(max_length=1024, blank=True)
+    is_public = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -40,16 +41,6 @@ def setRoomEndDate(sender, instance, **kwargs):
 
         # Update on DB
         Room.objects.filter(pk=instance.id).update(job_id=job.id) # update should not launch this function again
-
-
-class RoomMessage(models.Model):
-    '''
-    Class for all messages exchanged
-    '''
-    message = models.CharField(max_length=5000)
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message")
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="message")
-    insert_date = models.DateTimeField(auto_now_add=True)
 
 
 class RoomMember(models.Model):

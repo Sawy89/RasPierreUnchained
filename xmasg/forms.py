@@ -6,7 +6,7 @@ from . import models
 
 
 class RoomForm(ModelForm):
-    end_date = DateTimeField(
+    end_date = gift_date = DateTimeField(
         input_formats = ['%Y-%m-%dT%H:%M'],
         widget = DateTimeInput(
             format='%Y-%m-%dT%H:%M',
@@ -15,11 +15,13 @@ class RoomForm(ModelForm):
 
     class Meta:
         model = models.Room
-        fields = ('name', 'description', 'end_date')
+        fields = ('name', 'description', 'end_date', 'gift_date', 'is_public')
         labels = {
             'name': _('Nome'),
             'description': _('Descrizione'),
             'end_date': _('Data estrazione'),
+            'gift_date': _('Data scambio'),
+            'is_public': _('Stanza pubblica'),
         }
 
 
