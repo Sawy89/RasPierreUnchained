@@ -40,19 +40,19 @@
 
     <div class="col-auto top-menu">
       {% if user.is_authenticated %}
-      <!-- App menu -->
+        <!-- Logout button -->
+          <div class="float-right dropdown">
+            <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
+              <span class="glyphicon glyphicon-log-out"></span>
+            </a>
+          </div>
+        <!-- Home -->
         <div class="float-right dropdown">
-          <a href="{% url 'logout' %}" class="btn btn-lg dropbtn button-logout">
-            <span class="glyphicon glyphicon-log-out"></span>
+          <a href="{% url 'index' %}" class="btn btn-lg dropbtn button-logout">
+            <span class="glyphicon glyphicon-home"></span>
           </a>
         </div>
-      <!-- Home -->
-      <div class="float-right dropdown">
-        <a href="{% url 'index' %}" class="btn btn-lg dropbtn button-logout">
-          <span class="glyphicon glyphicon-home"></span>
-        </a>
-      </div>
-      <!-- Logout button -->
+        <!-- App menu -->
         <div class="float-right dropdown">
           <button class="btn btn-lg dropbtn">App</button>
           <div class="dropdown-content">

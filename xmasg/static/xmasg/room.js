@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
         var countDownInit = new Date(room_end_date).getTime();
     var nowInit = new Date().getTime();
 
-    // Set Sidebar Name
-    roomName = document.querySelector('#room-name');
-    if (roomName.innerHTML == '')
-        roomName.innerHTML = 'XmasG'
-
     // Disable admin checkbox if not admin
     if (roomAdmin == false) {
         document.querySelectorAll('input[name="is-admin"]').forEach(element => {
@@ -160,10 +155,10 @@ function setCountdown() {
             document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
 
         //do something later when date is reached
-        if (distance < 0) {
-        // Reload page
-        setTimeout('', 5000);
-        location.reload();
+        if (distance < 0 && distance>-5) {
+            // Reload page
+            setTimeout('', 5000);
+            location.reload();
         };
 
         }, second)

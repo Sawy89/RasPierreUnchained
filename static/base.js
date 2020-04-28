@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('#sidebarCollapse').addEventListener('click', function() {
-        document.querySelector('#sidebar').classList.toggle('active');
-        document.querySelector('#sidebarCollapse').classList.toggle('active');
-    });
+
+    // Sidebar management
+    elSidebar = document.querySelector('#sidebarCollapse');
+    if (elSidebar != "undefined"  &&  elSidebar != null)
+        elSidebar.addEventListener('click', function() {
+            document.querySelector('#sidebar').classList.toggle('active');
+            document.querySelector('#sidebarCollapse').classList.toggle('active');
+        });
 
 });
 
