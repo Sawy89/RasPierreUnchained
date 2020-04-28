@@ -85,3 +85,8 @@
 .container .info span .fa {
   color: #EF3B3A;
 }
+
+.top-menu {
+  max-height: 0px;
+  min-height: 0px;
+}

@@ -204,7 +204,9 @@ class RoomMemberModification(View):
                         room_member.save()
             elif data['elName'] == 'is-admin':
                 # is-admin
-                # ToDO aggiungere controllo: solo request.user == is_admin può modificare queste cose
+                current_member = models.RoomMember.objects.filter(room=room).filter(member=request.user).first()
+                if current_member == None or not(current_member.is_admin):
+                    return JsonResponse({'message': 'Your are not admin of this room'}, status=400)
                 room_member = models.RoomMember.objects.filter(room=room).filter(member=member).first()
                 if data['elChecked'] == True:
                     room_member.is_admin = True

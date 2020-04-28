@@ -54,7 +54,6 @@ class RoomMember(models.Model):
     '''
     Class for exclusion (people not to be extracted for that person)
     '''
-    # ToDo: only add member and accept modification if enddate is available
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="members")
     member = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_members")
     is_admin = models.BooleanField(default=False)

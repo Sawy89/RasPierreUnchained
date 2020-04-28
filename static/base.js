@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
         elSidebar.addEventListener('click', function() {
             document.querySelector('#sidebar').classList.toggle('active');
             document.querySelector('#sidebarCollapse').classList.toggle('active');
+            document.querySelector('#content').classList.toggle('not-active');
         });
+    
+        if (window.innerWidth < 480) {
+            document.querySelector('#sidebar').classList.add('active');
+            document.querySelector('#sidebarCollapse').classList.add('active');
+            document.querySelector('#content').classList.remove('not-active');
+        }
 
 });
 

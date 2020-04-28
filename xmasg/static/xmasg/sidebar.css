@@ -82,4 +82,7 @@ a[data-toggle="collapse"] {
     #sidebarCollapse.active {
     width: auto;
     }
+    #content.not-active {
+        display: none;
+    }
 }
