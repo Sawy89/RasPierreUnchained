@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/sidebar.css' %}">
 <script src="{% static 'xmasg/room.js' %}"></script>
+<script src="{% static 'xmasg/xmasg.js' %}"></script>
 {% endblock %}
 
 
@@ -26,26 +27,31 @@
 
 {% block content %}
 <div id="content">
-  <p>Nessuno dei tuoi amici ha già creato la vostra stanza?</p>
-  <p>Allora fallo tu, e poi aspetta che si iscrivano!</p>
+  <div class="content-blur backimage"></div>
+  <div class="content-text text-center">
+    <h2>Nessuno dei tuoi amici ha già creato la vostra stanza?</h2>
+    <h2>Allora fallo tu, e poi aspetta che si iscrivano!</h2>
 
-  <div class="container">
-    <div class="form">
-      <form class="" method="POST" action="{% url 'xmasg_room_new' %}">
-        {% csrf_token %}
-  
-        {% for field in form %}
-        <p>
-          <span>{{ field.label }}</span>
-          {{ field }}
-  
-          {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
+    <div class="container">
+      <div class="form">
+        <form class="" method="POST" action="{% url 'xmasg_room_new' %}">
+          {% csrf_token %}
+          <table id="new-table">
+          {% for field in form %}
+            <tr>
+              <th><span>{{ field.label }}</span></th>
+              <th>{{ field }}</th>
+              <th>
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </th>
+            </tr>
           {% endfor %}
-        </p>
-        {% endfor %}
-        <button type="submit">Crea nuova stanza</button>
-      </form>
+        </table>
+          <button type="submit" class="btn btn-primary">Crea nuova stanza</button>
+        </form>
+      </div>
     </div>
   </div>
   

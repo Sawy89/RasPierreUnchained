@@ -6,10 +6,6 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* background: linear-gradient(
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.8)
-      ), url("/static/background.png") no-repeat center center fixed; */
 }
 
 p {
@@ -35,8 +31,8 @@ a, a:hover, a:focus {
 .content-blur {
     background-attachment: fixed;
     overflow: visible;
-    -webkit-filter: blur(5px);
-    filter: blur(5px);
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
     z-index: -1;
 }
 
@@ -48,13 +44,14 @@ a, a:hover, a:focus {
   padding: 15px;
   top: 0;
   left: 0;
+  color: white;
 }
 
 
 
-#content p, #content li {
+#content p, #content li, #content td, #content th {
     font-size: 14px;
-    color: black;
+    color: white;
 }
 
 .new-room-div {
@@ -101,4 +98,14 @@ li span {
 .change-date-not-visible {
     visibility: hidden;
     width: 0px;
+}
+
+
+#new-table {
+    /* margin: 15px; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    border-collapse: separate;
+    border-spacing: 10px;
 }
