@@ -103,7 +103,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="room_id" value="{{ room.id }}">
                 <input type="hidden" name="user_id" value="{{ member.member.id }}">
-                <input type="submit" class="b tn btn-primary" value="Rimuovi">
+                <input type="submit" class="b tn btn-danger" value="Rimuovi">
               </form></td>
             {% endif %}
           </tr>
@@ -111,6 +111,22 @@
       </table>
       <input id="bnt-change-member" type="submit" class="btn btn-primary" value="Modifica">
     </div>
+
+    <!-- Add participant -->
+    {% if users is not None %}
+      <div class="mt-5">
+        <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" class="form-group" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="room_id" value="{{ room.id }}">
+          <select name="user_id" class="form-control">
+            {% for usern in users %}
+              <option value="{{ usern.id }}">{{ usern.username }} - {{ usern.first_name }} {{ usern.last_name }}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" class="b tn btn-primary mt-2" value="Aggiungi!">
+        </form>
+      </div>
+    {% endif %}
 
     <!-- Iscritto o no -->
     <div class="mt-5">

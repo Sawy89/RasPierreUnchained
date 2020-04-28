@@ -63,8 +63,6 @@ def room(request, pk):
         room.user_member = user_member
         room.end_date_str = timezone.localtime(room.end_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
         room.gift_date_str = timezone.localtime(room.gift_date).strftime('%d-%m-%Y %H:%M') # pay attention to tzinfo
-        # delta = room.end_date - timezone.now()
-        # room.end_date_delta_str = strfdelta(delta, "%D giorni, %H ore %M minuti e %S secondi!")
         for u in room_members:
             u.is_your_exclusion = user_member.has_as_exclusion(u.member) if user_member != None else False
             if u.member == request.user and u.is_admin:
@@ -75,6 +73,12 @@ def room(request, pk):
     # Check public-private
     if not(room.is_public) and request.user not in [u.member for u in room_members]:
         raise Http404('Room does not exist for you')
+
+    # Get all users (if admin)
+    if user_member != None and user_member.is_admin == True:
+        users = User.objects.all()
+    else:
+        users = None
     
     # Get form add/remove member
     room_members_list = [u.member for u in room_members]
@@ -98,7 +102,8 @@ def room(request, pk):
     
     return render(request, 'xmasg/room.html', {"sidebar_data": sidebar_data, 
                                                 "room": room, "room_members": room_members,
-                                                "form_add_member": form_add, "form_remove_member": form_remove}) 
+                                                "form_add_member": form_add, "form_remove_member": form_remove,
+                                                "users": users}) 
 
 @login_required
 def room_add_member(request):
