@@ -24,7 +24,7 @@
 
 
 {% block h1title %}
-<h1>Stanza: {{room.name}}!</h1>
+<h1>Casa: {{room.name}}!</h1>
 {% endblock %}
 
 
@@ -42,7 +42,7 @@
 <div id="content" class="container not-active">
   <div class="content-blur backimage"></div>
   <div class="content-text">
-    <!-- Dati della stanza -->
+    <!-- Dati della casa -->
     <div class="room-info">
       <h2>Benvenuto!</h2>
       <h3>{{ room.name }} - {{ room.description }}</h3>
@@ -131,7 +131,7 @@
     <!-- Iscritto o no -->
     <div class="mt-5">
       {% if form_add_member is not None %}
-        <h2>Vuoi entrare a far parte di questa stanza?</h2>
+        <h2>Vuoi entrare a far parte di questa casa?</h2>
         <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
           {% csrf_token %}
           {% for field in form_add_member %}
@@ -141,7 +141,7 @@
         </form>
       {% elif form_remove_member is not None %}
         <!-- Già iscritto -->
-        <h2>Vuoi abbondare questa stanza prima dell'estrazione?</h2>
+        <h2>Vuoi abbondare questa casa prima dell'estrazione?</h2>
         <form name="removeRoomMember" action="{% url 'xmasg_room_remove_member' %}" method="POST">
           {% csrf_token %}
           {% for field in form_remove_member %}

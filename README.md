@@ -14,6 +14,7 @@ Web Programming with Python and JavaScript - Final Project
 
 
 ## Import data
+Some testing data are imported with fixture data.json
 
 
 ## Configuration & Launch program
@@ -27,9 +28,14 @@ EMAIL_HOST_PASSWORD=yourpass!
 
 
 ## Program description
-The project is solved with Django and Javascript.
+The project is solved with Django and Javascript and SQL.
 The idea is to solve a real world problem: with my group of friends, for Christmas, we randomly select who is going to give a present to who --> everybody is going to receive a present from a random person; the idea is that 1 big gift is better than many little gift!
-The project is a platform where user can subscribe, selecting to participate in a "house", and there they will be randomly assigned a gift to be done to another user.
+The project is a platform where users can subscribe, selecting to participate in a "room/house", and there they will be randomly assigned a gift to be done to another user.
+Every house has got 2 dates:
+- gift_date = when physically users will exchange their gift (no action on this platform)
+- end_date = extraction date = when this platform will make a random extraction of the persone which every user would give a gift!
+There are some operation that can be done on houses:
+- private 
 
 
 ### File description

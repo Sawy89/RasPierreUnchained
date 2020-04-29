@@ -65,15 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Change dates
     if (roomAdmin == true) {
         // Button for display date change
-        document.querySelector('#bnt-change-giftdate').onclick = function () {showDateForm('giftdate');};
-        document.querySelector('#bnt-change-enddate').onclick = function () {showDateForm('enddate');};
+        if (document.querySelector('#bnt-change-giftdate') != null) document.querySelector('#bnt-change-giftdate').onclick = function () {showDateForm('giftdate');};
+        if (document.querySelector('#bnt-change-enddate') != null) document.querySelector('#bnt-change-enddate').onclick = function () {showDateForm('enddate');};
         // Dates
-        document.querySelector('#input-change-giftdate').addEventListener("change", processInputDates);
-        document.querySelector('#input-change-enddate').addEventListener("change", processInputDates);
+        if (document.querySelector('#bnt-change-giftdate') != null) document.querySelector('#bnt-change-giftdate').addEventListener("change", processInputDates);
+        if (document.querySelector('#bnt-change-enddate') != null) document.querySelector('#bnt-change-enddate').addEventListener("change", processInputDates);
         
         // Button for change the date
-        document.querySelector('#bnt-change2-giftdate').onclick = function () {dateModification('giftdate');};
-        document.querySelector('#bnt-change2-enddate').onclick = function () {dateModification('enddate');};
+        if (document.querySelector('#bnt-change2-giftdate') != null) document.querySelector('#bnt-change2-giftdate').onclick = function () {dateModification('giftdate');};
+        if (document.querySelector('#bnt-change2-enddate') != null) document.querySelector('#bnt-change2-enddate').onclick = function () {dateModification('enddate');};
     }
 
 });

@@ -7,12 +7,12 @@
         <!-- Aggiungere class='active' per la pagina selezionata -->
         
         <!-- rooms -->
-        <p class="sidebar-rooms">Stanze</p>
+        <p class="sidebar-rooms">Case</p>
         <li class="sidebar-rooms">
-            <a href="{% url 'xmasg_room_new' %}">Crea una nuova stanza</a>
+            <a href="{% url 'xmasg_room_new' %}">Crea una nuova casa</a>
         </li>
         <li class="sidebar-rooms">
-            <a href="#myroomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Le tue stanze</a>
+            <a href="#myroomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Le tue case</a>
             <ul class="collapse list-unstyled" id="myroomList">
                 {% for room in sidebar_data.myrooms %}
                     <li>
@@ -22,7 +22,7 @@
             </ul>
         </li>
         <li class="sidebar-rooms">
-            <a href="#roomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Stanze disponibili</a>
+            <a href="#roomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Case disponibili</a>
             <ul class="collapse list-unstyled" id="roomList">
                 {% for room in sidebar_data.rooms %}
                     <li>

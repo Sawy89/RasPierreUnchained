@@ -85,10 +85,12 @@ li span {
 
 .user-extracted-not-visible {
     background-color: black;
+    color: black;
 }
 
 .user-extracted-visible {
     font-weight: bold;
+    color: white;
 }
 
 .next-button {

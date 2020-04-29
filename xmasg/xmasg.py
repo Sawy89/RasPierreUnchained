@@ -9,6 +9,7 @@ def xmasg_extraction(room_id):
     '''
     Run a random extraction for the Xmas gift of the selected room
     '''
+    print(f'Start extraction for room n {room_id}')
     room = models.Room.objects.get(id=room_id)
     try:
         room_members = models.RoomMember.objects.filter(room=room)
@@ -31,16 +32,19 @@ def xmasg_extraction(room_id):
             room.save()
         else:
             for u in room_members:
-                user_receiver = User.objects.get(id=members_receiver[u.id])
+                user_receiver = User.objects.get(id=members_receiver[u.member.id])
                 u.receiver=user_receiver
                 u.save()
             # Save extraction done
             room.extraction_done = f"Success at {timezone.now()}"
             room.save()
 
-            # ToDO: send mail to members
+            # Send mail to members
             for u in room_members:
-                xmasg_extraction_mail(room, u)
+                try:
+                    xmasg_extraction_mail(room, u)
+                except:
+                    print('Mail not sent')
 
     except:
         room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"

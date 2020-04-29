@@ -121,7 +121,7 @@ def room_add_member(request):
                 return HttpResponseBadRequest('Extraction already done')
             if user not in [u.member for u in room_members]:
                 room_member = models.RoomMember.objects.create(room=room, member=user, is_admin=False)
-                room_member.exclusion.add(request.user)
+                room_member.exclusion.add(user)
                 room_member.save()
             return redirect('xmasg_room', pk=room.id)
         return HttpResponseBadRequest('Wrong add member request')
@@ -229,7 +229,7 @@ class RoomMemberModification(View):
 class RoomDateModification(View):
 
     def get(self, request):
-        return HttpResponseBadRequest('ciao ciao')
+        return HttpResponseBadRequest('Wrong request type')
     
     @method_decorator(login_required)
     def post(self, request):

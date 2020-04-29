@@ -41,7 +41,7 @@ def setRoomEndDate(sender, instance, **kwargs):
     # ToDO: check that the date of the job scheduler is the same
     # Add the job to the scheduler (only if not present)
     scheduler = BackgroundScheduler()
-    if instance.job_id not in [i.id for i in scheduler.get_jobs()]  and  instance.end_date < timezone.now():
+    if instance.job_id not in [i.id for i in scheduler.get_jobs()]  and  instance.end_date > timezone.now():
         print(f"Event for room {instance} will start at {instance.end_date}")
         job = scheduler.add_job(xmasg.xmasg_extraction, 'date', run_date=instance.end_date, args=[instance.id])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
         scheduler.start()
