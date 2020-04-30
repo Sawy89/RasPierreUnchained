@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils import timezone
+from django.utils.timezone import is_aware, make_aware
 from apscheduler.schedulers.background import BackgroundScheduler
 from . import xmasg
 
@@ -38,10 +39,17 @@ def setRoomEndDate(sender, instance, **kwargs):
     Set the timeout of the room for the extraction!
     '''
     # ToDo: reload all event on startup!
-    # ToDO: check that the date of the job scheduler is the same
     # Add the job to the scheduler (only if not present)
     scheduler = BackgroundScheduler()
-    if instance.job_id not in [i.id for i in scheduler.get_jobs()]  and  instance.end_date > timezone.now():
+    if instance.job_id in [i.id for i in scheduler.get_jobs()]  and  instance.end_date > timezone.now():
+        # The event is already present
+        job = scheduler.get_job(instance.job_id)
+        if job.trigger.run_date != make_aware(instance.end_date):
+            # The event is different
+            job.trigger.run_date = instance.end_date
+            print(f"Event (is changed) for room {instance} will start at {instance.end_date}")
+    else:
+        # Creation of a new event
         print(f"Event for room {instance} will start at {instance.end_date}")
         job = scheduler.add_job(xmasg.xmasg_extraction, 'date', run_date=instance.end_date, args=[instance.id])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
         scheduler.start()
