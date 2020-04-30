@@ -25,7 +25,7 @@ SECRET_KEY = 'tbp(a)+1k8@^hu(571ud#o58ar^s$+-1d81g*jim^l3r))4ahv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] #['192.168.1.114']
+ALLOWED_HOSTS = ['192.168.1.114']
 
 
 # Application definition
