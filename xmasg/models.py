@@ -48,7 +48,7 @@ def setRoomEndDate(sender, instance, **kwargs):
             # The event is different
             job.trigger.run_date = instance.end_date
             print(f"Event (is changed) for room {instance} will start at {instance.end_date}")
-    else:
+    elif instance.end_date > timezone.now():
         # Creation of a new event
         print(f"Event for room {instance} will start at {instance.end_date}")
         job = scheduler.add_job(xmasg.xmasg_extraction, 'date', run_date=instance.end_date, args=[instance.id])     # https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html#module-apscheduler.triggers.date
