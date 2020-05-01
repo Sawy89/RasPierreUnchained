@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/xmasg/sidebar.css' %}">
+<script src="{% static 'xmasg/xmasg.js' %}"></script>
+{% endblock %}
+
+
+{% block h1title %}
+<h1>XmasG!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "xmasg/element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "xmasg/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text text-center">
+    <h2>Nessuno dei tuoi amici ha già creato la vostra casa?</h2>
+    <h2>Allora fallo tu, e poi aspetta che si iscrivano!</h2>
+
+    <div class="container">
+      <div class="form">
+        <form class="" method="POST" action="{% url 'xmasg_room_new' %}">
+          {% csrf_token %}
+          <table id="new-table">
+          {% for field in form %}
+            <tr>
+              <th><span>{{ field.label }}</span></th>
+              <th>{{ field }}</th>
+              <th>
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </th>
+            </tr>
+          {% endfor %}
+        </table>
+          <button type="submit" class="btn btn-primary">Crea nuova casa</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

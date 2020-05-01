@@ -4,70 +4,44 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/xmasg/sidebar.css' %}">
 <script src="{% static 'xmasg/xmasg.js' %}"></script>
 {% endblock %}
 
 
 {% block h1title %}
-<h1>Hello! Welcome to XmasG!</h1>
+<h1>XmasG!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "xmasg/element_sidebar_button.html" %}
 {% endblock %}
 
 
 {% block sidebar %}
-<nav id="sidebar">
-  <div class="sidebar-header">
-    <h3>XmasG</h3>
-  </div>
-
-  <ul class="list-unstyled components">
-    <p>Dummy Heading</p>
-    <li class="active">
-      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-      <ul class="collapse list-unstyled" id="homeSubmenu">
-        <li>
-          <a href="#">Home 1</a>
-        </li>
-        <li>
-          <a href="#">Home 2</a>
-        </li>
-        <li>
-          <a href="#">Home 3</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">About</a>
-    </li>
-    <li>
-      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-      <ul class="collapse list-unstyled" id="pageSubmenu">
-        <li>
-          <a href="#">Page 1</a>
-        </li>
-        <li>
-          <a href="#">Page 2</a>
-        </li>
-        <li>
-          <a href="#">Page 3</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">Portfolio</a>
-    </li>
-    <li>
-      <a href="#">Contact</a>
-    </li>
-  </ul>
-
-</nav>
+{% include "xmasg/element_sidebar.html" %}
 {% endblock %}
 
 
 {% block content %}
-<div id="content">
-  <p>Ciao ciao!</p>
-
-  
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
+    <h2>Ciao a tutti, e benvenuti su XmasG!</h2>
+    <p>Se stai utilizzando XmasG per la prima volta, ti spiego velocemente cosa puoi fare.</p>
+    <p>Con il mio gruppo di amici, abbiamo deciso di estrarre a sorte il regalo di Natale. Essendo infatti un buon numero, fare un regalo a tutti risultava dispendioso e faticoso! 
+      La soluzione è perciò stata: ognuno farà il regalo ad un'altra persona estratta casualmente!</p>
+    <p>E quale modo migliore di farlo che XmasG?</p>
+    <p>Sei pronto?</p>
+    <ul>
+      <li>Crea una stanza, od unisciti ad una già esistente!</li>
+      <li>Inserisci o modifica la data di estrazione e la data di scambio del regalo!</li>
+      <li>Invita i tuoi amici ad iscriversi nella stanza!</li>
+      <li>C'è qualcuno a cui già pensi sempre? Se si, puoi ad esempio escludere tua sorella, che non verrà estratta per te!</li>
+      <li>Alla data di estrazione, XmasG ti comunicherà a chi farai il regalo, e poi tutti insieme potrete scambiarvelo!</li>
+    </ul>
+    <h2>Buon divertimento!</h2>
+  </div>
 </div>
 {% endblock %}

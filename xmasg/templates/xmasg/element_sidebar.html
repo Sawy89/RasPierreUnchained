@@ -1,0 +1,64 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3 id="room-name">{{ room.name }}</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <!-- Aggiungere class='active' per la pagina selezionata -->
+        
+        <!-- rooms -->
+        <p class="sidebar-rooms">Case</p>
+        <li class="sidebar-rooms">
+            <a href="{% url 'xmasg_room_new' %}">Crea una nuova casa</a>
+        </li>
+        <li class="sidebar-rooms">
+            <a href="#myroomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Le tue case</a>
+            <ul class="collapse list-unstyled" id="myroomList">
+                {% for room in sidebar_data.myrooms %}
+                    <li>
+                        <a href="{% url 'xmasg_room' room.id %}">{{ room.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="sidebar-rooms">
+            <a href="#roomList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Case disponibili</a>
+            <ul class="collapse list-unstyled" id="roomList">
+                {% for room in sidebar_data.rooms %}
+                    <li>
+                        <a href="{% url 'xmasg_room' room.id %}">{{ room.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+
+        <!-- Messages in the room -->
+        {% if info.room_name %}
+        <p class="sidebar-room-message">Messaggi</p>
+        <li class="sidebar-room-message">
+            <a href="#">Messaggia tutti</a>
+        </li>
+        <li class="sidebar-room-message">
+            <a href="#FriendList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Amici</a>
+            <ul class="collapse list-unstyled" id="FriendList">
+                {% for friend in friends %}
+                    <li>
+                        <a href="#">FriendName</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        
+        <!-- Other functionality/setting of the room -->
+        <p class="sidebar-room-other">Altro</p>
+        <li class="sidebar-room-other">
+            <a href="#">Xmas countdown</a>
+        </li>
+        <li class="sidebar-room-other">
+            <a href="#">Setting</a>
+        </li>
+        {% endif %}
+
+    </ul>
+
+</nav>

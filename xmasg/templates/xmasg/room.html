@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/xmasg/xmasg.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/xmasg/sidebar.css' %}">
+<script src="{% static 'xmasg/room.js' %}"></script>
+<script src="{% static 'xmasg/xmasg.js' %}"></script>
+<!-- Variable to javascript -->
+<script>
+  var roomAdmin = {{ room.is_user_admin|yesno:"true,false" }};
+  {% if form_add_member is None %}
+    var userIsMember = true;
+  {% else %}
+    var userIsMember = false;
+  {% endif %}
+  var url_xmasgajax_roommember_modification = '{% url 'xmasgajax_roommember_modification' %}';
+  var url_xmasgajax_date_modification = '{% url 'xmasgajax_date_modification' %}';
+  var room_id = {{ room.id }};
+  var room_end_date = new  Date("{{ room.end_date.isoformat }}");
+</script>
+{% endblock %}
+
+
+{% block h1title %}
+<h1>Casa: {{room.name}}!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "xmasg/element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "xmasg/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="container not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
+    <!-- Dati della casa -->
+    <div class="room-info">
+      <h2>Benvenuto!</h2>
+      <h3>{{ room.name }} - {{ room.description }}</h3>
+      <h3 class="next-button">Lo scambio dei regali è previsto per il {{ room.gift_date_str }}</h3>
+      {% if room.is_user_admin %}
+        <button id="bnt-change-giftdate" class="btn btn-primary change-giftdate">Cambia data</button>
+        <input id="input-change-giftdate" type="datetime-local" class="change-giftdate change-date-not-visible" required>
+        <button id="bnt-change2-giftdate" class="btn btn-primary change-giftdate change-date-not-visible">Cambia data</button>
+      {% endif %}
+      <div class="extraction">
+        {% if room.extraction_done == '' %}
+          <h3 class="next-button">L'estrazione avverrà il {{ room.end_date_str }}</h3>
+          {% if room.is_user_admin %}
+            <button id="bnt-change-enddate" class="btn btn-primary change-enddate">Cambia data</button>
+            <input id="input-change-enddate" type="datetime-local" class="change-enddate change-date-not-visible" required>
+            <button id="bnt-change2-enddate" class="btn btn-primary change-enddate change-date-not-visible">Cambia data</button>
+          {% endif %}
+          <ul>
+            <li class="li-countdown"><span id="days"></span>days</li>
+            <li class="li-countdown"><span id="hours"></span>Hours</li>
+            <li class="li-countdown"><span id="minutes"></span>Minutes</li>
+            <li class="li-countdown"><span id="seconds"></span>Seconds</li>
+          </ul>
+        {% elif 'Success' in room.extraction_done %}
+          <p>L'estrazione è avvenuta il {{ room.end_date_str }} con successo! Prepara il tuo regalo per 
+            <span id='user-extracted' class="user-extracted-not-visible">{{ room.user_member.receiver.username }} - {{ room.user_member.receiver.first_name }} {{ room.user_member.receiver.last_name }}</span></p>
+        {% else %}
+          <p>L'estrazione è fallita il {{ room.end_date_str }}: contatta l'admin del sito per avere indicazioni</p>
+        {% endif %}
+      </div>
+      <h4>Ecco i partecipanti</h4>
+      <table class="room-member table">
+        <tr>
+          <th scope='col'>User</th>
+          <th scope='col'>Nome</th>
+          <th scope='col'>Admin</th>
+          <th scope='col'>Esclusione</th>
+          {% if room.is_user_admin %}
+            <th scope='col'></th>
+          {% endif %}
+        </tr>
+        {% for member in room_members %}
+          <tr>
+            <td scope='row'>{{ member.member.username }}</td>
+            <td>{{ member.member.first_name }} {{ member.member.last_name }}</td>
+            {% if member.is_admin %}
+              <td><input type="checkbox" id="admin-{{ member.member.id }}" name="is-admin" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
+            {% else %}
+              <td><input type="checkbox" id="admin-{{ member.member.id }}" name="is-admin" data-defaultvalue="" value="{{ member.member.username }}"></td>
+            {% endif %}
+            {% if member.is_your_exclusion %}
+              <td><input type="checkbox" id="exclusion-{{ member.member.id }}" name="is-your-exclusion" data-defaultvalue="checked" value="{{ member.member.username }}" checked></td>
+            {% else %}
+              <td><input type="checkbox" id="exclusion-{{ member.member.id }}" name="is-your-exclusion" data-defaultvalue="" value="{{ member.member.username }}"></td>
+            {% endif %}
+            {% if room.is_user_admin %}
+              <td><form name="removeRoomMember" action="{% url 'xmasg_room_remove_member' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="room_id" value="{{ room.id }}">
+                <input type="hidden" name="user_id" value="{{ member.member.id }}">
+                <input type="submit" class="b tn btn-danger" value="Rimuovi">
+              </form></td>
+            {% endif %}
+          </tr>
+        {% endfor%}
+      </table>
+      <input id="bnt-change-member" type="submit" class="btn btn-primary" value="Modifica">
+    </div>
+
+    <!-- Add participant -->
+    {% if users is not None %}
+      <div class="mt-5">
+        <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" class="form-group" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="room_id" value="{{ room.id }}">
+          <select name="user_id" class="form-control">
+            {% for usern in users %}
+              <option value="{{ usern.id }}">{{ usern.username }} - {{ usern.first_name }} {{ usern.last_name }}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" class="b tn btn-primary mt-2" value="Aggiungi!">
+        </form>
+      </div>
+    {% endif %}
+
+    <!-- Iscritto o no -->
+    <div class="mt-5">
+      {% if form_add_member is not None %}
+        <h2>Vuoi entrare a far parte di questa casa?</h2>
+        <form name="addRoomMember" action="{% url 'xmasg_room_add_member' %}" method="POST">
+          {% csrf_token %}
+          {% for field in form_add_member %}
+            {{ field }}
+          {% endfor %}
+          <input type="submit" class="b tn btn-primary" value="Unisciti">
+        </form>
+      {% elif form_remove_member is not None %}
+        <!-- Già iscritto -->
+        <h2>Vuoi abbondare questa casa prima dell'estrazione?</h2>
+        <form name="removeRoomMember" action="{% url 'xmasg_room_remove_member' %}" method="POST">
+          {% csrf_token %}
+          {% for field in form_remove_member %}
+            {{ field }}
+          {% endfor %}
+          <input type="submit" class="btn btn-primary" value="Abbandona">
+        </form>
+      {% endif %}
+    </div>  
+  </div>
+</div>
+{% endblock %}
