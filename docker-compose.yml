@@ -6,11 +6,15 @@ services:
         command: python manage.py migrate
         volumes:
             - .:/usr/src/app
+        env_file:
+            - ./.env.dev
     population:
         build: .
         command: python manage.py loaddata data.json
         volumes:
             - .:/usr/src/app
+        env_file:
+            - ./.env.dev
         depends_on:
             - migration
     web:
@@ -25,6 +29,8 @@ services:
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/usr/src/app
+        env_file:
+            - ./.env.dev
         ports:
             - "8000:8000"
         depends_on:
