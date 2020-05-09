@@ -11,8 +11,8 @@ obj/
 *.db
 *.sqlite3
 *.code-workspace
-*.dev
 
 # Specific file
 config.bat
 note.txt
+.env.*
