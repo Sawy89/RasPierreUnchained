@@ -5,6 +5,7 @@ bin/
 obj/
 .vscode/
 .vs/
+static_deploy
 
 # File Type
 *.csv
