@@ -33,6 +33,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")#[]#['192.168.1
 INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
     'xmasg.apps.XmasgConfig',
+    'myself.apps.MyselfConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

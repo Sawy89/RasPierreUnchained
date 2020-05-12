@@ -1,0 +1,100 @@
+/* Title with my name*/
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    text-decoration: bold;
+    color: white;
+    }
+
+
+/* Table setting */  
+table {
+    margin: 5px;
+    width: 300px;
+    text-align: center;
+    }
+  
+th {
+    padding: 3px;
+    }
+  
+td {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #394047;
+    }
+  
+/* main setting  */
+.top1 {
+    background-color: #22262a;
+}
+
+.body {
+  background-color: #b9bfc6;
+  font-family: 'Amaranth';
+  color: #801a00;
+}
+
+/* Particular element setting */
+#firma{
+    text-align: right;
+    font-family: 'Allura';
+    font-size: 16pt;
+}
+
+.col-sub{
+    text-decoration: underline;
+}
+
+.main-title, h3 {
+    color: #4d0000;
+}
+
+
+
+/* Make navbar title disappear */
+@media screen and (min-width: 576px) {
+  #nav-only-little {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  table {
+    width: 576px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+  table {
+    font-size: 12px;
+    }
+}
+
+
+img {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px; }
+
+div p, div > h3, div > div > h3, .main {
+  margin: 25px; }
+
+div > h3 {
+  text-align: left; }
+
+div > div > h3 {
+  text-align: center; }
+
+.row {
+  margin-bottom: 25px;
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 35px; }
+
+.top1 p {
+  font-size: 14pt; }
+
+
