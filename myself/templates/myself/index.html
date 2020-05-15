@@ -4,7 +4,6 @@
 {% block head %}
   <link href="{% static '/myself/style.css' %}" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
   <script src="{% static '/myself/myself.js' %}"></script>
   <title>Denny site</title>
 {% endblock %}
@@ -24,12 +23,12 @@
     <div id="{{ el.id }}-content">
       <h3>{{ el.title }}</h3>
       <p>{{ el.text_short }}</p>
-      <form><input type="button" value="Read more" onclick="showDetail('{{el.id}}')" id="{{ el.id }}-showButton"></form>
+      <form><input type="button" class="readmore" value="Read more" onclick="showDetail('{{el.id}}')" id="{{ el.id }}-showButton"></form>
     </div>
     <!-- Content3: copy of content2 for small screen -->
     <div class="content3-main hidden" id="{{ el.id }}-content3">
       <p>{{ el.text_all }}</p>
-      <form><input type="button" value="Close" onclick="hideDetail('{{el.id}}')"></form>
+      <form><input type="button" class="readmore" value="Close" onclick="hideDetail('{{el.id}}')"></form>
     </div>
     {% endfor %}
   </div>
@@ -40,7 +39,7 @@
     <div class="content-blur backimage content2" id="{{ el.id }}-blur"></div>
     <div class="content-text content2" id="{{ el.id }}-detail">
       <p>{{ el.text_all }}</p>
-      <form><input type="button" value="Close" onclick="hideDetail('{{el.id}}')"></form>
+      <form><input type="button" class="readmore" value="Close" onclick="hideDetail('{{el.id}}')"></form>
     </div>
   </div>
   {% endfor %}

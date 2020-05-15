@@ -93,3 +93,34 @@ p {
 h3 {
   text-align: center;
 }
+
+.readmore {
+  /* text-transform: uppercase; */
+  background: url('background-watercolour-button.png');
+  background-repeat: no-repeat;
+  color: #000;
+  padding: 4px 16px 8px 0px ;
+  width: 125px;
+  font-family: open sans;
+  font-weight: bold;
+  font-size: 18px;
+  font-style: normal;
+  text-align: center;
+  margin-top: 1rem;
+  border: none;
+  font-family: 'Allura';
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.readmore:hover:enabled{
+  color: #444;
+  }
+.readmore:disabled{
+  color: rgb(150, 149, 149);
+  }

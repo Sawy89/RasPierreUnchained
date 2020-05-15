@@ -12,8 +12,8 @@ function showDetail(el_id) {
         if (!(element.classList.contains('hidden')))
             hideDetail(element.dataset.id);
     });
-    // Hide button
-    document.getElementById(el_id+'-showButton').classList.toggle('hidden');
+    // Disable button
+    document.getElementById(el_id+'-showButton').disabled = true;
     // Show detail block and adjust blur
     document.getElementById(el_id+'-content2').classList.toggle('hidden');
     document.getElementById(el_id+'-content3').classList.toggle('hidden');
@@ -26,7 +26,7 @@ function showDetail(el_id) {
 
 function hideDetail(el_id) {
     // Show again detail button
-    document.getElementById(el_id+'-showButton').classList.toggle('hidden');
+    document.getElementById(el_id+'-showButton').disabled = false;
     // Hide detail block and blur
     document.getElementById(el_id+'-content2').classList.toggle('hidden');
     document.getElementById(el_id+'-content3').classList.toggle('hidden');
