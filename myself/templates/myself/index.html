@@ -5,6 +5,7 @@
   <link href="{% static '/myself/style.css' %}" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet'>
+  <script src="{% static '/myself/myself.js' %}"></script>
   <title>Denny site</title>
 {% endblock %}
 
@@ -18,13 +19,31 @@
 <div id="content" class="not-active">
   <div class="content-blur backimage"></div>
   <div class="content-text">
-    <p>{{ testo.intro }}</p>
-                    
-    <!-- <img src="{% static '/myself/me_snow.jpg' %}" alt="Me snow yeah">    -->
-
-    <div id='firma'>
-      <p>Designed by Denny Terreno</p>
+    {% for el in text_list %}
+    <!-- Content: Main text -->
+    <div id="{{ el.id }}-content">
+      <h3>{{ el.title }}</h3>
+      <p>{{ el.text_short }}</p>
+      <form><input type="button" value="Read more" onclick="showDetail('{{el.id}}')" id="{{ el.id }}-showButton"></form>
     </div>
-</div>
+    <!-- Content3: copy of content2 for small screen -->
+    <div class="content3-main hidden" id="{{ el.id }}-content3">
+      <p>{{ el.text_all }}</p>
+      <form><input type="button" value="Close" onclick="hideDetail('{{el.id}}')"></form>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% for el in text_list %}
+  <!-- COntent2: detail text for big screen -->
+  <div class="hidden content2-main" id="{{ el.id }}-content2" data-id="{{ el.id }}">
+    <div class="content-blur backimage content2" id="{{ el.id }}-blur"></div>
+    <div class="content-text content2" id="{{ el.id }}-detail">
+      <p>{{ el.text_all }}</p>
+      <form><input type="button" value="Close" onclick="hideDetail('{{el.id}}')"></form>
+    </div>
+  </div>
+  {% endfor %}
+                    
 </div>
 {% endblock %}
