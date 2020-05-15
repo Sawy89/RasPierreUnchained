@@ -1,14 +1,78 @@
+/* Background and image */
+body {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2)
+  ), url("./back_me.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: right;
+}
+
+.backimage {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  ), url("./back_me.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: right;
+}
+
+#content {
+  width: 100%;
+  padding: 15px;
+  position: relative;
+}
+
+.content-blur {
+  background-attachment: fixed;
+  overflow: visible;
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.content-blur,
+.content-text {
+  width: 50%;   /* Half page for image, half page for content */
+  height: 100%;
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  left: 0;
+  color: white;
+}
+
+@media (max-width: 650px) {
+  .content-blur,
+  .content-text {
+    width: 100%;
+  }
+}
+
+
+/* Contenuto */
+p {
+  font-size: 15px;
+}
+
+
+
+
+
+
+
+
 /* Title with my name*/
-h1 {
+/* h1 {
     text-align: center;
     margin-bottom: 5px;
     text-decoration: bold;
     color: white;
-    }
+    } */
 
 
 /* Table setting */  
-table {
+/* table {
     margin: 5px;
     width: 300px;
     text-align: center;
@@ -25,7 +89,7 @@ td {
     }
   
 /* main setting  */
-.top1 {
+/* .top1 {
     background-color: #22262a;
 }
 
@@ -33,10 +97,10 @@ td {
   background-color: #b9bfc6;
   font-family: 'Amaranth';
   color: #801a00;
-}
+} */
 
 /* Particular element setting */
-#firma{
+/* #firma{
     text-align: right;
     font-family: 'Allura';
     font-size: 16pt;
@@ -48,12 +112,12 @@ td {
 
 .main-title, h3 {
     color: #4d0000;
-}
+} */
 
 
 
 /* Make navbar title disappear */
-@media screen and (min-width: 576px) {
+/* @media screen and (min-width: 576px) {
   #nav-only-little {
     display: none;
   }
@@ -95,6 +159,6 @@ div > div > h3 {
   margin-bottom: 35px; }
 
 .top1 p {
-  font-size: 14pt; }
+  font-size: 14pt; } */ 
 
 

@@ -46,6 +46,8 @@
               <span class="glyphicon glyphicon-log-out"></span>
             </a>
           </div>
+        {% endif %}
+      {% if user.is_authenticated or request.is_free == True %}
         <!-- Home -->
         <div class="float-right dropdown">
           <a href="{% url 'index' %}" class="btn btn-lg dropbtn button-logout">
