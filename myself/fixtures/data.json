@@ -1,0 +1,63 @@
+[
+    {
+        "model": "myself.Language",
+        "fields": {
+            "code": "it",
+            "name": "Italiano"
+        }
+    },
+    {
+        "model": "myself.Language",
+        "fields": {
+            "code": "en",
+            "name": "English"
+        }
+    },
+
+
+    {
+        "model": "myself.Content",
+        "pk": 1,
+        "fields": {
+            "name": "intro",
+            "language": "it",
+            "title": "Chi sono?",
+            "text_short": "Sono un ingegnere biomedico, appassionato di tecnologia, fumetti, amici e anche un po' di sport",
+            "text_all": "Sono un ingegnere biomedico, laureato da alcuni anni, con interessi per il mio campo di studio, ma anche per l'ingegneria più in generale. Sono un giovane volenteroso e alla ricerca della possibilità di ottenere nuove conoscenze e capacità. Ho maturato nel mio percorso di studi e nel mio tempo libero l'abilità a lavorare in gruppo insieme ad altre persone, cercando di sfruttare al meglio le competenze e le capacità di tutti i membri. In queste mie prime esperienze lavorative presso realtà molto stimolanti e dinamiche, ho avuto l'occasione di lavorare insieme a persone di altre nazionalità, migliorando molto la mia capacità comunicativa, e le mie conoscenze tecniche e mediche. Ho svolto numerose attività di volontariato come animatore parrocchiale, e nutro interessi musicali suonando alcuni strumenti. "
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 2,
+        "fields": {
+            "name": "study",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
+
+    {
+        "model": "myself.Content",
+        "pk": 3,
+        "fields": {
+            "name": "intro",
+            "language": "en",
+            "title": "Who am I?",
+            "text_short": "I am a biomedical engineer, I love tech, comics, friend and also a little bit of sport!",
+            "text_all": "I'm a biomedical engineer, with some year of experience, interested in the biomedical field but also in the more general engineering. I'm a young guy searching the possibility to obtain new skills and new knowledge. I'v learned in my life hot to work in a team, obtaining the best results for me and my colleagues. In my first working experiences, I've been in very interesting and dynamic places, working with people from different country, improving my communicative skills and my technical knowledge. I've done many voluntary experience, and I like music, playing some instruments. "
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 4,
+        "fields": {
+            "name": "study",
+            "language": "en",
+            "title": "La mia formazione",
+            "text_short": "After my scientific diploma, I've chosen Turin Politecnico, studying Biomedical engineering for 5 years",
+            "text_all": "I got my high school scientific diploma in 2008, with vote 100/100. Those 5 years had started like a game, I had known some people, I started to understand what learning was like. But what I learned was that I needed to work with other people to get things done, and that I have to be serious and take my responsability. My high school years teached me mainly a method of studying, that helped me in university, and they gave me some friends that I keep now!"
+        }
+    }
+]
