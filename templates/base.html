@@ -56,8 +56,8 @@
         </div>
         <!-- App menu -->
         <div class="float-right dropdown">
-          <button class="btn btn-lg dropbtn">App</button>
-          <div class="dropdown-content">
+          <button class="btn btn-lg dropbtn button-app">App</button>
+          <div {% if user.is_authenticated %} class="dropdown-content" {% else %} class="dropdown-content dropdown-content-little" {% endif %}>
             <a href="{% url 'xmasg_index' %}">XmasG</a>
             <a href="{% url 'myself_index' %}">Chi sono</a>
             <a href="#">Coming soon</a>
