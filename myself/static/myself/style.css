@@ -68,23 +68,6 @@ body {
 }
 
 
-/* Change for small screen: only one column! */
-@media (max-width: 650px) {
-  .content-blur,
-  .content-text {
-    width: 100%;
-  }
-  .content2-main {
-    visibility: hidden;
-    display: none;
-  }
-  .content3-main {
-    visibility: visible;
-    display: block;
-  }
-}
-
-
 /* Style content */
 p {
   font-size: 15px;
@@ -129,3 +112,38 @@ form {
 .readmore:disabled{
   color: rgb(150, 149, 149);
   }
+
+.lang-link {
+  font-size: 18px;
+  margin: auto 3px auto;
+  color: #33ccff;
+}
+#lang-block {
+  margin: auto 5px auto;
+}
+
+
+/* Change for smaller screen */
+@media (max-width: 650px) {
+  /* Only one column! */
+  .content-blur,
+  .content-text {
+    width: 100%;
+  }
+  .content2-main {
+    visibility: hidden;
+    display: none;
+  }
+  .content3-main {
+    visibility: visible;
+    display: block;
+  }
+
+  /* language little */
+  .lang-link {
+    font-size: 14px;
+    margin: auto 1px auto;
+    color: #33ccff
+    ;
+  }
+}

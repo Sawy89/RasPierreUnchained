@@ -9,6 +9,16 @@
 {% endblock %}
 
 
+{% block sidebarbutton %}
+<div id="lang-block">
+  {% for language in languages %}
+    <a href="{% url 'myself_index' %}{{ language.code }}" class="lang-link">{{ language.code }}</a>
+    {% if forloop.last == False %}<span class="lang-link">/</span>{% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
+
+
 {% block h1title %}
   <h1>Denny Terreno</h1>
 {% endblock %}
