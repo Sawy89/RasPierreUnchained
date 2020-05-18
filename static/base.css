@@ -6,14 +6,14 @@ body {
     background: linear-gradient(
       rgba(0, 0, 0, 0.2),
       rgba(0, 0, 0, 0.2)
-    ), url("./background.png") no-repeat center center fixed;
+    ), url("./background.jpg") no-repeat center center fixed;
 }
 
 .backimage {
   background: linear-gradient(
     rgba(0, 0, 0, 0.6),
     rgba(0, 0, 0, 0.6)
-  ), url("./background.png") no-repeat center center fixed;
+  ), url("./background.jpg") no-repeat center center fixed;
 }
  
 body {
