@@ -3,10 +3,20 @@
 */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-
 body {
     font-family: 'Poppins', sans-serif;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ), url("./background.png") no-repeat center center fixed;
 }
+
+.backimage {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.6)
+    ), url("./background.png") no-repeat center center fixed;
+  }
 
 p {
     font-family: 'Poppins', sans-serif;

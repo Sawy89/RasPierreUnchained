@@ -1,0 +1,149 @@
+/* Background and image */
+body {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2)
+  ), url("./back_me.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: right;
+}
+
+.backimage {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  ), url("./back_me.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: right;
+}
+
+#content {
+  width: 100%;
+  padding: 15px;
+  position: relative;
+}
+
+.content-blur {
+  background-attachment: fixed;
+  overflow: visible;
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.content-blur,
+.content-text {
+  width: 50%;   /* Half page for image, half page for content */
+  height: 100%;
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  left: 0;
+  color: white;
+}
+
+
+/* Visibility different content */
+.content2-main {
+  height: auto;
+  width: auto;
+}
+
+.content3-main {
+  visibility: hidden;
+  display: none;
+}
+
+.content2 {
+  right: 0;
+  left: unset;
+  height: auto;
+}
+
+
+.hidden {
+  visibility: hidden;
+  padding: 0px;
+  display: none;
+}
+
+
+/* Style content */
+p {
+  font-size: 15px;
+  margin-bottom: 0px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.readmore {
+  /* text-transform: uppercase; */
+  background: url('background-watercolour-button.png');
+  background-repeat: no-repeat;
+  color: #000;
+  padding: 4px 16px 8px 0px ;
+  width: 125px;
+  font-family: open sans;
+  font-weight: bold;
+  font-size: 18px;
+  font-style: normal;
+  text-align: center;
+  margin-top: 1rem;
+  border: none;
+  font-family: 'Allura';
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.content-block {
+  margin-top: 30px;
+}
+
+.readmore:hover:enabled{
+  color: #444;
+  }
+.readmore:disabled{
+  color: rgb(150, 149, 149);
+  }
+
+.lang-link {
+  font-size: 18px;
+  margin: auto 3px auto;
+  color: #33ccff;
+}
+#lang-block {
+  margin: auto 5px auto;
+}
+
+
+/* Change for smaller screen */
+@media (max-width: 650px) {
+  /* Only one column! */
+  .content-blur,
+  .content-text {
+    width: 100%;
+  }
+  .content2-main {
+    visibility: hidden;
+    display: none;
+  }
+  .content3-main {
+    visibility: visible;
+    display: block;
+  }
+
+  /* language little */
+  .lang-link {
+    font-size: 14px;
+    margin: auto 1px auto;
+    color: #33ccff
+    ;
+  }
+}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+  <link href="{% static '/myself/style.css' %}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet'>
+  <script src="{% static '/myself/myself.js' %}"></script>
+  <title>Denny site</title>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+<div id="lang-block">
+  {% for language in languages %}
+    <a href="{% url 'myself_index' %}{{ language.code }}" class="lang-link">{{ language.code }}</a>
+    {% if forloop.last == False %}<span class="lang-link">/</span>{% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block h1title %}
+  <h1>Denny Terreno</h1>
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
+    {% for el in text_list %}
+    <!-- Content: Main text -->
+    <div id="{{ el.name }}-content" class="content-block">
+      <h3>{{ el.title }}</h3>
+      <p>{{ el.text_short }}</p>
+      <form><input type="button" class="readmore" value="Read more" onclick="showDetail('{{el.name}}')" id="{{ el.name }}-showButton"></form>
+    </div>
+    <!-- Content3: copy of content2 for small screen -->
+    <div class="content3-main hidden" id="{{ el.name }}-content3">
+      <p>{{ el.text_all }}</p>
+      <form><input type="button" class="readmore" value="Close" onclick="hideDetail('{{el.name}}')"></form>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% for el in text_list %}
+  <!-- COntent2: detail text for big screen -->
+  <div class="hidden content2-main" id="{{ el.name }}-content2" data-id="{{ el.name }}">
+    <div class="content-blur backimage content2" id="{{ el.name }}-blur"></div>
+    <div class="content-text content2" id="{{ el.name }}-detail">
+      <p>{{ el.text_all }}</p>
+      <form><input type="button" class="readmore" value="Close" onclick="hideDetail('{{el.name}}')"></form>
+    </div>
+  </div>
+  {% endfor %}
+                    
+</div>
+{% endblock %}
