@@ -1,32 +1,22 @@
 version: '3'
 
 services:
-    migration:
-        build: .
-        command: python manage.py migrate
+    db:
+        image: postgres:12.0-alpine
         volumes:
-            - .:/usr/src/app
-        env_file:
-            - ./.env.dev
-    population:
-        build: .
-        command: python manage.py loaddata data.json
-        volumes:
-            - .:/usr/src/app
-        env_file:
-            - ./.env.dev
-        depends_on:
-            - migration
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=hello_django
+            - POSTGRES_PASSWORD=hello_django
+            - POSTGRES_DB=hello_django_dev
+        ports:
+            - "5432:5432" # visible from outside
+
     web:
         build:
             context: .
             dockerfile: Dockerfile
-        environment:
-            - EMAIL_HOST
-            - EMAIL_HOST_USER
-            - EMAIL_PORT
-            - EMAIL_HOST_PASSWORD
-        command: python manage.py runserver 0.0.0.0:8000
+        command: ./entrypoint.sh # execute bashfile we've created before
         volumes:
             - .:/usr/src/app
         env_file:
@@ -34,5 +24,7 @@ services:
         ports:
             - "8000:8000"
         depends_on:
-            - migration
-            - population
+            - db
+    
+volumes:
+  postgres_data:

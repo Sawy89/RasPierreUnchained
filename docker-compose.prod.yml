@@ -9,6 +9,7 @@ services:
             - .:/usr/src/app
         env_file:
             - ./.env.dev
+    
     web:
         build:
             context: .
