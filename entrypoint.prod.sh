@@ -16,11 +16,6 @@ then
 fi
 
 # Apply migration if needed
-python manage.py flush --no-input
 python manage.py migrate
 
-# load data
-python manage.py loaddata data.json # dev
-
-# Execute command in dockercompose
-exec "$@"
+python manage.py collectstatic --no-input --clear # prod

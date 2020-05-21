@@ -1,39 +1,36 @@
 version: '3'
 
 services:
-    migration:
-        build: .
-        command: bash -c "python manage.py migrate 
-                 && python manage.py collectstatic --no-input --clear"
+    db:
+        image: postgres:12.0-alpine
         volumes:
-            - .:/usr/src/app
+            - postgres_data:/var/lib/postgresql/data/
         env_file:
-            - ./.env.dev
+            - ./.env.prod.db
     
     web:
         build:
             context: .
-            dockerfile: Dockerfile
-        environment:
-            - EMAIL_HOST
-            - EMAIL_HOST_USER
-            - EMAIL_PORT
-            - EMAIL_HOST_PASSWORD
+            dockerfile: Dockerfile.prod
         command: gunicorn RasPierreUnchained.wsgi:application --bind 0.0.0.0:8000
         volumes:
-            - .:/usr/src/app
+            - static_volume:/home/app/web/staticfiles
         env_file:
             - ./.env.prod
         expose:
             - 8000
         depends_on:
-            - migration
+            - db
     
     nginx:
         build: ./nginx
         volumes:
-            - .:/usr/src/app
+            - static_volume:/home/app/web/staticfiles
         ports:
           - 1337:80
         depends_on:
           - web
+
+volumes:
+  postgres_data:
+  static_volume:

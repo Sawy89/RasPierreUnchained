@@ -16,7 +16,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        command: ./entrypoint.sh # execute bashfile we've created before
+        command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/usr/src/app
         env_file:
