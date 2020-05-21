@@ -63,6 +63,9 @@ COPY . $APP_HOME
 # chown all the files to the app user
 RUN chown -R appuser:appuser $APP_HOME
 
+# Update permissions
+RUN chmod +x /home/app/web/entrypoint.prod.sh
+
 # change to the appuser user
 USER appuser
 
