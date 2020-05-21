@@ -14,7 +14,7 @@ services:
             dockerfile: Dockerfile.prod
         command: gunicorn RasPierreUnchained.wsgi:application --bind 0.0.0.0:8000
         volumes:
-            - static_volume:/home/app/web/staticfiles
+            - static_volume:/home/app/web/static_deploy
         env_file:
             - ./.env.prod
         expose:
@@ -25,7 +25,7 @@ services:
     nginx:
         build: ./nginx
         volumes:
-            - static_volume:/home/app/web/staticfiles
+            - static_volume:/home/app/web/static_deploy
         ports:
           - 1337:80
         depends_on:
