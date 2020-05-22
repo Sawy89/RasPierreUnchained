@@ -1,24 +1,26 @@
-# Project final
+# RasPierre Unchained
 
-Web Programming with Python and JavaScript - Final Project
+This is my website, developed in PYTHON with DJANGO framework.
+It's born to makes people extract a random friend to make and receive a gift, but I am adding different other funcionality, for me and my friends.
+
 
 ## Install
 - Install Docker
-- Run (in the main folder) `docker-compose build` and then `docker-compose up` (the command `python manage.py runserver` is inside the docker-compose commands)
---> you can do it easily by running the file `start.bat`
+- DEV: configure `.env.dev` file and run the file `start.bat`
+- PROD: configure `.env.dev` and `-env-prod-db` file and run the file `start.sh`
+
+## Useful commands & tips
 - Access to the shell inside docker: `docker exec -it container_name /bin/bash`
 - Run `python manage.py makemigrations` (this is always manual, to let the user know something changed) and then `python mangage.py migrate` (this has been add to docker-compose), the first time, and every time there has been a change in code to `models.py`
-
 - To access the shell: `python manage.py shell`
 - To create admin: `python manage.py createsuperuser`
+- Some testing data are imported with fixture data.json
 
 
-## Import data
-Some testing data are imported with fixture data.json
-
-
-## Configuration & Launch program
+## ENV variable
 Set those ENV variable in the system before launching docker:
+
+### .env.prod
 ```
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
@@ -33,10 +35,17 @@ SQL_USER=hello_django
 SQL_PASSWORD=hello_django
 SQL_HOST=db
 SQL_PORT=5432
+DATABASE=postgres
+```
+### .env.prod.db
+```
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=db_name
 ```
 
 
-## Program description
+## XMASG
 The project is solved with Django and Javascript and SQL.
 The idea is to solve a real world problem: with my group of friends, for Christmas, we randomly select who is going to give a present to who --> everybody is going to receive a present from a random person; the idea is that 1 big gift is better than many little gift! Ex. Marco to Denny; Denny to Luca; Luca to Marco!
 The project is a platform where users can subscribe, selecting to participate in a "room/house", and there they will be randomly assigned a gift to be done to another user; this info will be accessible on xmasg and also sent by mail.
@@ -52,7 +61,6 @@ There are some operation that can be done on houses:
 - Admin can create or remove other member as admin;
 - Every member can set some people as exclusions: he won't give a gift to that person (ex. to the girlfriend, you already are going to do a gift!)
 The project is in italian for a simple reason: we'll use it next Christmas! 
-The idea is to integrate this platform in the future with some functionality of different application, needed by me or my friends.
 
 
 ## File description
@@ -69,7 +77,7 @@ Contains the application for extraction of the gift!
 in `*.py` files there are models, views, forms for interacting with DB, rendering pages and also some AJAX communication for js functions; in file `xmasg.py` there is the core code for randomly select giver and receiver. Template are divided in the 3 pages, and 2 element for organizing the sidebar. For static files, there is some CSS (but also bootstrap is used). and the core javscript is in `xmasg.js` file.
 
 ### Myself
-it's a site for describing myself, done with django in order to modify content online
+it's a site for describing myself, done with django in order to modify content online for admin
 
 
 ## Other
