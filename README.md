@@ -68,11 +68,8 @@ There is no javascript
 Contains the application for extraction of the gift!
 in `*.py` files there are models, views, forms for interacting with DB, rendering pages and also some AJAX communication for js functions; in file `xmasg.py` there is the core code for randomly select giver and receiver. Template are divided in the 3 pages, and 2 element for organizing the sidebar. For static files, there is some CSS (but also bootstrap is used). and the core javscript is in `xmasg.js` file.
 
-
-## Future improvement
-For future improvement, I want to:
-- deploy it, in order to ask some of my friend to test it, and then use it next Christmas!
-- add some other "applications" with some functionality helping me (I am currently tracking my activity on swimming pool with another old app, and I'd like to integrate) or some of my friends!
+### Myself
+it's a site for describing myself, done with django in order to modify content online
 
 
 ## Other
@@ -85,6 +82,7 @@ https://stackoverflow.com/questions/53563534/template-password-reset-form-html-d
 - CSRF: https://docs.djangoproject.com/en/3.0/ref/csrf/
 - AJAX: https://zerowithdot.com/django-2-ajax-call/, http://musings.tinbrain.net/blog/2015/aug/28/vanilla-js-meets-djangos-csrf/
 - Event scheduler: https://medium.com/@kevin.michael.horan/scheduling-tasks-in-django-with-the-advanced-python-scheduler-663f17e868e6, https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html
+- https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/ USED FOR DEPLOY!!!!
 
 ### Note
 Pay attention to date!

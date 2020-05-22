@@ -19,3 +19,6 @@ fi
 python manage.py migrate
 
 python manage.py collectstatic --no-input --clear # prod
+
+# Execute command in dockercompose
+exec "$@"
