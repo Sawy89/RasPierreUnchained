@@ -1,13 +1,15 @@
 # RasPierre Unchained
-
 This is my website, developed in PYTHON with DJANGO framework.
 It's born to makes people extract a random friend to make and receive a gift, but I am adding different other funcionality, for me and my friends.
+<br />
 
 
 ## Install
 - Install Docker
 - DEV: configure `.env.dev` file and run the file `start.bat`
 - PROD: configure `.env.dev` and `-env-prod-db` file and run the file `start.sh`
+<br />
+
 
 ## Useful commands & tips
 - Access to the shell inside docker: `docker exec -it container_name /bin/bash`
@@ -15,6 +17,7 @@ It's born to makes people extract a random friend to make and receive a gift, bu
 - To access the shell: `python manage.py shell`
 - To create admin: `python manage.py createsuperuser`
 - Some testing data are imported with fixture data.json
+<br />
 
 
 ## ENV variable
@@ -43,6 +46,7 @@ POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=db_name
 ```
+<br />
 
 
 ## XMASG
@@ -61,6 +65,7 @@ There are some operation that can be done on houses:
 - Admin can create or remove other member as admin;
 - Every member can set some people as exclusions: he won't give a gift to that person (ex. to the girlfriend, you already are going to do a gift!)
 The project is in italian for a simple reason: we'll use it next Christmas! 
+<br />
 
 
 ## File description
@@ -78,6 +83,7 @@ in `*.py` files there are models, views, forms for interacting with DB, renderin
 
 ### Myself
 it's a site for describing myself, done with django in order to modify content online for admin
+<br />
 
 
 ## Other
