@@ -3,34 +3,72 @@ version: '3'
 services:
     db:
         image: postgres:12.0-alpine
+        container_name: ras_db
         volumes:
             - postgres_data:/var/lib/postgresql/data/
         env_file:
             - ./.env.prod.db
+        restart: unless-stopped
     
     web:
         build:
             context: .
             dockerfile: Dockerfile.prod
+        container_name: ras_django
         command: gunicorn RasPierreUnchained.wsgi:application --bind 0.0.0.0:8000
         volumes:
             - static_volume:/home/app/web/static_deploy
+            - web-root:/home/app/web
         env_file:
             - ./.env.prod
         expose:
             - 8000
         depends_on:
             - db
+        restart: unless-stopped
     
     nginx:
+        image: nginx:1.17-alpine
+        container_name: ras_nginx
         build: ./nginx
         volumes:
             - static_volume:/home/app/web/static_deploy
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+            - web-root:/home/app/web
         ports:
           - 80:80
+          - 443:443
         depends_on:
           - web
+        restart: unless-stopped
+    
+    certbot:
+        image: certbot/certbot
+        container_name: ras_certbot
+        volumes:
+            - certbot-etc:/etc/letsencrypt
+            - certbot-var:/var/lib/letsencrypt
+            - web-root:/home/app/web
+        depends_on:
+            - nginx
+            - web
+        command: certonly --webroot --webroot-path=/home/app/web --email ddeennyy@hotmail.it --agree-tos --no-eff-email --force-renewal -d raspierre.it  -d www.raspierre.it
 
 volumes:
-  postgres_data:
-  static_volume:
+    postgres_data:
+    static_volume:
+    certbot-etc:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/sawy89/volumi/certbot/etc
+            o: bind
+    certbot-var:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/sawy89/volumi/certbot/var
+            o: bind
+    web-root:
+    
