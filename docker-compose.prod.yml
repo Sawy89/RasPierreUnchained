@@ -57,6 +57,11 @@ services:
 
 volumes:
     postgres_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/sawy89/volumi/db
+            o: bind
     static_volume:
     certbot-etc:
         driver: local
