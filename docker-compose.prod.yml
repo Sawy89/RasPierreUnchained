@@ -18,6 +18,7 @@ services:
         command: gunicorn RasPierreUnchained.wsgi:application --bind 0.0.0.0:8000
         volumes:
             - static_volume:/home/app/web/static_deploy
+            - web-root:/home/app/web
         env_file:
             - ./.env.prod
         expose:
@@ -34,6 +35,7 @@ services:
             - static_volume:/home/app/web/static_deploy
             - certbot-etc:/etc/letsencrypt
             - certbot-var:/var/lib/letsencrypt
+            - web-root:/home/app/web
         ports:
           - 80:80
         depends_on:
@@ -46,13 +48,20 @@ services:
         volumes:
             - certbot-etc:/etc/letsencrypt
             - certbot-var:/var/lib/letsencrypt
+            - web-root:/home/app/web
         depends_on:
             - nginx
             - web
-        command: certonly --webroot --email ddeennyy@hotmail.it --agree-tos --no-eff-email --staging -d raspierre.it  -d www.raspierre.it
+        command: certonly --webroot --webroot-path=/home/app/web --email ddeennyy@hotmail.it --agree-tos --no-eff-email --staging -d raspierre.it  -d www.raspierre.it
 
 volumes:
-  postgres_data:
-  static_volume:
-  certbot-etc:
-  certbot-var:
+    postgres_data:
+    static_volume:
+    certbot-etc:
+    certbot-var:
+    web-root:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/app/webroot/
+            o: bind
