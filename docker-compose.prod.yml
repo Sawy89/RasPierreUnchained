@@ -60,8 +60,3 @@ volumes:
     certbot-etc:
     certbot-var:
     web-root:
-        driver: local
-        driver_opts:
-            type: none
-            device: /home/sawy89/webroot/
-            o: bind
