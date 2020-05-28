@@ -3,6 +3,7 @@ version: '3'
 services:
     db:
         image: postgres:12.0-alpine
+        container_name: ras_db
         volumes:
             - postgres_data:/var/lib/postgresql/data/
         env_file:
@@ -13,6 +14,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.prod
+        container_name: ras_django
         command: gunicorn RasPierreUnchained.wsgi:application --bind 0.0.0.0:8000
         volumes:
             - static_volume:/home/app/web/static_deploy
@@ -26,6 +28,7 @@ services:
     
     nginx:
         image: nginx:1.17-alpine
+        container_name: ras_nginx
         build: ./nginx
         volumes:
             - static_volume:/home/app/web/static_deploy
@@ -39,6 +42,7 @@ services:
     
     certbot:
         image: certbot/certbot
+        container_name: ras_certbot
         volumes:
             - certbot-etc:/etc/letsencrypt
             - certbot-var:/var/lib/letsencrypt
