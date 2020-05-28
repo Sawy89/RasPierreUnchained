@@ -59,5 +59,16 @@ volumes:
     postgres_data:
     static_volume:
     certbot-etc:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/sawy89/volumi/certbot/etc
+            o: bind
     certbot-var:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/sawy89/volumi/certbot/var
+            o: bind
     web-root:
+    
