@@ -49,7 +49,7 @@ services:
         depends_on:
             - nginx
             - web
-        command: certonly --webroot --webroot-path=/home/app/web --email ddeennyy@hotmail.it --agree-tos --no-eff-email --staging -d raspierre.it  -d www.raspierre.it
+        command: certonly --webroot --email ddeennyy@hotmail.it --agree-tos --no-eff-email --staging -d raspierre.it  -d www.raspierre.it
 
 volumes:
   postgres_data:
