@@ -98,9 +98,9 @@ https://stackoverflow.com/questions/53563534/template-password-reset-form-html-d
 - Event scheduler: https://medium.com/@kevin.michael.horan/scheduling-tasks-in-django-with-the-advanced-python-scheduler-663f17e868e6, https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html
 
 USED FOR DEPLOY!!!!
-- https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/ 
-- https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose 
-
+- DEPLOY: https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/ 
+- HTTPS: https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose 
+- backup SQL: https://stackoverflow.com/questions/30171063/how-to-generate-a-postgresql-dump-from-a-docker-container
 
 ### Note
 Pay attention to date!
