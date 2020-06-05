@@ -37,6 +37,61 @@
             "text_all": "Liceo + Inge Biom!"
         }
     },
+    {
+        "model": "myself.Content",
+        "pk": 5,
+        "fields": {
+            "name": "study1",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 6,
+        "fields": {
+            "name": "study6",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 7,
+        "fields": {
+            "name": "study7",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 8,
+        "fields": {
+            "name": "study8",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
+    {
+        "model": "myself.Content",
+        "pk": 9,
+        "fields": {
+            "name": "study9",
+            "language": "it",
+            "title": "La mia formazione",
+            "text_short": "Dopo il Liceo Scientifico, ho scelto il Politecnico, appassionandomi al corso di Laurea in Ingegneria Biomedica",
+            "text_all": "Liceo + Inge Biom!"
+        }
+    },
 
     {
         "model": "myself.Content",
