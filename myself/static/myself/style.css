@@ -17,29 +17,9 @@ body {
   background-position: right;
 }
 
-#content {
-  width: 100%;
-  padding: 15px;
-  position: relative;
-}
-
-.content-blur {
-  background-attachment: fixed;
-  overflow: visible;
-  -webkit-filter: blur(8px);
-  filter: blur(8px);
-  z-index: -1;
-}
-
 .content-blur,
 .content-text {
   width: 50%;   /* Half page for image, half page for content */
-  height: 100%;
-  position: absolute;
-  padding: 15px;
-  top: 0;
-  left: 0;
-  color: white;
 }
 
 

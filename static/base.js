@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#sidebarCollapse').classList.add('active');
             document.querySelector('#content').classList.remove('not-active');
         }
+    
+    // Blurr
+    blurrHeigth();
+    window.addEventListener("resize", function(event) {
+        blurrHeigth();
+    })
 
 });
 
@@ -33,4 +39,13 @@ function getCookie(name) {
         }
     }
     return cookieValue;
-}
+};
+
+
+// blurr adapt heigth
+function blurrHeigth() {
+    divToCopy = document.querySelector(".content-text");
+    divToChange = document.querySelector(".content-blur");
+    divToChange.setAttribute("style","width:"+divToCopy.offsetWidth+"px");
+    divToChange.setAttribute("style","height:"+divToCopy.offsetHeight+"px");
+};
