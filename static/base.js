@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Blurr
     blurrHeigth();
-    window.addEventListener("resize", function(event) {
+    document.addEventListener("change", function(event) {
         blurrHeigth();
-    })
+    });
 
 });
 
@@ -46,6 +46,8 @@ function getCookie(name) {
 function blurrHeigth() {
     divToCopy = document.querySelector(".content-text");
     divToChange = document.querySelector(".content-blur");
-    divToChange.setAttribute("style","width:"+divToCopy.offsetWidth+"px");
-    divToChange.setAttribute("style","height:"+divToCopy.offsetHeight+"px");
+    if (divToCopy!=null && divToChange!=null) {
+        divToChange.setAttribute("style","width:"+divToCopy.offsetWidth+"px");
+        divToChange.setAttribute("style","height:"+divToCopy.offsetHeight+"px");
+    };
 };
