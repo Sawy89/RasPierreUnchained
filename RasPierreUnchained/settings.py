@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
     'xmasg.apps.XmasgConfig',
     'myself.apps.MyselfConfig',
+    'alldoc.apps.AlldocConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
