@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  Ciao ciao
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+
+  <div id="auto">
+    <h1>Auto</h1>
+    <div class="liste-dati">
+      <ul>
+        {% for auto in Auto %}
+          <li>{{auto}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="form">
+      <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+        {% csrf_token %}
+        <table id="new-table">
+          {% for field in AutoForm %}
+          <tr>
+            <th><span>{{ field.label }}</span></th>
+            <th>{{ field }}</th>
+            <th>
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </th>
+          </tr>
+          {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-primary">Nuova auto</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div id="station">
+    <h1>Station</h1>
+    <div class="liste-dati">
+      <ul>
+        {% for station in Station %}
+          <li>{{station}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="form">
+      <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+        {% csrf_token %}
+        <table id="new-table">
+          {% for field in StationForm %}
+          <tr>
+            <th><span>{{ field.label }}</span></th>
+            <th>{{ field }}</th>
+            <th>
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </th>
+          </tr>
+          {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-primary">Nuovo distributore</button>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
