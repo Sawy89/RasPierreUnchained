@@ -124,13 +124,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/static_deploy/'
+if os.getenv("DEBUG"):
+    static_folder = '/static/'
+else:
+    static_folder = '/static_deploy/'
+STATIC_URL = static_folder
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 # For deploy: static files are moved here
-STATIC_ROOT = os.path.join(BASE_DIR, "static_deploy")
+STATIC_ROOT = os.path.join(BASE_DIR, static_folder)
 
 
 # Page after login
