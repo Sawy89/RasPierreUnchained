@@ -19,6 +19,8 @@ def fuel_as_management(request):
         form_auto = forms.AutoForm(request.POST, prefix='auto')
         if form_auto.is_valid():
             form_auto.save()
+            # ToDo: Redirect with GET
+            # redirect('alldoc_fuel_as_management')
     else:
         form_auto = forms.AutoForm(prefix='auto')
     if request.method == 'POST' and 'station-name' in request.POST:

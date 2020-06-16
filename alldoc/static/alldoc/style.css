@@ -1,0 +1,26 @@
+.content-text {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.blocco {
+    margin: 20px 60px 40px 20px;
+    font-size: 15px;
+}
+
+.blocco2 {
+    margin-top: 10px;
+}
+
+.form-label {
+    padding: 10px 30px 10px 1px;
+}
+
+.form-field {
+    color: black
+}
+
+.form-button {
+    margin: 20px;
+    align-content: center;
+}

@@ -4,6 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
 {% endblock %}
 
 
@@ -24,69 +25,72 @@
 
 {% block content %}
 <div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
 
-  <div id="auto">
-    <h1>Auto</h1>
-    <div class="liste-dati">
-      <ul>
-        {% for auto in Auto %}
-          <li>{{auto}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <div class="form">
-      <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
-        {% csrf_token %}
-        <table id="new-table">
-          {% for field in AutoForm %}
-          <tr>
-            <th><span>{{ field.label }}</span></th>
-            <th>{{ field }}</th>
-            <th>
-            {% for error in field.errors %}
-              <p style="color: red">{{ error }}</p>
-            {% endfor %}
-            </th>
-          </tr>
+    <div id="auto" class="blocco">
+      <h1 class="blocco2">Auto</h1>
+      <div class="liste-dati blocco2">
+        <ul>
+          {% for auto in Auto %}
+            <li>{{auto}}</li>
           {% endfor %}
-        </table>
-        <button type="submit" class="btn btn-primary">Nuova auto</button>
-      </form>
-    </div>
+        </ul>
+      </div>
 
-  </div>
-
-  <div id="station">
-    <h1>Station</h1>
-    <div class="liste-dati">
-      <ul>
-        {% for station in Station %}
-          <li>{{station}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <div class="form">
-      <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
-        {% csrf_token %}
-        <table id="new-table">
-          {% for field in StationForm %}
-          <tr>
-            <th><span>{{ field.label }}</span></th>
-            <th>{{ field }}</th>
-            <th>
-            {% for error in field.errors %}
-              <p style="color: red">{{ error }}</p>
+      <div class="form blocco2">
+        <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in AutoForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
             {% endfor %}
-            </th>
-          </tr>
-          {% endfor %}
-        </table>
-        <button type="submit" class="btn btn-primary">Nuovo distributore</button>
-      </form>
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuova auto</button>
+        </form>
+      </div>
+
     </div>
 
+    <div id="station" class="blocco">
+      <h1 class="blocco2">Station</h1>
+      <div class="liste-dati blocco2">
+        <ul>
+          {% for station in Station %}
+            <li>{{station}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="form blocco2">
+        <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in StationForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
+            {% endfor %}
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuovo distributore</button>
+        </form>
+      </div>
+
+    </div>
   </div>
 
 </div>
