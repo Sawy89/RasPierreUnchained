@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
+    <h1>Rifornimenti</h1>
+    <div class="content-text-flex">
+      <div class="liste-dati blocco">
+        <ul>
+          {% for supply in Supply %}
+            <li>{{supply}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="form blocco">
+        <form class="" method="POST" action="{% url 'alldoc_fuel_supply_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in SupplyForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
+            {% endfor %}
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuova auto</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
