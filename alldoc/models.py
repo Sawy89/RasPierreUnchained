@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Auto(models.Model):
@@ -58,14 +59,25 @@ class Supply(models.Model):
     distance = models.IntegerField(default=None, blank=True, null=True)
     insertdate = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('event_date', 'auto',)
+
+
+    def save(self, *args, **kwargs):
+        supply_pre = Supply.objects.filter(auto=self.auto).filter(event_date__lt=self.event_date).order_by('-event_date').first()
+        if supply_pre and supply_pre.distance_total < self.distance_total:
+            super(Supply, self).save(*args, **kwargs)
+        else:
+            raise ValidationError('La distanza deve aumentare')
+
 
     def updateDistance(self):
         '''
         Aggiorna il campo "distance" come differenza tra l'attuale e il precedente
         '''
-        supply_prec = Supply.objects.filter(auto=self.auto).filter(distance_total__lt=self.distance_total).order_by('-distance_total').first()
-        if supply_prec:
-            distance = self.distance_total - supply_prec.distance_total
+        supply_pre = Supply.objects.filter(auto=self.auto).filter(distance_total__lt=self.distance_total).order_by('-distance_total').first()
+        if supply_pre:
+            distance = self.distance_total - supply_pre.distance_total
         else:
             distance = self.distance_total
         Supply.objects.filter(id=self.id).update(distance=distance)
@@ -73,7 +85,7 @@ class Supply(models.Model):
 
     def __str__(self):
         prezzo = round(self.price / self.volume,2)
-        return f"{self.event_date} - {self.auto.name} - {self.station} - {self.distance}Km - {prezzo}€/l"
+        return f"{self.event_date} - {self.auto.name} - {self.distance_total} - {self.station} - {self.distance}Km - {prezzo}€/l"
 
 
 @receiver(post_save, sender=Supply)

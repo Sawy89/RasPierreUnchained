@@ -29,13 +29,6 @@
   <div class="content-text">
     <h1>Rifornimenti</h1>
     <div class="content-text-flex">
-      <div class="liste-dati blocco">
-        <ul>
-          {% for supply in Supply %}
-            <li>{{supply}}</li>
-          {% endfor %}
-        </ul>
-      </div>
 
       <div class="form blocco">
         <form class="" method="POST" action="{% url 'alldoc_fuel_supply_management' %}">
@@ -53,9 +46,18 @@
             </tr>
             {% endfor %}
           </table>
-          <button type="submit" class="btn btn-primary form-button">Nuova auto</button>
+          <button type="submit" class="btn btn-primary form-button">Nuovo rifornimento</button>
         </form>
       </div>
+
+      <div class="liste-dati blocco">
+        <ul>
+          {% for supply in Supply %}
+            <li>{{supply}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      
     </div>
 
   </div>

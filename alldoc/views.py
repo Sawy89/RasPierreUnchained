@@ -53,9 +53,10 @@ def fuel_supply_management(request):
     else:
         last_auto = models.Supply.objects.latest('id').auto
         last_station = models.Supply.objects.latest('id').station
-        form = forms.SupplyForm(initial={'auto':last_auto,'station':last_station})
+        last_distance = models.Supply.objects.latest('id').distance_total
+        form = forms.SupplyForm(initial={'auto':last_auto, 'station':last_station, 'distance_total':last_distance})
 
     # Get data
-    Supply = models.Supply.objects.all()
+    Supply = models.Supply.objects.all()#[::-1][:10][::-1]     # only last elements
 
     return render(request, 'alldoc/fuel_supply_management.html', {"common": common, "Supply": Supply, "SupplyForm": form})
