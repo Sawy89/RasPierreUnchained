@@ -8,4 +8,5 @@ urlpatterns = [
     path('fuel/supply/delete/<int:pk>', views.fuel_supply_delete, name='alldoc_fuel_supply_delete'),
     path('fuel/auto/delete/<int:pk>', views.fuel_auto_delete, name='alldoc_fuel_auto_delete'),
     path('fuel/station/delete/<int:pk>', views.fuel_station_delete, name='alldoc_fuel_station_delete'),
+    path('fuel/stat', views.fuel_stat, name='alldoc_fuel_stat'),
 ]

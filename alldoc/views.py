@@ -61,9 +61,14 @@ def fuel_supply_management(request):
         form = forms.SupplyForm(initial={'auto':last_auto, 'station':last_station, 'distance_total':last_distance})
 
     # Get data
-    Supply = models.Supply.objects.all()#[::-1][:10][::-1]     # only last elements
+    diz_supply = {}
+    for auto in models.Auto.objects.all():
+        Supply = models.Supply.objects.filter(auto=auto).all()#[::-1][:10][::-1]     # only last elements
+        for supply_id, supply in enumerate(Supply):
+            supply.deletable = True if supply_id+1 == len(Supply) else False
+        diz_supply[auto.name] = Supply
 
-    return render(request, 'alldoc/fuel_supply_management.html', {"common": common, "Supply": Supply, "SupplyForm": form})
+    return render(request, 'alldoc/fuel_supply_management.html', {"common": common, "Auto": diz_supply, "SupplyForm": form})
 
 
 def fuel_supply_delete(request, pk):
@@ -85,3 +90,8 @@ def fuel_station_delete(request, pk):
     if request.method == 'POST':
         models.Station.objects.filter(pk=pk).delete()
     return redirect('alldoc_fuel_as_management')
+
+
+def fuel_stat(request):
+    Supply = models.Supply.objects.all()
+    return render(request, 'alldoc/fuel_stat.html', {"Supply": Supply})
