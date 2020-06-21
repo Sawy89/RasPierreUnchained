@@ -57,7 +57,7 @@
             <li>
               <span>{{supply}}</span>
               {% if forloop.counter == Supply|length %}
-                <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_supply_delete' supply.id %}" onclick="return confirm('attenzione');">
+                <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_supply_delete' supply.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare il rifornimento?');">
                   {% csrf_token %}
                   <button class="btn"><i class="fa fa-trash"></i></button>
                 </form>

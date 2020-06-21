@@ -32,7 +32,11 @@ def fuel_as_management(request):
 
     # Get data
     Auto = models.Auto.objects.all()
+    for auto in Auto:
+        auto.deletable = True if not(auto.supply.all().exists()) else False 
     Station = models.Station.objects.all()
+    for station in Station:
+        station.deletable = True if not(station.supply.all().exists()) else False
 
     return render(request, 'alldoc/fuel_as_management.html', {"common": common, "Auto": Auto, "Station": Station,
                                                 "AutoForm": form_auto, "StationForm": form_station})
@@ -64,8 +68,20 @@ def fuel_supply_management(request):
 
 def fuel_supply_delete(request, pk):
     '''Delete supply'''
-    print('zio?')
     if request.method == 'POST':
-        print('ciao')
         models.Supply.objects.filter(pk=pk).delete()
     return redirect('alldoc_fuel_supply_management')
+
+
+def fuel_auto_delete(request, pk):
+    '''Delete auto'''
+    if request.method == 'POST':
+        models.Auto.objects.filter(pk=pk).delete()
+    return redirect('alldoc_fuel_as_management')
+
+
+def fuel_station_delete(request, pk):
+    '''Delete station'''
+    if request.method == 'POST':
+        models.Station.objects.filter(pk=pk).delete()
+    return redirect('alldoc_fuel_as_management')

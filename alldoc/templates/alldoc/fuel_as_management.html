@@ -5,6 +5,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 
@@ -33,7 +34,15 @@
       <div class="liste-dati blocco2">
         <ul>
           {% for auto in Auto %}
-            <li>{{auto}}</li>
+            <li>
+              <span>{{auto}}</span>
+              {% if auto.deletable %}
+                <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_auto_delete' auto.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare l\'auto?');">
+                  {% csrf_token %}
+                  <button class="btn"><i class="fa fa-trash"></i></button>
+                </form>
+              {% endif %}
+            </li>
           {% endfor %}
         </ul>
       </div>
@@ -65,7 +74,15 @@
       <div class="liste-dati blocco2">
         <ul>
           {% for station in Station %}
-            <li>{{station}}</li>
+          <li>
+            <span>{{station}}</span>
+            {% if station.deletable %}
+              <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_station_delete' station.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare il distributore?');">
+                {% csrf_token %}
+                <button class="btn"><i class="fa fa-trash"></i></button>
+              </form>
+            {% endif %}
+          </li>
           {% endfor %}
         </ul>
       </div>
