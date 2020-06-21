@@ -25,6 +25,26 @@
     align-content: center;
 }
 
+.form-delete {
+    display: inline;
+    margin: 4px;
+}
+
 h1 {
     text-align: center;
 }
+
+/* Style buttons --> stile applicato a tutti! attenzione!*/
+.btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 8px 12px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: RoyalBlue;
+  }

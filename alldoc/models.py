@@ -65,7 +65,7 @@ class Supply(models.Model):
 
     def save(self, *args, **kwargs):
         supply_pre = Supply.objects.filter(auto=self.auto).filter(event_date__lt=self.event_date).order_by('-event_date').first()
-        if supply_pre and supply_pre.distance_total < self.distance_total:
+        if not(supply_pre) or supply_pre.distance_total < self.distance_total:
             super(Supply, self).save(*args, **kwargs)
         else:
             raise ValidationError('La distanza deve aumentare')

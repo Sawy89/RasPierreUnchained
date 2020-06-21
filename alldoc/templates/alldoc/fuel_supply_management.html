@@ -5,6 +5,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 
@@ -53,7 +54,15 @@
       <div class="liste-dati blocco">
         <ul>
           {% for supply in Supply %}
-            <li>{{supply}}</li>
+            <li>
+              <span>{{supply}}</span>
+              {% if forloop.counter == Supply|length %}
+                <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_supply_delete' supply.id %}" onclick="return confirm('attenzione');">
+                  {% csrf_token %}
+                  <button class="btn"><i class="fa fa-trash"></i></button>
+                </form>
+              {% endif %}
+            </li>
           {% endfor %}
         </ul>
       </div>
