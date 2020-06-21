@@ -77,7 +77,7 @@ def fuel_auto_delete(request, pk):
     '''Delete auto'''
     if request.method == 'POST':
         models.Auto.objects.filter(pk=pk).delete()
-    return redirect('alldoc_fuel_as_management')
+    return redirect('alldoc_fuel_as_management', permanent=True)
 
 
 def fuel_station_delete(request, pk):
