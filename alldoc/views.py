@@ -105,19 +105,20 @@ def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
     # get form
     form = forms.FuelStatForm(request.GET)
     if form.is_valid():
-        auto = form.cleaned_data['auto']
-        start_date = form.cleaned_data['start_date']
-        end_date = form.cleaned_data['end_date']
+        common["auto"] = form.cleaned_data['auto']
+        common["start_date"] = form.cleaned_data['start_date']
+        common["end_date"] = form.cleaned_data['end_date']
     else:
         form = forms.FuelStatForm(initial={"auto":last_auto, "start_date":start_date_init,
                                 "end_date":end_date_init})
-        auto = last_auto
-        start_date = start_date_init
-        end_date = end_date_init 
+        common["auto"] = last_auto
+        common["start_date"] = start_date_init
+        common["end_date"] = end_date_init 
     
     # Get data
-    common = {"auto": auto}
-    Supply = models.Supply.objects.filter(auto=auto).filter(event_date__gte=start_date) \
-                        .filter(event_date__lte=end_date).order_by('event_date').all()
+    Supply = models.Supply.objects.filter(auto=common["auto"]).filter(event_date__gte=common["start_date"]) \
+                        .filter(event_date__lte=common["end_date"]).order_by('event_date').all()
+    for supply in Supply:
+        supply.calcStat()
 
     return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form})

@@ -26,7 +26,8 @@ class Auto(models.Model):
     insertdate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.fuel_type} - {self.description}"
+        str_r = f"{self.name} [{self.fuel_type}]"
+        return str_r
 
 
 class Station(models.Model):
@@ -86,6 +87,22 @@ class Supply(models.Model):
     def __str__(self):
         prezzo = round(self.price / self.volume,2)
         return f"{self.event_date} - {self.auto.name} - {self.distance_total}km - {self.station} - {self.volume}/{self.distance}={round(self.distance/self.volume,2)}km/l - {prezzo}€/litro"
+    
+    
+    def _calcPrice(self):
+        self.pricevolume = round(self.price / self.volume, 2)
+        self.pricedistance = round(self.price / self.distance, 2)
+    
+    def _calcConsumption(self):
+        self.consumption1 = round(self.distance / self.volume, 2)
+        self.consumption2 = round(self.volume * 100 / self.distance, 2)
+
+
+    def calcStat(self):
+        '''Calculate Statistics'''
+        self._calcPrice()
+        self._calcConsumption()
+
 
 
 @receiver(post_save, sender=Supply)

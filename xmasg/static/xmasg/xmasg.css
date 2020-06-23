@@ -30,12 +30,6 @@ p {
     color: #000000;
 }
 
-a, a:hover, a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
 
 #content p, #content li, #content td, #content th {
     font-size: 14px;

@@ -32,7 +32,6 @@
     <div class="form blocco">
       
       <form class="" method="GET" action="{% url 'alldoc_fuel_stat' %}">
-        {% csrf_token %}
         <table id="new-table">
           {% for field in form %}
           <tr>
@@ -50,17 +49,32 @@
       </form>
 
 
-    <h2>{{common.auto}}</h2>
+    <h2>{{common.auto}} - dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
     <div class="content-text-flex">
 
       <div class="liste-dati blocco">
-        <ul>
+        <table id="table-stat">
+          <tr>
+            <th>Data</th>
+            <th>Distributore</th>
+            <th>Distanza totale [km]</th>
+            <th>Prezzo [€/litro]</th>
+            <th>Prezzo [€/km]</th>
+            <th>Consumo [km/litro]</th>
+            <th>Consumo [litri/100km]</th>
+          </tr>
           {% for supply in Supply %}
-            <li>
-              <span>{{supply}}</span>
-            </li>
+            <tr>
+              <td>{{supply.event_date|date:"d/m/Y"}}</td>
+              <td>{{supply.station}}</td>
+              <td>{{supply.distance_total}}</td>
+              <td>{{supply.pricevolume}}</td>
+              <td>{{supply.pricedistance}}</td>
+              <td>{{supply.consumption1}}</td>
+              <td>{{supply.consumption2}}</td>
+            </tr>
           {% endfor %}
-        </ul>
+        </table>
       </div>
       
     </div>
