@@ -85,7 +85,7 @@ class Supply(models.Model):
 
     def __str__(self):
         prezzo = round(self.price / self.volume,2)
-        return f"{self.event_date} - {self.auto.name} - {self.distance_total} - {self.station} - {self.distance}Km - {prezzo}€/l"
+        return f"{self.event_date} - {self.auto.name} - {self.distance_total}km - {self.station} - {self.volume}/{self.distance}={round(self.distance/self.volume,2)}km/l - {prezzo}€/litro"
 
 
 @receiver(post_save, sender=Supply)
@@ -93,4 +93,9 @@ def calcDistance(sender, instance, **kwargs):
     '''
     Launch calculation of distance
     '''
+    # Update current
     instance.updateDistance()
+    # Update all followinf (if any)
+    supply_list = Supply.objects.filter(auto=instance.auto).filter(distance_total__gt=instance.distance_total).all() 
+    for supply in supply_list:
+        supply.updateDistance()
