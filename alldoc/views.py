@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from . import forms, models
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -92,6 +93,31 @@ def fuel_station_delete(request, pk):
     return redirect('alldoc_fuel_as_management')
 
 
-def fuel_stat(request):
-    Supply = models.Supply.objects.all()
-    return render(request, 'alldoc/fuel_stat.html', {"Supply": Supply})
+def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
+    '''Stat for supply'''
+    common = {"name": "Fuel"}
+
+    # Initial-default values
+    last_auto = models.Supply.objects.latest('id').auto
+    start_date_init = timezone.now().date() + timezone.timedelta(days=-60)
+    end_date_init = timezone.now().date()
+
+    # get form
+    form = forms.FuelStatForm(request.GET)
+    if form.is_valid():
+        auto = form.cleaned_data['auto']
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+    else:
+        form = forms.FuelStatForm(initial={"auto":last_auto, "start_date":start_date_init,
+                                "end_date":end_date_init})
+        auto = last_auto
+        start_date = start_date_init
+        end_date = end_date_init 
+    
+    # Get data
+    common = {"auto": auto}
+    Supply = models.Supply.objects.filter(auto=auto).filter(event_date__gte=start_date) \
+                        .filter(event_date__lte=end_date).order_by('event_date').all()
+
+    return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form})

@@ -3,6 +3,8 @@ from django.forms import Form, ModelForm, DateTimeField
 from django.forms.widgets import DateTimeInput
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.forms.fields import DateField
+from django.forms.models import ModelChoiceField
 
 
 class AutoForm(ModelForm):
@@ -50,4 +52,19 @@ class SupplyForm(ModelForm):
         model = models.Supply
         fields = ('event_date','auto','station','volume','price','distance_total')
 
-            
+
+
+class FuelStatForm(Form):
+    start_date = DateField(
+        input_formats = ['%Y-%m-%dT%H:%M'],
+        widget = DateTimeInput(
+            format='%Y-%m-%dT%H:%M',
+            attrs={'type': 'datetime-local'})
+        )
+    end_date = DateField(
+        input_formats = ['%Y-%m-%dT%H:%M'],
+        widget = DateTimeInput(
+            format='%Y-%m-%dT%H:%M',
+            attrs={'type': 'datetime-local'})
+        )
+    auto = ModelChoiceField(queryset=models.Auto.objects.all())
