@@ -1,0 +1,38 @@
+[
+    {
+        "model": "alldoc.Auto",
+        "pk": 1,
+        "fields": {
+            "name": "Fiesta",
+            "description": "la mia auto",
+            "fuel_type": "Diesel",
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+
+
+    {
+        "model": "alldoc.Station",
+        "pk": 1,
+        "fields": {
+            "name": "IP",
+            "location": "Carrù",
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+
+
+    {
+        "model": "alldoc.Supply",
+        "pk": 1,
+        "fields": {
+            "event_date": "2020-04-14",
+            "auto": 1,
+            "station": 1,
+            "volume": 32,
+            "price": 38.5,
+            "distance_total": 100,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    }
+]

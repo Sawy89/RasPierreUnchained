@@ -1,0 +1,34 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3 id="room-name">{{ common.name }}</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <!-- Aggiungere class='active' per la pagina selezionata -->
+        
+        <!-- Fuel -->
+        <p>Fuel</p>
+        <li>
+            <a href="#FuelList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fuel action</a>
+            <ul class="collapse list-unstyled" id="FuelList">
+                <li><a href="{% url 'alldoc_fuel_as_management' %}">Auto & Distributori</a></li>
+                <li><a href="{% url 'alldoc_fuel_supply_management' %}">Rifornimenti</a></li>
+                <li><a href="{% url 'alldoc_fuel_stat' %}">Statistiche</a></li>
+            </ul>
+        </li>
+        
+
+        <!-- Fuel -->
+        <p>Piscina</p>
+        <li>
+            <a href="#FuelList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fuel action</a>
+            <ul class="collapse list-unstyled" id="FuelList">
+                <li><a href="{% url 'alldoc_fuel_as_management' %}">Auto & Stations</a></li>
+                <li><a href="{% url 'alldoc_fuel_as_management' %}">Rifornimenti</a></li>
+                <li><a href="{% url 'alldoc_fuel_as_management' %}">Statistiche</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+</nav>

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text content-text-flex">
+
+    <div id="auto" class="blocco">
+      <h1 class="blocco2">Auto</h1>
+      <div class="liste-dati blocco2">
+        <ul>
+          {% for auto in Auto %}
+            <li>
+              <span>{{auto}}</span>
+              {% if auto.deletable %}
+                <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_auto_delete' auto.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare l\'auto?');">
+                  {% csrf_token %}
+                  <button class="btn"><i class="fa fa-trash"></i></button>
+                </form>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="form blocco2">
+        <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in AutoForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
+            {% endfor %}
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuova auto</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div id="station" class="blocco">
+      <h1 class="blocco2">Station</h1>
+      <div class="liste-dati blocco2">
+        <ul>
+          {% for station in Station %}
+          <li>
+            <span>{{station}}</span>
+            {% if station.deletable %}
+              <form class="form-delete" method="POST" action="{% url 'alldoc_fuel_station_delete' station.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare il distributore?');">
+                {% csrf_token %}
+                <button class="btn"><i class="fa fa-trash"></i></button>
+              </form>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="form blocco2">
+        <form class="" method="POST" action="{% url 'alldoc_fuel_as_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in StationForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
+            {% endfor %}
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuovo distributore</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

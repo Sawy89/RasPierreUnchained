@@ -1,0 +1,75 @@
+.content-text-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.blocco {
+    margin: 20px 60px 40px 20px;
+    font-size: 15px;
+}
+
+.blocco2 {
+    margin-top: 10px;
+}
+
+.form-label {
+    padding: 10px 30px 10px 1px;
+}
+
+.form-field {
+    color: black
+}
+
+.form-button {
+    margin: 20px;
+    align-content: center;
+}
+
+.form-delete {
+    display: inline;
+    margin: 4px;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Style buttons --> stile applicato a tutti! attenzione!*/
+.btn {
+    background-color: #4CAF50; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 8px 12px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: #04ad0a;
+  }
+
+
+  /* Table */
+  #table-stat {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #table-stat td, #table-stat th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #table-stat tr:nth-child(even){background-color: #4e4d4d;}
+  
+  #table-stat tr:hover {background-color: #ddd; color:black;}
+  
+  #table-stat th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
