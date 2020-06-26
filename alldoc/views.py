@@ -1,9 +1,23 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from . import forms, models
 from django.utils import timezone
+from highcharts import Highchart
+import numpy as np
+import json
+from decimal import Decimal
+import datetime
 
-# Create your views here.
+from . import forms, models
+
+
+# %% Support
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Decimal):
+            return float(o)
+        return super(DecimalEncoder, self).default(o)
+
+# %% Create your views here.
 def index(request):
     return render(request, 'alldoc/index.html')
 
@@ -118,7 +132,23 @@ def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
     # Get data
     Supply = models.Supply.objects.filter(auto=common["auto"]).filter(event_date__gte=common["start_date"]) \
                         .filter(event_date__lte=common["end_date"]).order_by('event_date').all()
+    cum_sum = [[0, 0, 0]] # calcolo la somma, per ottenere la cumulata  
     for supply in Supply:
         supply.calcStat()
+        cum_sum.append([supply.event_date, cum_sum[-1][1]+supply.distance, cum_sum[-1][2]+supply.volume])
+    cum_sum.pop(0)
+    
+    # Highchart
+    chart = Highchart(height = 500)
+    chart.add_data_set([[1000*(a.event_date-datetime.date(1970,1,1)).total_seconds(), int(a.pricevolume*100)/100] for a in Supply], series_type='line', name='Prezzo (€/litro)')
+    chart.add_data_set([[1000*(a.event_date-datetime.date(1970,1,1)).total_seconds(), int(a.consumption1*100)/100] for a in Supply], series_type='line', name='km con un litro')
+    chart.add_data_set([[1000*(a[0]-datetime.date(1970,1,1)).total_seconds(), int(a[1]/a[2]*100)/100] for a in cum_sum], series_type='line', name='km con un litro (tendenza)')
+    
+    chart.set_options('xAxis', {'type': 'datetime', 'gridLineWidth': 1})
+#    chart.set_options('chart', {'backgroundColor':'transparent'})
+    chart.set_options('tooltip', {'formatter': 'default_tooltip'})
+    chart.set_options('title', {'text': f"Statistiche consumo {common['auto']}"})
+    chart.htmlcontent;
+    chart_dict = {"header": chart.htmlheader, "content":chart.content}
 
-    return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form})
+    return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form, "chart": chart_dict})
