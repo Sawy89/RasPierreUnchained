@@ -128,12 +128,12 @@ if os.getenv("DEBUG"):
     static_folder = '/static/'
 else:
     static_folder = '/static_deploy/'
-STATIC_URL = static_folder
+STATIC_URL = '/static_deploy/'#static_folder
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 # For deploy: static files are moved here
-STATIC_ROOT = os.path.join(BASE_DIR, static_folder.replace('/',''))
+STATIC_ROOT = os.path.join(BASE_DIR, "static_deploy")#static_folder.replace('/',''))
 
 
 # Page after login
