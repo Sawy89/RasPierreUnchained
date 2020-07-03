@@ -78,7 +78,7 @@ def fuel_supply_management(request):
     # Get data
     diz_supply = {}
     for auto in models.Auto.objects.all():
-        Supply = models.Supply.objects.filter(auto=auto).order_by('event_date').all()#[::-1][:10][::-1]     # only last elements
+        Supply = models.Supply.objects.filter(auto=auto).order_by('event_date').all()[::-1][:10][::-1]     # only last elements
         for supply_id, supply in enumerate(Supply):
             supply.deletable = True if supply_id+1 == len(Supply) else False
         diz_supply[auto.name] = Supply
