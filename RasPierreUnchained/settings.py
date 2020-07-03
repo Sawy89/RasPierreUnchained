@@ -124,7 +124,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-if os.getenv("DEBUG"):
+if DEBUG==1:
     static_folder = '/static/'
 else:
     static_folder = '/static_deploy/'
