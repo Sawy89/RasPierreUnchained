@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.utils import timezone
+from django.contrib.admin.views.decorators import staff_member_required
 from highcharts import Highchart
 import numpy as np
 import json
@@ -18,10 +19,12 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 # %% Create your views here.
+@staff_member_required
 def index(request):
     return render(request, 'alldoc/index.html')
 
 
+@staff_member_required
 def fuel_as_management(request):
     '''
     Auto & Station management: see, add and modify
@@ -57,6 +60,7 @@ def fuel_as_management(request):
                                                 "AutoForm": form_auto, "StationForm": form_station})
 
 
+@staff_member_required
 def fuel_supply_management(request):
     '''
     Supply management
@@ -86,6 +90,7 @@ def fuel_supply_management(request):
     return render(request, 'alldoc/fuel_supply_management.html', {"common": common, "Auto": diz_supply, "SupplyForm": form})
 
 
+@staff_member_required
 def fuel_supply_delete(request, pk):
     '''Delete supply'''
     if request.method == 'POST':
@@ -93,6 +98,7 @@ def fuel_supply_delete(request, pk):
     return redirect('alldoc_fuel_supply_management')
 
 
+@staff_member_required
 def fuel_auto_delete(request, pk):
     '''Delete auto'''
     if request.method == 'POST':
@@ -100,6 +106,7 @@ def fuel_auto_delete(request, pk):
     return redirect('alldoc_fuel_as_management', permanent=True)
 
 
+@staff_member_required
 def fuel_station_delete(request, pk):
     '''Delete station'''
     if request.method == 'POST':
@@ -107,6 +114,7 @@ def fuel_station_delete(request, pk):
     return redirect('alldoc_fuel_as_management')
 
 
+@staff_member_required
 def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
     '''Stat for supply'''
     common = {"name": "Fuel"}
