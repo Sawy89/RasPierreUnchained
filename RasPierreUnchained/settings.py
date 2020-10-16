@@ -133,7 +133,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 # For deploy: static files are moved here
-STATIC_ROOT = os.path.join(BASE_DIR, static_folder)
+if DEBUG!=1:
+    STATIC_ROOT = os.path.join(BASE_DIR, static_folder.replace('/',''))
 
 
 # Page after login
