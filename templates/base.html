@@ -61,7 +61,9 @@
             <!-- <a href="{% url 'myself_index' %}">Chi sono</a> -->
             {% if user.is_authenticated %}
               <a href="{% url 'xmasg_index' %}">XmasG</a>
-              <a href="{% url 'alldoc_index' %}">D.O.C</a>
+              {% if user.is_staff %}
+                <a href="{% url 'alldoc_index' %}">D.O.C</a>
+              {% endif %}
             {% endif %}
             <a href="#">Coming soon</a>
           </div>
