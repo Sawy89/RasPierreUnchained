@@ -57,7 +57,7 @@ def xmasg_extraction_mail(room, member):
     '''
     Send mail with the extracted
     '''
-    from_mail = 'dennytool@gmail.com'
+    from_mail = 'dennytools@gmail.com'
     oggetto = f"XmasG: estrazione per {room.name}"
     testo = f"Buongiorno {member.member.first_name},\nÉ stata effettuata l'estrazione per la stanza {room.name}.\n\n"
     testo += f"Sei stato molto fortunato, e dovrai fare il regalo a {member.receiver.username} - {member.receiver.first_name} {member.receiver.last_name}"
