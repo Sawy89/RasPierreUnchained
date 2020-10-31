@@ -17,7 +17,79 @@
         "fields": {
             "name": "IP",
             "location": "Carrù",
-            "insertdate": "2020-04-14 07:00:00+02:00"
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 2,
+        "fields": {
+            "name": "CONAD",
+            "location": "Savigliano",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 3,
+        "fields": {
+            "name": "ENI",
+            "location": "Carrù",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 4,
+        "fields": {
+            "name": "ENI (plus)",
+            "location": "Carrù",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 5,
+        "fields": {
+            "name": "COOP",
+            "location": "Mondovicino",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 6,
+        "fields": {
+            "name": "Altro",
+            "location": "ND",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 7,
+        "fields": {
+            "name": "Altro",
+            "location": "Germania",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 8,
+        "fields": {
+            "name": "Altro",
+            "location": "Olanda",
+            "insertdate": "2018-01-01 00:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Station",
+        "pk": 9,
+        "fields": {
+            "name": "Altro",
+            "location": "Belgio",
+            "insertdate": "2018-01-01 00:00:00+02:00"
         }
     },
 
