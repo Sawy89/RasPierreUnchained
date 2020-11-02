@@ -11,45 +11,48 @@ def xmasg_extraction(room_id):
     '''
     print(f'Start extraction for room n {room_id}')
     room = models.Room.objects.get(id=room_id)
-    try:
-        room_members = models.RoomMember.objects.filter(room=room)
-        
-        # Cycle on room members to get J as expected
-        members = {}
-        for u in room_members.all():
-            exc = [i[0] for i in u.exclusion.all().values_list('id')]
-            if u.member.id not in exc:
-                exc.append(u.member.id)
-            members[u.member.id] = exc
-        
-        # Permutation = extraction
-        members_receiver = xmasg_perm(members)
+    if room.end_date == timezone.now().replace(microsecond=0, second=0):
+        try:
+            room_members = models.RoomMember.objects.filter(room=room)
+            
+            # Cycle on room members to get J as expected
+            members = {}
+            for u in room_members.all():
+                exc = [i[0] for i in u.exclusion.all().values_list('id')]
+                if u.member.id not in exc:
+                    exc.append(u.member.id)
+                members[u.member.id] = exc
+            
+            # Permutation = extraction
+            members_receiver = xmasg_perm(members)
 
-        # Save receiver
-        if members_receiver == None:
-            # Save error
-            room.extraction_done = f"Failure: extraction not done at {timezone.now()}"
+            # Save receiver
+            if members_receiver == None:
+                # Save error
+                room.extraction_done = f"Failure: extraction not done at {timezone.now()}"
+                room.save()
+            else:
+                for u in room_members:
+                    user_receiver = User.objects.get(id=members_receiver[u.member.id])
+                    u.receiver=user_receiver
+                    u.save()
+                # Save extraction done
+                room.extraction_done = f"Success at {timezone.now()}"
+                room.save()
+
+                # Send mail to members
+                for u in room_members:
+                    try:
+                        xmasg_extraction_mail(room, u)
+                        print('Mail sent')
+                    except:
+                        print('Mail not sent')
+
+        except:
+            room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"
             room.save()
-        else:
-            for u in room_members:
-                user_receiver = User.objects.get(id=members_receiver[u.member.id])
-                u.receiver=user_receiver
-                u.save()
-            # Save extraction done
-            room.extraction_done = f"Success at {timezone.now()}"
-            room.save()
-
-            # Send mail to members
-            for u in room_members:
-                try:
-                    xmasg_extraction_mail(room, u)
-                    print('Mail sent')
-                except:
-                    print('Mail not sent')
-
-    except:
-        room.extraction_done = f"Failure for a problem (try except) at {timezone.now()}"
-        room.save()
+    else:
+        print(f"Extraction at the wrong hour because {room.end_date} different from current time {timezone.now().replace(microsecond=0, second=0)}")
 
 
 
