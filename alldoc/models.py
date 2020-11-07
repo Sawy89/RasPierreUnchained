@@ -116,3 +116,38 @@ def calcDistance(sender, instance, **kwargs):
     supply_list = Supply.objects.filter(auto=instance.auto).filter(distance_total__gt=instance.distance_total).all() 
     for supply in supply_list:
         supply.updateDistance()
+
+
+
+# %% Pool
+class Pool(models.Model):
+    '''
+    Class for Pools --> piscine
+    '''
+    db_table = 'pool'
+
+    name = models.CharField(max_length=64, unique=True)
+    lap_length = models.IntegerField()
+    insertdate = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} [{self.lap_length} m]"
+
+
+class PoolSession(models.Model):
+    '''
+    Classe per i rifornimenti
+    '''
+    db_table = 'pool_session'
+
+    event_date = models.DateField()
+    pool = models.ForeignKey(Pool, on_delete=models.CASCADE, related_name="session")
+    lap_number = models.IntegerField()
+    insertdate = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('event_date', 'pool',)
+    
+    def __str__(self):
+        metri = self.lap_number * self.pool.lap_length
+        return f"{self.event_date} - {self.pool.name} - {self.lap_number} vasche [{metri} m]"

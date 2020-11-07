@@ -7,6 +7,7 @@ import numpy as np
 import json
 from decimal import Decimal
 import datetime
+from django.utils import timezone
 
 from . import forms, models
 
@@ -160,3 +161,75 @@ def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
     chart_dict = {"header": chart.htmlheader, "content":chart.content}
 
     return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form, "chart": chart_dict})
+
+
+# %% Pool
+@staff_member_required
+def pool_management(request):
+    '''
+    Pool: see, add and modify
+    '''
+    common = {"name": "Pool"}
+
+    # Form
+    print(request)
+    if request.method == 'POST':
+        form_pool = forms.PoolForm(request.POST, prefix='pool')
+        if form_pool.is_valid():
+            form_pool.save()
+            # ToDo: Redirect with GET
+            # redirect('alldoc_fuel_as_management')
+    else:
+        form_pool = forms.PoolForm(prefix='pool')
+    
+    # Get data
+    Pool = models.Pool.objects.all()
+    for pool in Pool:
+        pool.deletable = True if not(pool.session.all().exists()) else False 
+
+    return render(request, 'alldoc/pool_management.html', {"common": common, "Pool": Pool,
+                                                "PoolForm": form_pool})
+
+
+
+@staff_member_required
+def pool_delete(request, pk):
+    '''Delete pool'''
+    if request.method == 'POST':
+        models.Pool.objects.filter(pk=pk).delete()
+    return redirect('alldoc_pool_management', permanent=True)
+
+
+@staff_member_required
+def pool_session_management(request):
+    '''
+    Pool session management
+    '''
+    common = {"name": "Pool"}
+
+    # Form
+    print(request)
+    if request.method == 'POST':
+        form = forms.PoolSessionForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        last_pool = models.PoolSession.objects.latest('id').pool if models.PoolSession.objects.all() else None
+        last_lap_number = models.PoolSession.objects.latest('id').lap_number if models.PoolSession.objects.all() else None
+        form = forms.PoolSessionForm(initial={'pool':last_pool, 'lap_number':last_lap_number})
+
+    # Get data
+    PoolSession = models.PoolSession.objects.order_by('-event_date').all()[:10]
+    for sess in PoolSession:
+        if sess.event_date >= datetime.date.today()+datetime.timedelta(days=-5):
+            sess.deletable = True
+
+    return render(request, 'alldoc/pool_session.html', {"common": common, "PoolSession": PoolSession, "PoolSessionForm": form})
+
+
+@staff_member_required
+def pool_session_delete(request, pk):
+    '''Delete Pool session'''
+    if request.method == 'POST':
+        models.PoolSession.objects.filter(pk=pk).delete()
+    return redirect('alldoc_pool_session')
