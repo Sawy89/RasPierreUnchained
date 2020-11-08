@@ -50,23 +50,27 @@
       </form>
 
 
-    <h2>{{common.auto}} - dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
+    <h2>Statistiche dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
     <div class="content-text-flex">
 
       <div class="liste-dati blocco">
         <table id="table-stat">
           <tr>
             <th>Data</th>
-            <th>Piscina</th>
+            <th>Allenamenti</th>
             <th>Vasche</th>
             <th>Metri</th>
+            <th>Media vasche</th>
+            <th>Media metri</th>
           </tr>
-          {% for sess in PoolSession %}
+          {% for a in list_stat %}
             <tr>
-              <td>{{sess.event_date|date:"d/m/Y"}}</td>
-              <td>{{sess.pool.name}}</td>
-              <td>{{sess.lap_number}}</td>
-              <td>{{sess.metri}}</td>
+              <td>{{a.data|date:"m/Y"}}</td>
+              <td>{{a.allenamenti}}</td>
+              <td>{{a.vasche_norm}}</td>
+              <td>{{a.metri}}</td>
+              <td>{{a.media_vasche}}</td>
+              <td>{{a.media_metri}}</td>
             </tr>
           {% endfor %}
         </table>
@@ -77,6 +81,30 @@
     <div>
       {{ chart.content | safe }}
     </div>
+
+    <h2>Allenamenti dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
+    <div class="content-text-flex">
+
+        <div class="liste-dati blocco">
+          <table id="table-stat">
+            <tr>
+              <th>Data</th>
+              <th>Piscina</th>
+              <th>Vasche</th>
+              <th>Metri</th>
+            </tr>
+            {% for sess in PoolSession %}
+              <tr>
+                <td>{{sess.event_date|date:"d/m/Y"}}</td>
+                <td>{{sess.pool.name}}</td>
+                <td>{{sess.lap_number}}</td>
+                <td>{{sess.metri}}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+  
+      </div>
 
   </div>
 

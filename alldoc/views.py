@@ -267,31 +267,29 @@ def pool_stat(request, start_date=None, end_date=None):
         if annomese not in list_date:
             diz[annomese] = {'data': sess.event_date.replace(day=1), 
                              'allenamenti': 0, 
-                             'vasche (norm)': 0,
+                             'vasche_norm': 0,
                              'metri': 0}
             list_date.append(annomese)
         # Add values
         diz[annomese]['allenamenti'] += 1
-        diz[annomese]['vasche (norm)'] += sess.lap_number * 25 / sess.pool.lap_length # normalize to 25m length
+        diz[annomese]['vasche_norm'] += sess.lap_number * sess.pool.lap_length / 25 # normalize to 25m length
         diz[annomese]['metri'] += sess.lap_number * sess.pool.lap_length
     
-    # Rechange data
-    # diz_final = {'data': [], 'allenamenti': [], 'vasche (norm)': [], 'metri': [], 'vasche media': [], 'metri media': []}
-    # for annomese in list_date:
-    #     diz_final['data'].append(diz[annomese]['data'])
-    #     diz_final['allenamenti'].append(diz[annomese]['allenamenti'])
-    #     diz_final['vasche (norm)'].append(diz[annomese]['vasche (norm)'])
-    #     diz_final['metri'].append(diz[annomese]['metri'])
-    #     diz_final['vasche media'].append(round(diz[annomese]['vasche (norm)']/diz[annomese]['allenamenti'], 2))
-    #     diz_final['metri media'].append(round(diz[annomese]['metri']/diz[annomese]['allenamenti'], 2))
+    # Save in list
+    list_stat = []
+    for a in list_date:
+        diz[annomese]['vasche_norm'] = int( diz[annomese]['vasche_norm'])
+        diz[a]['media_vasche'] = int(diz[a]['vasche_norm']/diz[a]['allenamenti'])
+        diz[a]['media_metri'] = int(diz[a]['metri']/diz[a]['allenamenti'])
+        list_stat.append(diz[a])
 
-    # Highchart
+    # Highchart ToDo: rewrite with list_stat
     chart = Highchart(height = 500)
     chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['allenamenti']] for a in list_date], 
                         series_type='line', name='Allenamenti')
-    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['vasche (norm)']/diz[a]['allenamenti']] for a in list_date], 
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['media_vasche']] for a in list_date], 
                         series_type='bar', name='Media vasche')
-    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['metri']/diz[a]['allenamenti']] for a in list_date], 
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['media_metri']] for a in list_date], 
                         series_type='bar', name='Media metri')
     
     chart.set_options('xAxis', {'type': 'datetime', 'gridLineWidth': 1})
@@ -301,4 +299,4 @@ def pool_stat(request, start_date=None, end_date=None):
     chart.htmlcontent;
     chart_dict = {"header": chart.htmlheader, "content":chart.content}
 
-    return render(request, 'alldoc/pool_stat.html', {"common": common, "PoolSession": PoolSession, "form": form, "chart": chart_dict})
+    return render(request, 'alldoc/pool_stat.html', {"common": common, "PoolSession": PoolSession, "form": form, "chart": chart_dict, "list_stat": list_stat})

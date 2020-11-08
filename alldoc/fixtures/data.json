@@ -106,5 +106,93 @@
             "distance_total": 100,
             "insertdate": "2020-04-14 07:00:00+02:00"
         }
+    },
+
+
+
+
+
+
+
+    {
+        "model": "alldoc.Pool",
+        "pk": 1,
+        "fields": {
+            "name": "Saluzzo",
+            "lap_length": 25,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.Pool",
+        "pk": 2,
+        "fields": {
+            "name": "Carrù",
+            "lap_length": 10,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+
+
+
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 1,
+        "fields": {
+            "event_date": "2020-09-14",
+            "pool": 1,
+            "lap_number": 60,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 2,
+        "fields": {
+            "event_date": "2020-09-25",
+            "pool": 1,
+            "lap_number": 50,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 3,
+        "fields": {
+            "event_date": "2020-09-29",
+            "pool": 2,
+            "lap_number": 100,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 4,
+        "fields": {
+            "event_date": "2020-10-02",
+            "pool": 1,
+            "lap_number": 60,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 5,
+        "fields": {
+            "event_date": "2020-10-14",
+            "pool": 2,
+            "lap_number": 150,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
+    },
+    {
+        "model": "alldoc.PoolSession",
+        "pk": 6,
+        "fields": {
+            "event_date": "2020-11-01",
+            "pool": 1,
+            "lap_number": 60,
+            "insertdate": "2020-04-14 07:00:00+02:00"
+        }
     }
 ]
