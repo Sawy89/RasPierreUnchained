@@ -233,3 +233,72 @@ def pool_session_delete(request, pk):
     if request.method == 'POST':
         models.PoolSession.objects.filter(pk=pk).delete()
     return redirect('alldoc_pool_session')
+
+
+@staff_member_required
+def pool_stat(request, start_date=None, end_date=None):
+    '''Stat for Pool'''
+    common = {"name": "Pool"}
+
+    # Initial-default values
+    start_date_init = (timezone.now().date() + timezone.timedelta(days=-365)).replace(day=1)
+    end_date_init = timezone.now().date()
+
+    # get form
+    form = forms.PoolStatForm(request.GET)
+    if form.is_valid():
+        common["start_date"] = form.cleaned_data['start_date']
+        common["end_date"] = form.cleaned_data['end_date']
+    else:
+        form = forms.PoolStatForm(initial={"start_date":start_date_init,
+                                "end_date":end_date_init})
+        common["start_date"] = start_date_init
+        common["end_date"] = end_date_init 
+    
+    # Get data
+    PoolSession = models.PoolSession.objects.filter(event_date__gte=common["start_date"]) \
+                        .filter(event_date__lte=common["end_date"]).order_by('event_date').all()
+    diz = {} # calcolo il group by mese/anno
+    list_date = []  
+    for sess in PoolSession:
+        sess.metri = sess.lap_number * sess.pool.lap_length
+        annomese = str(sess.event_date.month).zfill(2)+"-"+str(sess.event_date.year)
+        # First month appearence
+        if annomese not in list_date:
+            diz[annomese] = {'data': sess.event_date.replace(day=1), 
+                             'allenamenti': 0, 
+                             'vasche (norm)': 0,
+                             'metri': 0}
+            list_date.append(annomese)
+        # Add values
+        diz[annomese]['allenamenti'] += 1
+        diz[annomese]['vasche (norm)'] += sess.lap_number * 25 / sess.pool.lap_length # normalize to 25m length
+        diz[annomese]['metri'] += sess.lap_number * sess.pool.lap_length
+    
+    # Rechange data
+    # diz_final = {'data': [], 'allenamenti': [], 'vasche (norm)': [], 'metri': [], 'vasche media': [], 'metri media': []}
+    # for annomese in list_date:
+    #     diz_final['data'].append(diz[annomese]['data'])
+    #     diz_final['allenamenti'].append(diz[annomese]['allenamenti'])
+    #     diz_final['vasche (norm)'].append(diz[annomese]['vasche (norm)'])
+    #     diz_final['metri'].append(diz[annomese]['metri'])
+    #     diz_final['vasche media'].append(round(diz[annomese]['vasche (norm)']/diz[annomese]['allenamenti'], 2))
+    #     diz_final['metri media'].append(round(diz[annomese]['metri']/diz[annomese]['allenamenti'], 2))
+
+    # Highchart
+    chart = Highchart(height = 500)
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['allenamenti']] for a in list_date], 
+                        series_type='line', name='Allenamenti')
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['vasche (norm)']/diz[a]['allenamenti']] for a in list_date], 
+                        series_type='bar', name='Media vasche')
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['metri']/diz[a]['allenamenti']] for a in list_date], 
+                        series_type='bar', name='Media metri')
+    
+    chart.set_options('xAxis', {'type': 'datetime', 'gridLineWidth': 1})
+#    chart.set_options('chart', {'backgroundColor':'transparent'})
+    chart.set_options('tooltip', {'formatter': 'default_tooltip'})
+    chart.set_options('title', {'text': f"Statistiche allenamenti in piscina"})
+    chart.htmlcontent;
+    chart_dict = {"header": chart.htmlheader, "content":chart.content}
+
+    return render(request, 'alldoc/pool_stat.html', {"common": common, "PoolSession": PoolSession, "form": form, "chart": chart_dict})
