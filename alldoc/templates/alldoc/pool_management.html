@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text content-text-flex">
+
+    <div id="pool" class="blocco">
+      <h1 class="blocco2">Piscine</h1>
+      <div class="liste-dati blocco2">
+        <ul>
+          {% for pool in Pool %}
+            <li>
+              <span>{{pool}}</span>
+              {% if pool.deletable %}
+                <form class="form-delete" method="POST" action="{% url 'alldoc_pool_delete' pool.id %}" onclick="return confirm('Attenzione! Vuoi veramente cancellare la piscina?');">
+                  {% csrf_token %}
+                  <button class="btn"><i class="fa fa-trash"></i></button>
+                </form>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="form blocco2">
+        <form class="" method="POST" action="{% url 'alldoc_pool_management' %}">
+          {% csrf_token %}
+          <table id="new-table">
+            {% for field in PoolForm %}
+            <tr>
+              <th class="form-label"><span>{{ field.label }}</span></th>
+              <th class="form-field">{{ field }}</th>
+              <th>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </th>
+            </tr>
+            {% endfor %}
+          </table>
+          <button type="submit" class="btn btn-primary form-button">Nuova piscina</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+</div>
+{% endblock %}

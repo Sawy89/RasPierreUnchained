@@ -68,3 +68,40 @@ class FuelStatForm(Form):
             attrs={'type': 'datetime-local'})
         )
     auto = ModelChoiceField(queryset=models.Auto.objects.all())
+
+
+# %% Pool
+class PoolForm(ModelForm):
+    class Meta:
+        model = models.Pool
+        fields = ('name','lap_length')
+
+
+class PoolSessionForm(ModelForm):
+
+    event_date = DateTimeField(
+        input_formats = ['%Y-%m-%dT%H:%M'],
+        initial=timezone.now().date(),
+        widget = DateTimeInput(
+            format='%Y-%m-%dT%H:%M',
+            attrs={'type': 'datetime-local'})
+    )
+
+    class Meta:
+        model = models.PoolSession
+        fields = ('event_date','pool','lap_number')
+
+
+class PoolStatForm(Form):
+    start_date = DateField(
+        input_formats = ['%Y-%m-%dT%H:%M'],
+        widget = DateTimeInput(
+            format='%Y-%m-%dT%H:%M',
+            attrs={'type': 'datetime-local'})
+        )
+    end_date = DateField(
+        input_formats = ['%Y-%m-%dT%H:%M'],
+        widget = DateTimeInput(
+            format='%Y-%m-%dT%H:%M',
+            attrs={'type': 'datetime-local'})
+        )

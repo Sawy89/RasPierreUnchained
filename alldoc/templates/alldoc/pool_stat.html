@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static '/sidebar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/alldoc/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{{ chart.header | safe }}
+{% endblock %}
+
+
+{% block h1title %}
+<h1>D.O.C!</h1>
+{% endblock %}
+
+
+{% block sidebarbutton %}
+{% include "element_sidebar_button.html" %}
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "alldoc/element_sidebar.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content" class="not-active">
+  <div class="content-blur backimage"></div>
+  <div class="content-text">
+    <h1>Piscina statistiche</h1>
+    <div class="form blocco">
+      
+      <form class="" method="GET" action="{% url 'alldoc_pool_stat' %}">
+        <table id="new-table">
+          {% for field in form %}
+          <tr>
+            <th class="form-label"><span>{{ field.label }}</span></th>
+            <th class="form-field">{{ field }}</th>
+            <th>
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </th>
+          </tr>
+          {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-primary form-button">Cerca</button>
+      </form>
+
+
+    <h2>Statistiche dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
+    <div class="content-text-flex">
+
+      <div class="liste-dati blocco">
+        <table id="table-stat">
+          <tr>
+            <th>Data</th>
+            <th>Allenamenti</th>
+            <th>Vasche</th>
+            <th>Metri</th>
+            <th>Media vasche</th>
+            <th>Media metri</th>
+          </tr>
+          {% for a in list_stat %}
+            <tr>
+              <td>{{a.data|date:"m/Y"}}</td>
+              <td>{{a.allenamenti}}</td>
+              <td>{{a.vasche_norm}}</td>
+              <td>{{a.metri}}</td>
+              <td>{{a.media_vasche}}</td>
+              <td>{{a.media_metri}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+    </div>
+
+    <div>
+      {{ chart.content | safe }}
+    </div>
+
+    <h2>Allenamenti dal {{common.start_date|date:"d/m/Y"}} al {{common.end_date|date:"d/m/Y"}}</h2>
+    <div class="content-text-flex">
+
+        <div class="liste-dati blocco">
+          <table id="table-stat">
+            <tr>
+              <th>Data</th>
+              <th>Piscina</th>
+              <th>Vasche</th>
+              <th>Metri</th>
+            </tr>
+            {% for sess in PoolSession %}
+              <tr>
+                <td>{{sess.event_date|date:"d/m/Y"}}</td>
+                <td>{{sess.pool.name}}</td>
+                <td>{{sess.lap_number}}</td>
+                <td>{{sess.metri}}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+  
+      </div>
+
+  </div>
+
+</div>
+{% endblock %}

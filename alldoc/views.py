@@ -7,6 +7,7 @@ import numpy as np
 import json
 from decimal import Decimal
 import datetime
+from django.utils import timezone
 
 from . import forms, models
 
@@ -160,3 +161,142 @@ def fuel_stat(request, auto_id=None, start_date=None, end_date=None):
     chart_dict = {"header": chart.htmlheader, "content":chart.content}
 
     return render(request, 'alldoc/fuel_stat.html', {"common": common, "Supply": Supply, "form": form, "chart": chart_dict})
+
+
+# %% Pool
+@staff_member_required
+def pool_management(request):
+    '''
+    Pool: see, add and modify
+    '''
+    common = {"name": "Pool"}
+
+    # Form
+    print(request)
+    if request.method == 'POST':
+        form_pool = forms.PoolForm(request.POST, prefix='pool')
+        if form_pool.is_valid():
+            form_pool.save()
+            # ToDo: Redirect with GET
+            # redirect('alldoc_fuel_as_management')
+    else:
+        form_pool = forms.PoolForm(prefix='pool')
+    
+    # Get data
+    Pool = models.Pool.objects.all()
+    for pool in Pool:
+        pool.deletable = True if not(pool.session.all().exists()) else False 
+
+    return render(request, 'alldoc/pool_management.html', {"common": common, "Pool": Pool,
+                                                "PoolForm": form_pool})
+
+
+
+@staff_member_required
+def pool_delete(request, pk):
+    '''Delete pool'''
+    if request.method == 'POST':
+        models.Pool.objects.filter(pk=pk).delete()
+    return redirect('alldoc_pool_management', permanent=True)
+
+
+@staff_member_required
+def pool_session_management(request):
+    '''
+    Pool session management
+    '''
+    common = {"name": "Pool"}
+
+    # Form
+    print(request)
+    if request.method == 'POST':
+        form = forms.PoolSessionForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        last_pool = models.PoolSession.objects.latest('id').pool if models.PoolSession.objects.all() else None
+        last_lap_number = models.PoolSession.objects.latest('id').lap_number if models.PoolSession.objects.all() else None
+        form = forms.PoolSessionForm(initial={'pool':last_pool, 'lap_number':last_lap_number})
+
+    # Get data
+    PoolSession = models.PoolSession.objects.order_by('-event_date').all()[:10]
+    for sess in PoolSession:
+        if sess.event_date >= datetime.date.today()+datetime.timedelta(days=-5):
+            sess.deletable = True
+
+    return render(request, 'alldoc/pool_session.html', {"common": common, "PoolSession": PoolSession, "PoolSessionForm": form})
+
+
+@staff_member_required
+def pool_session_delete(request, pk):
+    '''Delete Pool session'''
+    if request.method == 'POST':
+        models.PoolSession.objects.filter(pk=pk).delete()
+    return redirect('alldoc_pool_session')
+
+
+@staff_member_required
+def pool_stat(request, start_date=None, end_date=None):
+    '''Stat for Pool'''
+    common = {"name": "Pool"}
+
+    # Initial-default values
+    start_date_init = (timezone.now().date() + timezone.timedelta(days=-365)).replace(day=1)
+    end_date_init = timezone.now().date()
+
+    # get form
+    form = forms.PoolStatForm(request.GET)
+    if form.is_valid():
+        common["start_date"] = form.cleaned_data['start_date']
+        common["end_date"] = form.cleaned_data['end_date']
+    else:
+        form = forms.PoolStatForm(initial={"start_date":start_date_init,
+                                "end_date":end_date_init})
+        common["start_date"] = start_date_init
+        common["end_date"] = end_date_init 
+    
+    # Get data
+    PoolSession = models.PoolSession.objects.filter(event_date__gte=common["start_date"]) \
+                        .filter(event_date__lte=common["end_date"]).order_by('event_date').all()
+    diz = {} # calcolo il group by mese/anno
+    list_date = []  
+    for sess in PoolSession:
+        sess.metri = sess.lap_number * sess.pool.lap_length
+        annomese = str(sess.event_date.month).zfill(2)+"-"+str(sess.event_date.year)
+        # First month appearence
+        if annomese not in list_date:
+            diz[annomese] = {'data': sess.event_date.replace(day=1), 
+                             'allenamenti': 0, 
+                             'vasche_norm': 0,
+                             'metri': 0}
+            list_date.append(annomese)
+        # Add values
+        diz[annomese]['allenamenti'] += 1
+        diz[annomese]['vasche_norm'] += sess.lap_number * sess.pool.lap_length / 25 # normalize to 25m length
+        diz[annomese]['metri'] += sess.lap_number * sess.pool.lap_length
+    
+    # Save in list
+    list_stat = []
+    for a in list_date:
+        diz[annomese]['vasche_norm'] = int( diz[annomese]['vasche_norm'])
+        diz[a]['media_vasche'] = int(diz[a]['vasche_norm']/diz[a]['allenamenti'])
+        diz[a]['media_metri'] = int(diz[a]['metri']/diz[a]['allenamenti'])
+        list_stat.append(diz[a])
+
+    # Highchart ToDo: rewrite with list_stat
+    chart = Highchart(height = 500)
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['allenamenti']] for a in list_date], 
+                        series_type='line', name='Allenamenti')
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['media_vasche']] for a in list_date], 
+                        series_type='bar', name='Media vasche')
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['metri']] for a in list_date], 
+                        series_type='bar', name='metri')
+    
+    chart.set_options('xAxis', {'type': 'datetime', 'gridLineWidth': 1})
+#    chart.set_options('chart', {'backgroundColor':'transparent'})
+    chart.set_options('tooltip', {'formatter': 'default_tooltip'})
+    chart.set_options('title', {'text': f"Statistiche allenamenti in piscina"})
+    chart.htmlcontent;
+    chart_dict = {"header": chart.htmlheader, "content":chart.content}
+
+    return render(request, 'alldoc/pool_stat.html', {"common": common, "PoolSession": PoolSession, "form": form, "chart": chart_dict, "list_stat": list_stat})
