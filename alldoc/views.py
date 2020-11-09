@@ -289,8 +289,8 @@ def pool_stat(request, start_date=None, end_date=None):
                         series_type='line', name='Allenamenti')
     chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['media_vasche']] for a in list_date], 
                         series_type='bar', name='Media vasche')
-    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['media_metri']] for a in list_date], 
-                        series_type='bar', name='Media metri')
+    chart.add_data_set([[1000*(diz[a]['data']-datetime.date(1970,1,1)).total_seconds(), diz[a]['metri']] for a in list_date], 
+                        series_type='bar', name='metri')
     
     chart.set_options('xAxis', {'type': 'datetime', 'gridLineWidth': 1})
 #    chart.set_options('chart', {'backgroundColor':'transparent'})
