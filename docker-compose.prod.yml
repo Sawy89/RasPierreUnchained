@@ -57,6 +57,8 @@ services:
         depends_on:
           - web
         restart: unless-stopped
+        networks:
+            - docker-net
     
     certbot:
         image: certbot/certbot
