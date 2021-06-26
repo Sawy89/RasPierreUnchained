@@ -148,3 +148,8 @@ EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
+
+# Admin for log
+ADMINS = [('Denny', 'ddeennyy@hotmail.it')]
+SERVER_EMAIL = 'dennytools@gmail.com'
+
