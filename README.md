@@ -17,6 +17,7 @@ It's born to makes people extract a random friend to make and receive a gift, bu
 - To access the shell: `python manage.py shell`
 - To create admin: `python manage.py createsuperuser`
 - Some testing data are imported with fixture data.json
+- `SELECT setval('alldoc_poolsession_id_seq', 392, FALSE);` for upgrading autoincrement!
 <br />
 
 
