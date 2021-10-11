@@ -153,3 +153,7 @@ EMAIL_USE_TLS = True
 ADMINS = [('Denny', 'ddeennyy@hotmail.it')]
 SERVER_EMAIL = 'dennytools@gmail.com'
 
+# For 500 server error
+WHITENOISE_AUTOREFRESH = True
+
+
