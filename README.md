@@ -97,6 +97,7 @@ https://stackoverflow.com/questions/53563534/template-password-reset-form-html-d
 - CSRF: https://docs.djangoproject.com/en/3.0/ref/csrf/
 - AJAX: https://zerowithdot.com/django-2-ajax-call/, http://musings.tinbrain.net/blog/2015/aug/28/vanilla-js-meets-djangos-csrf/
 - Event scheduler: https://medium.com/@kevin.michael.horan/scheduling-tasks-in-django-with-the-advanced-python-scheduler-663f17e868e6, https://apscheduler.readthedocs.io/en/stable/modules/triggers/date.html
+- DEBUG docker https://stackoverflow.com/questions/69485319/starting-django-with-docker-unexpected-character
 
 USED FOR DEPLOY!!!!
 - DEPLOY: https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/ 
