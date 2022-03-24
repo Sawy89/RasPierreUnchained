@@ -81,7 +81,6 @@ class PoolSessionForm(ModelForm):
 
     event_date = DateTimeField(
         input_formats = ['%Y-%m-%dT%H:%M'],
-        initial=timezone.now().date(),
         widget = DateTimeInput(
             format='%Y-%m-%dT%H:%M',
             attrs={'type': 'datetime-local'})

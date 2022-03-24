@@ -216,7 +216,7 @@ def pool_session_management(request):
     else:
         last_pool = models.PoolSession.objects.latest('id').pool if models.PoolSession.objects.all() else None
         last_lap_number = models.PoolSession.objects.latest('id').lap_number if models.PoolSession.objects.all() else None
-        form = forms.PoolSessionForm(initial={'pool':last_pool, 'lap_number':last_lap_number})
+        form = forms.PoolSessionForm(initial={'pool':last_pool, 'lap_number':last_lap_number, 'event_date': timezone.now().date()})
 
     # Get data
     PoolSession = models.PoolSession.objects.order_by('-event_date').all()[:10]
