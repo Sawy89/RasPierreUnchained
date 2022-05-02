@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+xknx
+pyModbusTCP
+sqlalchemy
+mysql-connector-python
+apscheduler
+sklearn
+pandas
