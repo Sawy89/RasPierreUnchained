@@ -1,8 +1,11 @@
 import logging
 from datetime import datetime
-from fastapi import FastAPI
+import traceback
+from fastapi import FastAPI, HTTPException
 # from fastapi.responses import FileResponse
 import os
+from sklearn.ensemble import RandomForestRegressor
+from models import ForecastData
 
 from settings import LOG_CONF, LOG_PATH
 
@@ -32,10 +35,24 @@ def ping():
 #     logger.info(f'Return log {filename} file')
 #     return FileResponse(os.path.join(LOG_PATH, filename), filename=filename)
 
-@app.get('/forecast/fill_gaps', tags=[NAMESPACE])
-def fill_gaps():
+@app.post('/forecast/fill_gaps', tags=[NAMESPACE])
+def fill_gaps(data: ForecastData):
     '''Fill gaps forecast'''
-    logger.info('Ping function called!')
-    return {'status': 'active', 'message': f'pong from {NAMESPACE}', 'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+    logger.info('Fill gaps endpoint called!')
+
+    try:
+        model = RandomForestRegressor()
+        logger.info('Train with Random Forecast Regressor')
+        model.fit(data.x_train, data.y_train)
+        logger.info('Predict with Random Forecast Regressor')
+        prev = model.predict(data.x_test)
+        logger.info('Prediction done')
+    except Exception as err:
+        logger.error(f"{err} - {err.args} - {type(err)}")
+        logger.error('Error fill gaps endpoint')
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="Error in ML model processing")
+
+    return {'status': 'done', 'data': prev.tolist()}
 
 

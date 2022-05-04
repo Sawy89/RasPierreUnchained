@@ -38,10 +38,10 @@ services:
             - ./_backup:/usr/data/app/
             - ./scivolo/src:/usr/src/app
         ports:
-            - 2500:8000
+            - 2500:2500
         env_file:
             - .env.dev
-        command: uvicorn --reload --workers 1 --host 0.0.0.0 --port 8000 app:app
+        command: uvicorn app:app --reload --workers 1 --host 0.0.0.0 --port 2500
 
     
     adminer:
