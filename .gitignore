@@ -6,6 +6,7 @@ obj/
 .vscode/
 .vs/
 static_deploy
+_backup
 
 # File Type
 *.csv
