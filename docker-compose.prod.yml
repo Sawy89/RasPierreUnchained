@@ -41,6 +41,7 @@ services:
         networks:
             - docker-net
     
+
     backend:
         build: 
             context: scivolo
@@ -50,10 +51,10 @@ services:
         volumes:
             - ./_backup:/usr/data/app/
         ports:
-            - 2500:8000
+            - 2500:2500
         env_file:
             - .env.prod
-        command: uvicorn --host 0.0.0.0 --port 8000 --proxy-headers app:app
+        command: uvicorn app:app --host 0.0.0.0 --port 2500 --root-path /api
         networks:
             - docker-net
         depends_on:
@@ -78,6 +79,7 @@ services:
         networks:
             - docker-net
     
+
     certbot:
         image: certbot/certbot
         container_name: ras_certbot
@@ -89,6 +91,7 @@ services:
             - nginx
             - web
         command: certonly --webroot --webroot-path=/home/app/web --email ddeennyy@hotmail.it --agree-tos --no-eff-email --force-renewal -d raspierre.it  -d www.raspierre.it
+
 
 volumes:
     postgres_data:
