@@ -45,7 +45,7 @@ services:
         build: 
             context: scivolo
             dockerfile: Dockerfile
-        container_name: "scivolo"
+        container_name: ras_scivolo
         restart: unless-stopped
         volumes:
             - ./_backup:/usr/data/app/
