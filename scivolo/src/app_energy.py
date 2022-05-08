@@ -32,7 +32,6 @@ def ping():
     '''Test function server is active'''
     logger.info('Ping function called!')
     return {'status': 'active', 'message': f'pong from {NAMESPACE}', 'current_time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
     
 
 # %% Endpoints
@@ -174,7 +173,7 @@ def check_energy_daily():
     db.close()
 
 
-@scheduler_load.scheduled_job('cron', id='fill_gaps', hour='18', minute='18') # pay attention: it's in UTC
+# @scheduler_load.scheduled_job('cron', id='fill_gaps', hour='18', minute='18') # pay attention: it's in UTC
 def fill_all_gaps():
     '''
     Fill all gaps in the energy modbus table with estimated data

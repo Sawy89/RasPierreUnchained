@@ -46,7 +46,7 @@ services:
         build: 
             context: scivolo
             dockerfile: Dockerfile
-        container_name: "scivolo"
+        container_name: scivolo
         volumes:
             - ./_backup:/usr/data/app/
             - ./scivolo/src:/usr/src/app
