@@ -12,6 +12,19 @@ services:
             - POSTGRES_DB=hello_django_dev
         ports:
             - "5432:5432" # visible from outside
+    
+
+    database:
+        image: mysql:8
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d/
+        environment:
+            - MYSQL_ROOT_PASSWORD=admin
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - 3306:3306 # visible from outside
+        networks:
+            - ew-net
 
 
     web:
@@ -33,7 +46,7 @@ services:
         build: 
             context: scivolo
             dockerfile: Dockerfile
-        container_name: "scivolo"
+        container_name: scivolo
         volumes:
             - ./_backup:/usr/data/app/
             - ./scivolo/src:/usr/src/app
@@ -42,6 +55,8 @@ services:
         env_file:
             - .env.dev
         command: uvicorn app:app --reload --workers 1 --host 0.0.0.0 --port 2500
+        networks:
+            - ew-net
 
     
     adminer:
@@ -51,3 +66,7 @@ services:
     
 volumes:
   postgres_data:
+
+networks:
+  ew-net:
+    driver: bridge

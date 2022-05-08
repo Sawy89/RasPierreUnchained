@@ -1,13 +1,12 @@
 import logging
-from datetime import datetime
 import traceback
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
-# from fastapi.responses import FileResponse
-import os
 from sklearn.ensemble import RandomForestRegressor
-from models import ForecastData
 
-from settings import LOG_CONF, LOG_PATH
+from models import ForecastData
+from settings import LOG_CONF
+import app_energy
 
 
 # %% Init
@@ -17,6 +16,7 @@ logger = logging.getLogger(NAMESPACE)
 logging.config.fileConfig(LOG_CONF, disable_existing_loggers=False)
 
 app = FastAPI()
+app.include_router(app_energy.router)
 
 
 # %% Test endpoint
@@ -28,12 +28,6 @@ def ping():
 
 
 # %% Production endpoint
-# @app.get('/log', tags=[NAMESPACE])
-# def ping(errorflag: bool):
-#     '''Download current log file: error or normal'''
-#     filename = "Error.log" if errorflag else "Log.log"
-#     logger.info(f'Return log {filename} file')
-#     return FileResponse(os.path.join(LOG_PATH, filename), filename=filename)
 
 @app.post('/forecast/fill_gaps', tags=[NAMESPACE])
 def fill_gaps(data: ForecastData):
