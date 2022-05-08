@@ -15,6 +15,7 @@ services:
 
     database:
         image: mysql:8
+        container_name: scivolo_db
         volumes:
             - /home/ubuntu/ScivoloDatabase:/var/lib/mysql
         env_file:
@@ -59,7 +60,7 @@ services:
         build: 
             context: scivolo
             dockerfile: Dockerfile
-        container_name: scivolo
+        container_name: scivolo_be
         restart: unless-stopped
         volumes:
             - ./_backup:/usr/data/app/
