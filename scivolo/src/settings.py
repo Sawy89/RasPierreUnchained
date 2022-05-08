@@ -1,6 +1,7 @@
 import os
 
 # SPECIFIC
+ACTIVE_MODBUS_DATA_TYPE = [1, 2, 3, 4, 5]
 
 # CONSTANT
 LOG_CONF = os.environ.get("LOG_CONF", default="/usr/src/app/logging.conf") # need the env variable for vscode debug

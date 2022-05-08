@@ -2,14 +2,15 @@
 Endpoint for getting data on load, production in the future, and so on
 '''
 
+from distutils.command.install_data import install_data
 import logging
 import datetime
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from apscheduler.schedulers.background import BackgroundScheduler
 import traceback
 
-from settings import LOG_CONF, EMAIL_ADMIN
+from settings import LOG_CONF, EMAIL_ADMIN, ACTIVE_MODBUS_DATA_TYPE
 from models_energy import DbModbusData, DbModbusDataTypes, ForecastDates, ModbusData
 from forecast_energy import fill_gaps
 from database import get_db
@@ -44,8 +45,15 @@ def save_modbus_data(modbus_data: ModbusData, db: Session = Depends(get_db)):
     logger.info(f'Save incremental energy from modbus: {modbus_data}')
     adesso = datetime.datetime.now()
 
+    # Check presence
+    d = db.query(DbModbusData).filter(DbModbusData.modbus_type_id == modbus_data.modbus_type_id) \
+                .filter(DbModbusData.ins_date == modbus_data.ins_date).first()
+    if not d:
+        logger.info('Data already on database')
+        return {'on_db': True, 'uploaded': False}
+
+    # Save on DB
     try:
-        # Save on DB
         data = DbModbusData(**modbus_data.dict())
         db.add(data)
         db.commit()
@@ -53,10 +61,10 @@ def save_modbus_data(modbus_data: ModbusData, db: Session = Depends(get_db)):
         logger.error(f"{err} - {err.args} - {type(err)}")
         logger.error('Error incremental energies save')
         traceback.print_exc()
-        # raise
+        raise HTTPException(status_code=500, detail="upload in DB failed")
 
     logger.info('incremental energies saved - finish')
-    return {'on_db': True}
+    return {'on_db': True, 'uploaded': True}
 
 
 
