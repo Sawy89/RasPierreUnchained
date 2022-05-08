@@ -17,7 +17,7 @@ services:
         image: mysql:8
         container_name: scivolo_db
         volumes:
-            - /home/ubuntu/ScivoloDatabase:/var/lib/mysql
+            - /home/sawy89/ScivoloDatabase:/var/lib/mysql
         env_file:
             - .env.prod
         restart: unless-stopped
