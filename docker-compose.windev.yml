@@ -44,18 +44,10 @@ services:
         env_file:
             - .env.dev
         command: uvicorn app:app --reload --workers 1 --host 0.0.0.0 --port 2500
-        networks:
-            - ew-net
 
     
     adminer:
         image: adminer
         ports:
             - 8080:8080
-    
-# volumes:
-#   postgres_data:
 
-networks:
-  ew-net:
-    driver: bridge

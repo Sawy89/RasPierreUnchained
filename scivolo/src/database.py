@@ -2,9 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from settings import DATABASE_IP, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME
+from settings import SQL_DATABASE, SQL_PASSWORD, SQL_HOST, SQL_PORT, SQL_USER
 
-SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_IP}/{DATABASE_NAME}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{SQL_USER}:{SQL_PASSWORD}@{SQL_HOST}:{SQL_PORT}/{SQL_DATABASE}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
