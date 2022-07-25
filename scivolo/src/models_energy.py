@@ -11,7 +11,8 @@ class DbModbusDataTypes(Base):
     __tablename__ = "modbus_data_types"
 
     modbus_type_id = Column(Integer, primary_key=True)
-    modbus_tcp_address = Column(String, unique=True, nullable=False)
+    modbus_tcp_address = Column(String, nullable=False)
+    modbus_ip = Column(Integer, nullable=False)
     readable_name = Column(String, unique=True, nullable=False)
     description = Column(String)
 

@@ -31,7 +31,7 @@ services:
             - db
     
 
-    backend:
+    scivolo_be:
         build: 
             context: scivolo
             dockerfile: Dockerfile

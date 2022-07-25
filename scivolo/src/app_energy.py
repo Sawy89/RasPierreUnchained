@@ -135,7 +135,7 @@ def fill_gaps_endpoint(modbus_type_id: int, dates: ForecastDates, db: Session = 
 scheduler_load = BackgroundScheduler()
 
 
-@scheduler_load.scheduled_job('cron', id='update_energy_hourly', hour='*', minute='42') # pay attention: it's in UTC
+@scheduler_load.scheduled_job('cron', id='update_energy_hourly', hour='*', minute='21') # pay attention: it's in UTC
 def update_energy_hourly():
     '''
     Calculate the energy from raw data
