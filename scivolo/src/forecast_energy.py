@@ -34,23 +34,23 @@ def fill_gaps(logger, modbus_type_id,
     else:
         db_present = True
     statement = f"""SELECT c15.Vtime 
-                        , month(c15.Vtime) AS mese
-                        , day(c15.Vtime) AS giorno
+                        , EXTRACT(month FROM c15.Vtime) AS mese
+                        , EXTRACT(day FROM c15.Vtime) AS giorno
                         , VTS_AEEG
                         , Vclass_2
                         , Vnowork
                         , V_hGME
                         , V_VnW
                         , V_VnG
-                        , if(e15.reale = 1, e15.value, NULL) AS value
+                        , case when e15.reale = true then e15.value else null end AS value
                         , e15.reale AS reale
-                        , if(md.reale = 1, md.value, NULL) AS md_value
+                        , case when md.reale = true then md.value else NULL end AS md_value
                         , md.reale AS md_reale
-                    FROM scivolo.calendario_15m c15
-                    LEFT JOIN scivolo.energy_15m e15 
+                    FROM calendario_15m c15
+                    LEFT JOIN energy_15m e15 
                         ON c15.Vtime = e15.Vtime
-                        AND e15.modbus_type_id = {modbus_type_id} 
-                    LEFT JOIN scivolo.modbus_data md
+                        AND e15.modbus_type_id = 1
+                    LEFT JOIN modbus_data md
                         ON c15.Vtime = md.ins_date
                         AND e15.modbus_type_id = md.modbus_type_id
                     WHERE c15.Vtime >= '{start_all.strftime('%Y/%m/%d')}'
@@ -125,7 +125,8 @@ def fill_gaps(logger, modbus_type_id,
                             reale=False, value=dati[idx]['md_value'])
             db.add(data)
             db.commit()
-            db.execute(f'CALL modbus_data_updater')
+            db.execute('CALL modbus_data_updater()')
+            db.commit()
     else:
         logger.info(f'FillGaps: NO forecast for n {modbus_type_id}: there are {len(test_idx)} gaps')
 

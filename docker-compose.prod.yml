@@ -11,20 +11,6 @@ services:
         restart: unless-stopped
         networks:
             - docker-net
-    
-
-    database:
-        image: mysql:8
-        container_name: scivolo_db
-        volumes:
-            - /home/sawy89/ScivoloDatabase:/var/lib/mysql
-        env_file:
-            - .env.prod
-        restart: unless-stopped
-        ports:
-            - 3306:3306 # visible from outside
-        networks:
-            - docker-net
 
     
     adminer:

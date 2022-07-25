@@ -15,6 +15,7 @@ from models_energy import DbModbusData, DbModbusDataTypes, ForecastDates, Modbus
 from forecast_energy import fill_gaps
 from database import get_db
 from utils import send_mail
+from sqlalchemy.sql import text
 
 # %% Init
 NAMESPACE = "energy"
@@ -67,6 +68,25 @@ def save_modbus_data(modbus_data: ModbusData, db: Session = Depends(get_db)):
 
 
 
+@router.get('/get_data', tags=[NAMESPACE])
+def get_modbus_data(db: Session = Depends(get_db)):
+    '''
+    Get some data from database
+    '''
+    logger.info(f'Get some data from database')
+    adesso = datetime.datetime.now()
+
+    # Check presence
+    d = db.query(DbModbusData).filter(DbModbusData.modbus_type_id == 1) \
+                .filter(DbModbusData.ins_date >= datetime.date(2022,1,1)).all()
+    if not d:
+        logger.info('Datanot present')
+        raise HTTPException(status_code=404, detail='No data on database')
+
+    logger.info('Get data from database - finish')
+    return d
+
+
 @router.post('/fill_gaps/{modbus_type_id}', tags=[NAMESPACE])
 def fill_gaps_endpoint(modbus_type_id: int, dates: ForecastDates, db: Session = Depends(get_db)):
     '''Fill gaps'''
@@ -99,6 +119,8 @@ def fill_gaps_endpoint(modbus_type_id: int, dates: ForecastDates, db: Session = 
             
             db.execute(f"CALL scivolo.update_hourly({modbus_type_id}, '{dates.start_date}')")
             dict_mail.update({'update 1 hour': 1})
+            
+            db.commit()
         except Exception as err:
             logger.error(f"{err} - {err.args} - {type(err)}")
             logger.error(f'Error launch procedures for {modbus_type_id}')
@@ -113,7 +135,7 @@ def fill_gaps_endpoint(modbus_type_id: int, dates: ForecastDates, db: Session = 
 scheduler_load = BackgroundScheduler()
 
 
-@scheduler_load.scheduled_job('cron', id='update_energy_hourly', hour='*', minute='5') # pay attention: it's in UTC
+@scheduler_load.scheduled_job('cron', id='update_energy_hourly', hour='*', minute='21') # pay attention: it's in UTC
 def update_energy_hourly():
     '''
     Calculate the energy from raw data
@@ -126,8 +148,9 @@ def update_energy_hourly():
         try:
             logger.info(f'Launch procedure update_15_minutes and update_hourly for {modbus_type_id}')
             # Update 15 minutes and hourly
-            db.execute(f"CALL scivolo.update_15_minutes({modbus_type_id})")
-            db.execute(f"CALL scivolo.update_hourly({modbus_type_id}, NULL)")
+            db.execute(text(f"CALL update_15_minutes({modbus_type_id})"))
+            db.execute(text(f"CALL update_hourly({modbus_type_id}, NULL)"))
+            db.commit()
         except Exception as err:
             logger.error(f"{err} - {err.args} - {type(err)}")
             logger.error(f'Error launch procedures for {modbus_type_id}')
@@ -156,7 +179,7 @@ def check_energy_daily():
     dict_result = {}
     for modbus_type_id in ACTIVE_MODBUS_DATA_TYPE:
         modbus_tcp_type = db.query(DbModbusDataTypes).filter(DbModbusDataTypes.modbus_type_id == modbus_type_id).first()
-        statement = f"SELECT count(*) AS n FROM scivolo.modbus_data WHERE modbus_type_id = {modbus_type_id} AND date(ins_date) = '{date_check}' AND reale = 1"
+        statement = f"SELECT count(*) AS n FROM modbus_data WHERE modbus_type_id = {modbus_type_id} AND date(ins_date) = '{date_check}' AND reale = true"
         n_data = db.execute(statement).fetchone()[0]
         dict_result[modbus_tcp_type.readable_name] = n_data
         if n_data < hour_to_have:
@@ -206,6 +229,8 @@ def fill_all_gaps():
             
             db.execute(f"CALL scivolo.update_hourly({modbus_type_id}, NULL)")
             dict_mail.update({'update 1 hour': True})
+            
+            db.commit()
         except Exception as err:
             logger.error(f"{err} - {err.args} - {type(err)}")
             logger.error(f'Error launch procedures for {modbus_type_id}')

@@ -1,9 +1,8 @@
-fastapi
-uvicorn
-sqlalchemy
-mysql-connector-python
-apscheduler
-sklearn
-pandas
-apscheduler
-requests
+fastapi==0.78.0
+uvicorn==0.18.1
+sqlalchemy==1.4.38
+apscheduler==3.9.1
+scikit-learn==1.1.1
+pandas==1.4.3
+requests==2.28.1
+psycopg2-binary==2.9.3
