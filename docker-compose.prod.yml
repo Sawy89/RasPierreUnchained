@@ -9,6 +9,8 @@ services:
         env_file:
             - ./.env.prod.db
         restart: unless-stopped
+        ports:
+            - "5432:5432" # visible from outside
         networks:
             - docker-net
 
