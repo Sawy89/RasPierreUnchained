@@ -112,7 +112,8 @@ BEGIN
         , count(*) AS n
          , CASE WHEN sum((CASE WHEN reale THEN 1 ELSE 0 end) -1) = 0 THEN true ELSE false END AS reale
     FROM energy_15m
-    WHERE modbus_type_id = 1
+    WHERE modbus_type_id = _current_modbus_type_id
+    and Vtime >= _start_date
     group by datat, ora;
 
 
