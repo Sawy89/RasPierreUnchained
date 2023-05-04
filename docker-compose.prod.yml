@@ -44,23 +44,23 @@ services:
             - docker-net
     
 
-    backend:
-        build: 
-            context: scivolo
-            dockerfile: Dockerfile
-        container_name: scivolo_be
-        restart: unless-stopped
-        volumes:
-            - ./_backup:/usr/data/app/
-        ports:
-            - 2500:2500
-        env_file:
-            - .env.prod
-        command: uvicorn app:app --host 0.0.0.0 --port 2500 --root-path /api
-        networks:
-            - docker-net
-        depends_on:
-            - db
+    # backend:
+    #     build: 
+    #         context: scivolo
+    #         dockerfile: Dockerfile
+    #     container_name: scivolo_be
+    #     restart: unless-stopped
+    #     volumes:
+    #         - ./_backup:/usr/data/app/
+    #     ports:
+    #         - 2500:2500
+    #     env_file:
+    #         - .env.prod
+    #     command: uvicorn app:app --host 0.0.0.0 --port 2500 --root-path /api
+    #     networks:
+    #         - docker-net
+    #     depends_on:
+    #         - db
 
     
     nginx:
